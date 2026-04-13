@@ -1,9 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import AuthPages from "../Components/AuthPages";
 
-const LoginPage = () => {
+const LoginPage = ({ isAuthentication, setIsAuthentication }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/auth/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        navigate("/");
+        setIsAuthentication(true);
+      } else {
+        setIsAuthentication(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error?.response?.data.message || "Server error");
+
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
+  };
+
   return (
     <AuthPages>
       <div>
@@ -19,6 +54,8 @@ const LoginPage = () => {
             type="text"
             placeholder="Email"
             className="border p-2 rounded-xl bg-white text-black w-full"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
         </div>
 
@@ -30,6 +67,8 @@ const LoginPage = () => {
             type="Password"
             placeholder="Password"
             className="border p-2 rounded-xl bg-white text-black w-full"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
           <Link
             to="/forgot-password"
@@ -40,7 +79,10 @@ const LoginPage = () => {
         </div>
 
         <div className="w-full mt-7 flex flex-col items-center text-center">
-          <button className="bg-chat-bg w-[80%] py-4 rounded-xl text-sm cursor-pointer">
+          <button
+            onClick={handleLogin}
+            className="bg-chat-bg w-[80%] py-4 rounded-xl text-sm cursor-pointer"
+          >
             Log in
           </button>
           <p className="mt-3 text-[#E8FFF1]">
