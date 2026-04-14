@@ -47,7 +47,7 @@ const RegisterPage = () => {
     <AuthPages>
       <h1 className="text-2xl font-semibold">Create an account</h1>
       {errorType === "general" ? (
-        <p className="text-red-500 text-xs mt-2 ml-2 font-bold flex items-center gap-1">
+        <p className="text-red-500 text-sm mt-2 ml-2 font-bold flex items-center gap-1">
           <MdError />
           {errorMsg}
         </p>

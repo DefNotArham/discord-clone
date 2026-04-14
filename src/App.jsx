@@ -58,7 +58,11 @@ const App = () => {
         path="/"
         element={
           <ProtectedRoutes>
-            <Homepage user={user} />
+            <Homepage
+              user={user}
+              setUser={setUser}
+              setIsAuthentication={setIsAuthentication}
+            />
           </ProtectedRoutes>
         }
       />

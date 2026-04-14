@@ -52,7 +52,7 @@ const LoginPage = ({ setIsAuthentication, setUser }) => {
         <p>We are happy to see again!</p>
 
         {errorType === "general" && (
-          <p className="text-red-500 text-xs mt-2 ml-2 font-bold flex items-center gap-1">
+          <p className="text-red-500 text-sm mt-2 ml-2 font-bold flex items-center gap-1">
             <MdError />
             {errorMsg}
           </p>
