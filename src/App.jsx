@@ -5,6 +5,7 @@ import axios from "axios";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import Homepage from "./pages/Homepage";
+import VerificationPage from "./pages/VerificationPage";
 
 const App = () => {
   const [isAuthentication, setIsAuthentication] = useState(false);
@@ -37,7 +38,7 @@ const App = () => {
   }, []);
 
   const ProtectedRoutes = ({ children }) => {
-    if (!isAuthentication) {
+    if (!isAuthentication && !user.isVerified) {
       return <Navigate to="/login" replace />;
     }
 
@@ -45,7 +46,7 @@ const App = () => {
   };
 
   const RedirectAuthenticatedUser = ({ children }) => {
-    if (isAuthentication) {
+    if (isAuthentication && user.isVerified) {
       return <Navigate to="/" replace />;
     }
 
@@ -74,6 +75,7 @@ const App = () => {
           </RedirectAuthenticatedUser>
         }
       />
+
       <Route
         path="/login"
         element={
@@ -82,6 +84,18 @@ const App = () => {
               setIsAuthentication={setIsAuthentication}
               setUser={setUser}
               user={user}
+            />
+          </RedirectAuthenticatedUser>
+        }
+      />
+
+      <Route
+        path="/verify-email"
+        element={
+          <RedirectAuthenticatedUser>
+            <VerificationPage
+              isAuthentication={isAuthentication}
+              setIsAuthentication={setIsAuthentication}
             />
           </RedirectAuthenticatedUser>
         }

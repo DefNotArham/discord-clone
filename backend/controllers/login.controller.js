@@ -45,6 +45,14 @@ const loginController = async (req, res) => {
         typeError: "general",
       });
 
+    if (!existingUser.isVerified) {
+      return res.status(403).json({
+        success: false,
+        message: "Please verify your email first",
+        typeError: "general",
+      });
+    }
+
     generateTokenAndSetCookie(res, existingUser._id);
 
     res.status(200).json({

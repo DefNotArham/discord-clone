@@ -29,7 +29,7 @@ const RegisterPage = () => {
       );
 
       if (response.data.success) {
-        navigate("/login");
+        navigate("/verify-email");
       }
     } catch (error) {
       console.log(error);

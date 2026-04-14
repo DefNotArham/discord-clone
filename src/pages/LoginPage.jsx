@@ -29,9 +29,6 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
         navigate("/");
         setUser(response.data.user);
         setIsAuthentication(true);
-      } else {
-        setUser(null);
-        setIsAuthentication(false);
       }
     } catch (error) {
       console.log(error);
