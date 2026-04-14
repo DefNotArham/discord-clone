@@ -81,6 +81,7 @@ const App = () => {
             <LoginPage
               setIsAuthentication={setIsAuthentication}
               setUser={setUser}
+              user={user}
             />
           </RedirectAuthenticatedUser>
         }

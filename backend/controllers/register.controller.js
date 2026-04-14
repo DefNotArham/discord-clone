@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../model/user.model.js";
-import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
+import { sendVerificationEmail } from "../mail/mailjet.js";
 
 const registerController = async (req, res) => {
   let { email, username, password, DOB } = req.body;
@@ -129,15 +129,19 @@ const registerController = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
+    const verificationCode = Math.floor(100000 + Math.random() * 900000);
+
     const newUser = new User({
       email,
       username,
       password: hashPassword,
       DOB,
+      verificationCode,
+      verificationCodeExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
     });
 
     await newUser.save();
-    generateTokenAndSetCookie(res, newUser._id);
+    await sendVerificationEmail(newUser.email, verificationCode);
 
     res.status(201).json({
       success: true,

@@ -5,7 +5,7 @@ import { MdError } from "react-icons/md";
 
 import AuthPages from "../Components/AuthPages";
 
-const LoginPage = ({ setIsAuthentication, setUser }) => {
+const LoginPage = ({ setIsAuthentication, setUser, user }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
