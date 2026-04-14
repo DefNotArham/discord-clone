@@ -42,6 +42,12 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
     }
   };
 
+  const handleForgotPassword = async () => {
+    try {
+      const response = axios.get("http://localhost:8000/auth/forgot");
+    } catch (error) {}
+  };
+
   return (
     <AuthPages>
       <div>
@@ -88,12 +94,12 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <Link
-            to="/forgot-password"
-            className="mt-2 ml-1 underline text-sm text-[#E8FFF1]"
+          <a
+            onClick={handleForgotPassword}
+            className="mt-2 ml-1 underline text-sm text-[#E8FFF1] cursor-pointer"
           >
             Forgot your password?
-          </Link>
+          </a>
         </div>
 
         <div className="w-full mt-7 flex flex-col items-center text-center">

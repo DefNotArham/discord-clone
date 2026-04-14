@@ -38,15 +38,14 @@ const App = () => {
   }, []);
 
   const ProtectedRoutes = ({ children }) => {
-    if (!isAuthentication && !user.isVerified) {
+    if (!isAuthentication || !user?.isVerified) {
       return <Navigate to="/login" replace />;
     }
 
     return children;
   };
-
   const RedirectAuthenticatedUser = ({ children }) => {
-    if (isAuthentication && user.isVerified) {
+    if (isAuthentication && user?.isVerified) {
       return <Navigate to="/" replace />;
     }
 
