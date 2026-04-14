@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MdError } from "react-icons/md";
+import { IoCloseSharp } from "react-icons/io5";
 
 import AuthPages from "../Components/AuthPages";
 
@@ -11,6 +12,8 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
 
   const [errorMsg, setErrorMsg] = useState("");
   const [errorType, setErrorType] = useState("");
+
+  const [forgotPassSucess, setForgotPassSuccess] = useState(false);
 
   const navigate = useNavigate();
 
@@ -44,8 +47,26 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
 
   const handleForgotPassword = async () => {
     try {
-      const response = axios.get("http://localhost:8000/auth/forgot");
-    } catch (error) {}
+      const response = await axios.post(
+        "http://localhost:8000/auth/forgot-password",
+        { email },
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        setForgotPassSuccess(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMsg(error.response.data.message);
+      setErrorType("email");
+      setForgotPassSuccess(false);
+
+      setTimeout(() => {
+        setErrorMsg("");
+        setErrorType("");
+      }, 3000);
+    }
   };
 
   return (
@@ -77,6 +98,9 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
+          {errorType === "email" && (
+            <p className="text-red-500 text-sm mt-1">{errorMsg}</p>
+          )}
         </div>
 
         <div className="flex flex-col items-start">
@@ -117,6 +141,23 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
           </p>
         </div>
       </div>
+
+      {forgotPassSucess && (
+        <>
+          <div className="fixed inset-0 bg-black/50  z-40"></div>
+
+          <div className="fixed bg-emerald-500 p-6 rounded-2xl top-10 z-50">
+            <div className="flex items-center gap-3 text-lg font-semibold justify-center">
+              <h1>Check your email to reset your password</h1>
+              <IoCloseSharp
+                size={25}
+                className="cursor-pointer"
+                onClick={() => setForgotPassSuccess(false)}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </AuthPages>
   );
 };

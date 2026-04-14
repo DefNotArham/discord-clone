@@ -1,4 +1,4 @@
-export const verificationEmail = `
+export const verificationEmailTemplate = (verificationCode) => `
   <div style="
     font-family: Arial, sans-serif;
     background: #0f172a;
@@ -41,7 +41,7 @@ export const verificationEmail = `
         color: #ffffff;
         border: 1px solid #22c55e;
       ">
-        {verificationCode}
+        ${verificationCode}
       </div>
 
       <p style="
@@ -55,8 +55,7 @@ export const verificationEmail = `
     </div>
   </div>
 `;
-
-export const resetPasswordEmail = () => `
+export const resetPasswordEmailTemplate = (resetToken) => `
   <div style="
     font-family: Arial, sans-serif;
     background: #0f172a;
@@ -74,7 +73,7 @@ export const resetPasswordEmail = () => `
     ">
       
       <h1 style="
-        color: #ef4444;
+        color: #22c55e;
         margin-bottom: 10px;
       ">
         Chat App
@@ -91,31 +90,47 @@ export const resetPasswordEmail = () => `
       <p style="
         font-size: 14px;
         color: #9ca3af;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
       ">
         We received a request to reset your password. Click the button below to continue.
       </p>
 
-      <a href="http://localhost:5173/reset-password/{resetToken}"
+      <a href="http://localhost:5173/reset-password/${resetToken}"
         style="
           display: inline-block;
-          padding: 12px 20px;
-          background: #ef4444;
-          color: #ffffff;
+          padding: 14px 24px;
+          background: #22c55e;
+          color: #0b1220;
           text-decoration: none;
-          border-radius: 8px;
+          border-radius: 10px;
           font-weight: bold;
-          margin-bottom: 20px;
+          font-size: 15px;
         ">
         Reset Password
       </a>
 
       <p style="
-        margin-top: 25px;
         font-size: 12px;
         color: #6b7280;
+        margin-top: 15px;
       ">
-        This link will expire soon. If you didn’t request this, you can ignore this email.
+        Or copy and paste this link:
+      </p>
+
+      <p style="
+        font-size: 12px;
+        color: #22c55e;
+        word-break: break-all;
+      ">
+        http://localhost:5173/reset-password/${resetToken}
+      </p>
+
+      <p style="
+        margin-top: 25px;
+        font-size: 13px;
+        color: #9ca3af;
+      ">
+        This link will expire soon. If you didn’t request this, ignore this email.
       </p>
 
     </div>

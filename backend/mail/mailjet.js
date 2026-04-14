@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import Mailjet from "node-mailjet";
 import {
-  verificationEmail,
+  verificationEmailTemplate,
   resetPasswordEmailTemplate,
-} from "./mailTemplates.js";
+} from "../mail/mailTemplates.js";
 
 dotenv.config();
 
@@ -27,11 +27,7 @@ export const sendVerificationEmail = async (userEmail, verificationCode) => {
             },
           ],
           Subject: "Verify your account",
-          TextPart: `Your verification code is: ${verificationCode}`,
-          HTMLPart: verificationEmail.replace(
-            "{verificationCode}",
-            verificationCode,
-          ),
+          HTMLPart: verificationEmailTemplate(verificationCode),
         },
       ],
     });
@@ -56,11 +52,8 @@ export const resetPasswordEmail = async (userEmail, resetToken) => {
               Email: userEmail,
             },
           ],
-          Subject: "Verify your account",
-          HTMLPart: resetPasswordEmailTemplate.replace(
-            "{resetToken}",
-            resetToken,
-          ),
+          Subject: "Reset your password",
+          HTMLPart: resetPasswordEmailTemplate(resetToken),
         },
       ],
     });
