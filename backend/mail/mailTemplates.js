@@ -136,3 +136,70 @@ export const resetPasswordEmailTemplate = (resetToken) => `
     </div>
   </div>
 `;
+
+export const passwordChangedEmailTemplate = () => `
+  <div style="
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    padding: 40px 0;
+  ">
+    <div style="
+      max-width: 500px;
+      margin: auto;
+      background: #111827;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      color: #ffffff;
+      border: 1px solid #1f2937;
+    ">
+      
+      <h1 style="
+        color: #22c55e;
+        margin-bottom: 10px;
+      ">
+        Chat App
+      </h1>
+
+      <p style="
+        font-size: 18px;
+        font-weight: bold;
+        color: #22c55e;
+        margin-bottom: 15px;
+      ">
+        Password Updated Successfully
+      </p>
+
+      <p style="
+        font-size: 14px;
+        color: #d1d5db;
+        margin-bottom: 25px;
+        line-height: 1.5;
+      ">
+        Your password has been successfully changed.  
+        If this was you, you can safely ignore this email.
+      </p>
+
+      <div style="
+        width: 100%;
+        padding: 14px;
+        background: #0b1220;
+        border-radius: 10px;
+        border: 1px solid #22c55e;
+        color: #9ca3af;
+        font-size: 13px;
+      ">
+        If you did NOT make this change, please reset your password immediately.
+      </div>
+
+      <p style="
+        margin-top: 25px;
+        font-size: 12px;
+        color: #6b7280;
+      ">
+        This is an automated security message from Chat App.
+      </p>
+
+    </div>
+  </div>
+`;

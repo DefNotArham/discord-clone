@@ -3,6 +3,7 @@ import Mailjet from "node-mailjet";
 import {
   verificationEmailTemplate,
   resetPasswordEmailTemplate,
+  passwordChangedEmailTemplate,
 } from "../mail/mailTemplates.js";
 
 dotenv.config();
@@ -54,6 +55,32 @@ export const resetPasswordEmail = async (userEmail, resetToken) => {
           ],
           Subject: "Reset your password",
           HTMLPart: resetPasswordEmailTemplate(resetToken),
+        },
+      ],
+    });
+
+    console.log("Email sent:", request.body);
+  } catch (error) {
+    console.log("Email error:", error);
+  }
+};
+
+export const resetPasswordSucessEmail = async (userEmail, resetToken) => {
+  try {
+    const request = await mailjet.post("send", { version: "v3.1" }).request({
+      Messages: [
+        {
+          From: {
+            Email: "arhamkabir231@gmail.com", // must be verified in Mailjet
+            Name: "Chat App",
+          },
+          To: [
+            {
+              Email: userEmail,
+            },
+          ],
+          Subject: "Password changed successfully",
+          HTMLPart: passwordChangedEmailTemplate(),
         },
       ],
     });
