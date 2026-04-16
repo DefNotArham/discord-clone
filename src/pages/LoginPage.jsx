@@ -153,7 +153,7 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
         <div className="w-full mt-7 flex flex-col items-center text-center">
           <button
             onClick={handleLogin}
-            className="bg-chat-bg w-[80%] py-4 rounded-xl text-sm cursor-pointer flex justify-center"
+            className="bg-chat-bg w-[80%] py-4 rounded-xl text-sm cursor-pointer flex justify-center items-center"
             disabled={isLoading}
           >
             {isLoading ? (

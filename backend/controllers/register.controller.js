@@ -3,10 +3,11 @@ import User from "../model/user.model.js";
 import { sendVerificationEmail } from "../mail/mailjet.js";
 
 const registerController = async (req, res) => {
-  let { email, username, password, DOB } = req.body;
+  let { email, username, password, DOB, displayName } = req.body;
   try {
     email = email?.trim().toLowerCase();
-    username = username?.trim();
+    username = username?.trim().toLowerCase();
+    displayName = displayName || username;
 
     if (!email || !username || !password || !DOB)
       return res.status(400).json({
@@ -28,6 +29,13 @@ const registerController = async (req, res) => {
         success: false,
         message: "Username must be 3–20 characters long",
         typeError: "username",
+      });
+
+    if (displayName.length < 3 || displayName.length > 20)
+      return res.status(400).json({
+        success: false,
+        message: "Display must be 3–20 characters long",
+        typeError: "displayName",
       });
 
     // Email errors
@@ -136,6 +144,7 @@ const registerController = async (req, res) => {
       username,
       password: hashPassword,
       DOB,
+      displayName,
       verificationCode,
       verificationCodeExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
     });

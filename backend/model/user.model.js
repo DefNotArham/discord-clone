@@ -9,7 +9,14 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       unique: true,
     },
-    username: { type: String, required: true, trim: true, unique: true },
+    username: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+      lowercase: true,
+    },
+    displayName: { type: String, required: true },
     password: { type: String, required: true },
     DOB: { type: Date, required: true },
     isVerified: { type: Boolean, default: false },
@@ -17,6 +24,7 @@ const userSchema = new mongoose.Schema(
     resetPasswordTokenExpiresAt: Date,
     verificationCode: String,
     verificationCodeExpiresAt: Date,
+    status: { type: String, default: "Online" },
   },
   { timestamps: true },
 );

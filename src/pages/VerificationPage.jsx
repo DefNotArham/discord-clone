@@ -82,7 +82,7 @@ const VerificationPage = ({ user, setUser }) => {
               <button
                 onClick={handleVerify}
                 disabled={isLoading}
-                className="p-3 font-semibold cursor-pointer text-sm rounded-xl mx-auto mt-3 w-full bg-emerald-700 "
+                className="p-3 font-semibold cursor-pointer text-sm rounded-xl mx-auto mt-3 w-full bg-emerald-700 flex justify-center items-center "
               >
                 {isLoading ? (
                   <Oval

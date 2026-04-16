@@ -111,7 +111,7 @@ const ResetPasswordPage = () => {
           <button
             onClick={handleResetPassword}
             disabled={isLoading}
-            className="bg-chat-bg w-[80%] py-4 rounded-xl text-sm cursor-pointer mt-3"
+            className="bg-chat-bg w-[80%] py-4 rounded-xl text-sm cursor-pointer mt-3 flex items-center justify-center"
           >
             {isLoading ? (
               <Oval

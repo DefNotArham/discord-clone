@@ -10,6 +10,7 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [DOB, setDOB] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
   const [errorMsg, setErrorMsg] = useState("");
   const [errorType, setErrorType] = useState("");
@@ -28,6 +29,7 @@ const RegisterPage = () => {
           username,
           password,
           DOB,
+          displayName: displayName || username,
         },
         { withCredentials: true },
       );
@@ -67,7 +69,13 @@ const RegisterPage = () => {
         ""
       )}
 
-      <div className="w-full mt-5 flex flex-col gap-5">
+      <form
+        className="w-full mt-5 flex flex-col gap-5"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleEnter();
+        }}
+      >
         <div className="flex flex-col items-start">
           <label className="ml-1 my-2">
             Email Address <span className="text-red-700">*</span>
@@ -94,13 +102,7 @@ const RegisterPage = () => {
           )}
         </div>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleLogin();
-          }}
-          className="flex flex-col items-start"
-        >
+        <div className="flex flex-col items-start">
           <label className="ml-1 my-2">
             Username <span className="text-red-700">*</span>
           </label>
@@ -123,7 +125,30 @@ const RegisterPage = () => {
           ) : (
             ""
           )}
-        </form>
+        </div>
+
+        <div className="flex flex-col items-start">
+          <label className="ml-1 my-2">Display name</label>
+          <input
+            type="text"
+            placeholder="Display name (optional)"
+            className={`border p-2 rounded-xl bg-white text-black w-full transition-all ${
+              errorType === "general" || errorType === "displayName"
+                ? "border-red-500 border-2 "
+                : "border-2 border-white"
+            }`}
+            onChange={(e) => setDisplayName(e.target.value)}
+            value={displayName}
+          />
+          {errorType === "displayName" ? (
+            <p className="text-red-500 text-xs mt-2 ml-2 font-bold flex items-center gap-1">
+              <MdError />
+              {errorMsg}
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
 
         <div className="flex flex-col items-start">
           <label className="ml-1 my-2">
@@ -182,11 +207,11 @@ const RegisterPage = () => {
             ""
           )}
         </div>
-      </div>
+      </form>
 
       <div className="w-full mt-7 flex flex-col items-center text-center">
         <button
-          className="bg-chat-bg w-[80%] py-4 rounded-xl text-sm cursor-pointer"
+          className="bg-chat-bg w-[80%] py-4 rounded-xl text-sm cursor-pointer flex items-center justify-center"
           onClick={handleCreateAccount}
           disabled={isLoading}
         >
