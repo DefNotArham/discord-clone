@@ -7,10 +7,13 @@ import LoginPage from "./pages/LoginPage";
 import Homepage from "./pages/Homepage";
 import VerificationPage from "./pages/VerificationPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import SettingsPage from "./pages/SettingsPage";
 
 const App = () => {
   const [isAuthentication, setIsAuthentication] = useState(false);
   const [user, setUser] = useState(null);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -32,6 +35,8 @@ const App = () => {
         console.log(error);
         setIsAuthentication(false);
         setUser(null);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -39,6 +44,7 @@ const App = () => {
   }, []);
 
   const ProtectedRoutes = ({ children }) => {
+    if (loading) return null;
     if (!isAuthentication || !user?.isVerified) {
       return <Navigate to="/login" replace />;
     }
@@ -46,7 +52,8 @@ const App = () => {
     return children;
   };
   const RedirectAuthenticatedUser = ({ children }) => {
-    if (isAuthentication && user?.isVerified) {
+    if (loading) return null;
+    if (isAuthentication) {
       return <Navigate to="/" replace />;
     }
 
@@ -55,6 +62,15 @@ const App = () => {
 
   return (
     <Routes>
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoutes>
+            <SettingsPage user={user} />
+          </ProtectedRoutes>
+        }
+      />
+
       <Route
         path="/"
         element={
@@ -67,6 +83,7 @@ const App = () => {
           </ProtectedRoutes>
         }
       />
+
       <Route
         path="/register"
         element={

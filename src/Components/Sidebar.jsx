@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 // Icons
 import { FiPlus } from "react-icons/fi";
@@ -18,6 +19,8 @@ const Sidebar = ({ user }) => {
   const [toggleProfileBox, setToggleProfileBox] = useState(false);
   const [showStatusMenu, setShowStatusMenu] = useState(false);
   const [status, setStatus] = useState(user.status);
+
+  const [copied, setCopied] = useState(false);
 
   const profileRef = useRef(null);
   const statusRef = useRef(null);
@@ -169,11 +172,13 @@ const Sidebar = ({ user }) => {
         </div>
 
         <div className="relative group">
-          <IoSettingsSharp
-            size={20}
-            color="white"
-            className="mr-3 cursor-pointer hover:rotate-180 transition-transform duration-500 ease-in-out"
-          />
+          <Link to="/settings">
+            <IoSettingsSharp
+              size={20}
+              color="white"
+              className="mr-3 cursor-pointer hover:rotate-180 transition-transform duration-500 ease-in-out"
+            />
+          </Link>
 
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 border border-gray-700 bg-black text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
             Settings
@@ -208,10 +213,13 @@ const Sidebar = ({ user }) => {
             </div>
 
             <div className="px-3 pb-4 flex flex-col gap-2">
-              <button className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2">
+              <Link
+                to="/settings"
+                className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
+              >
                 <MdEdit />
                 Edit Profile
-              </button>
+              </Link>
 
               <div className="relative">
                 <button
@@ -233,9 +241,19 @@ const Sidebar = ({ user }) => {
                 </button>
               </div>
 
-              <button className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(user.username);
+                  setCopied(true);
+
+                  setTimeout(() => {
+                    setCopied(false);
+                  }, 3000);
+                }}
+                className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
+              >
                 <FaRegUserCircle />
-                Copy User Id
+                {copied ? "Copied" : "Copy Username"}
               </button>
             </div>
           </div>
@@ -244,11 +262,11 @@ const Sidebar = ({ user }) => {
 
       {showStatusMenu ? (
         <div
-          className="absolute bg-[#103f38] left-78  bottom-20 text-white p-3 rounded-2xl flex flex-col w-60 gap-5 z-[999]"
+          className="absolute bg-[#103f38] left-78  bottom-20 text-white p-3 rounded-2xl flex flex-col w-60 gap-2 z-[999]"
           ref={statusRef}
         >
           <button
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer hover:bg-[#116852] py-1 px-2 rounded-xl  transition-all"
             onClick={() => {
               const newStatus = "Online";
               setStatus(newStatus);
@@ -259,7 +277,7 @@ const Sidebar = ({ user }) => {
             <FaCircle color="green" size={10} className=" " /> Online
           </button>
           <button
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer hover:bg-[#116852] py-1 px-2 rounded-xl  transition-all"
             onClick={() => {
               const newStatus = "Idle";
               setStatus(newStatus);
@@ -271,7 +289,7 @@ const Sidebar = ({ user }) => {
             Idle
           </button>
           <button
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer hover:bg-[#116852] py-1 px-2 rounded-2xl  transition-all"
             onClick={() => {
               const newStatus = "Do Not Disturb";
               setStatus(newStatus);
@@ -283,7 +301,7 @@ const Sidebar = ({ user }) => {
             Do Not Disturb
           </button>
           <button
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer hover:bg-[#116852] py-1 px-2 rounded-2xl  transition-all"
             onClick={() => {
               const newStatus = "Invisible";
               setStatus(newStatus);
