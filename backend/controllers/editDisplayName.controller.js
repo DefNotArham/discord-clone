@@ -11,6 +11,13 @@ const editDisplayNameController = async (req, res) => {
         message: "User not found",
       });
 
+    if (newDisplayName.length < 3 || newDisplayName.length > 20)
+      return res.status(400).json({
+        success: false,
+        message: "Display must be 3–20 characters long",
+        typeError: "displayName",
+      });
+
     user.displayName = newDisplayName;
     await user.save();
 

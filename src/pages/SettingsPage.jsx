@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,6 +12,37 @@ import { MdArrowOutward } from "react-icons/md";
 
 const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
   const navigate = useNavigate();
+
+  const [editDisplayName, setEditDisplayName] = useState(false);
+  const [newDisplayName, setNewDisplayName] = useState(user.displayName);
+
+  const [error, setError] = useState("");
+
+  const handleEditDisplay = async () => {
+    if (editDisplayName) {
+      if (newDisplayName.length < 3 || newDisplayName.length > 20) {
+        setError("Display name must be 3–20 characters");
+        return;
+      }
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/user/change-displayName",
+          { newDisplayName },
+          { withCredentials: true },
+        );
+
+        setUser((prev) => ({
+          ...prev,
+          displayName: newDisplayName,
+        }));
+      } catch (error) {
+        console.log(error);
+        setError(error.response?.data?.message);
+      }
+    }
+
+    setEditDisplayName(!editDisplayName);
+  };
 
   const handleLogout = async () => {
     try {
@@ -84,10 +115,37 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
           <div className="bg-[#0f3f36] p-4 rounded-2xl flex justify-between items-center">
             <div>
               <p className="text-gray-300">Display Name</p>
-              <span className="font-semibold">{user.displayName}</span>
+              {editDisplayName ? (
+                <>
+                  <input
+                    className={`border p-2 text-sm rounded-2xl mt-2 ${
+                      error ? "border-red-500" : ""
+                    }`}
+                    placeholder="Enter new display name"
+                    onChange={(e) => setNewDisplayName(e.target.value)}
+                    value={newDisplayName}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleEditDisplay();
+                      }
+                    }}
+                  />
+
+                  {error ? (
+                    <p className="text-red-500 text-xs mt-2 ml-2"> {error}</p>
+                  ) : (
+                    ""
+                  )}
+                </>
+              ) : (
+                <span className="font-semibold">{newDisplayName}</span>
+              )}
             </div>
-            <button className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-emerald-700 px-3 py-1 rounded-lg">
-              Edit
+            <button
+              onClick={() => handleEditDisplay()}
+              className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-emerald-700 px-3 py-1 rounded-lg"
+            >
+              {editDisplayName ? "Save" : "Edit"}
             </button>
           </div>
 
