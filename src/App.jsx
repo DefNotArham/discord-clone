@@ -63,19 +63,23 @@ const App = () => {
   return (
     <Routes>
       <Route
-        path="/settings"
+        path="/"
         element={
           <ProtectedRoutes>
-            <SettingsPage user={user} />
+            <Homepage
+              user={user}
+              setUser={setUser}
+              setIsAuthentication={setIsAuthentication}
+            />
           </ProtectedRoutes>
         }
       />
 
       <Route
-        path="/"
+        path="/settings"
         element={
           <ProtectedRoutes>
-            <Homepage
+            <SettingsPage
               user={user}
               setUser={setUser}
               setIsAuthentication={setIsAuthentication}

@@ -14,7 +14,7 @@ import { MdEdit } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ setUser, user }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [toggleProfileBox, setToggleProfileBox] = useState(false);
   const [showStatusMenu, setShowStatusMenu] = useState(false);
@@ -38,6 +38,10 @@ const Sidebar = ({ user }) => {
       );
 
       setStatus(newStatus);
+      setUser((prev) => ({
+        ...prev,
+        status: newStatus,
+      }));
     } catch (error) {
       console.log(error);
     }
