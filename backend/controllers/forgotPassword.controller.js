@@ -25,7 +25,7 @@ const forgotPasswordController = async (req, res) => {
 
     await resetPasswordEmail(existUser.email, existUser.resetPasswordToken);
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       message: "Reset email sent",
     });

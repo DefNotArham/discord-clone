@@ -26,6 +26,45 @@ const resetPasswordController = async (req, res) => {
         message: "New password cannot be the same as your current password",
       });
 
+    // Password errors
+    if (password.length < 8)
+      return res.status(400).json({
+        success: false,
+        message: "Password must be at least 8 characters long",
+        typeError: "password",
+      });
+
+    if (!/\d/.test(password))
+      return res.status(400).json({
+        success: false,
+        messsage: "Password must include atleast one number",
+        typeError: "password",
+      });
+
+    if (!/[a-zA-Z]/.test(password)) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must include at least one letter",
+        typeError: "password",
+      });
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must include at least one uppercase letter",
+        typeError: "password",
+      });
+    }
+
+    if (!/[!@#$%^&*]/.test(password)) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must include a special character (!@#$%^&*)",
+        typeError: "password",
+      });
+    }
+
     const hashPassword = await bcrypt.hash(password, 10);
     user.password = hashPassword;
     user.resetPasswordToken = undefined;

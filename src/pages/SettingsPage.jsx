@@ -24,6 +24,12 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
 
   const [isLoading1, setIsLoading1] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
+  const [isLoading3, setIsLoading3] = useState(false);
+
+  const [changePass, setChangePass] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setNewConfirmPassword] = useState("");
 
   const handleEditDisplay = async () => {
     if (editDisplayName) {
@@ -74,6 +80,11 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
       return;
     }
 
+    if (newUsername === "") {
+      setEditUsername(false);
+      return;
+    }
+
     if (editUsername) {
       setIsLoading2(true);
       try {
@@ -111,6 +122,56 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
           setErrorType("");
         }, 3000);
       }
+    }
+  };
+
+  const handleChangePassword = async () => {
+    setIsLoading3(true);
+    setChangePass(true);
+    try {
+      const response = await axios.patch(
+        "http://localhost:8000/user/change-password",
+        {
+          currentPassword,
+          newPassword,
+          confirmNewPassword,
+        },
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        setChangePass(false);
+        setIsLoading3(false);
+
+        setCurrentPassword("");
+        setNewPassword("");
+        setNewConfirmPassword("");
+
+        setUser((prev) => ({
+          ...prev,
+          password: newPassword,
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading3(false);
+      setError(error?.response?.data.message);
+      setErrorType("password");
+
+      setCurrentPassword("");
+      setNewPassword("");
+      setNewConfirmPassword("");
+
+      setTimeout(() => {
+        setError("");
+        setErrorType("");
+      }, 3000);
+    }
+  };
+
+  const handleChangePassKey = (e) => {
+    if (e.key === "Enter") {
+      handleChangePassword();
     }
   };
 
@@ -216,6 +277,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
             </div>
             <button
               onClick={() => handleEditDisplay()}
+              disabled={isLoading1}
               className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-emerald-700 px-3 py-1 rounded-lg"
             >
               {isLoading1 ? "Saving..." : editDisplayName ? "Save" : "Edit"}
@@ -232,8 +294,8 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       error && errorType === "username" ? "border-red-500" : ""
                     }`}
                     placeholder="Enter new username"
-                    value={newUsername}
                     onChange={(e) => setNewUsername(e.target.value)}
+                    value={newUsername}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         handleChangeUsername();
@@ -252,6 +314,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
             </div>
             <button
               onClick={handleChangeUsername}
+              disabled={isLoading2}
               className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-emerald-700 px-3 py-1 rounded-lg"
             >
               {isLoading2 ? "Saving..." : editUsername ? "Save" : "Edit"}
@@ -264,12 +327,18 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
           </div>
 
           <div className="space-y-3">
-            <div className="bg-[#0f3f36] hover:bg-[#124f45] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer">
-              <span className="font-medium">Change Password</span>
+            <button
+              className="bg-[#0f3f36] hover:bg-[#124f45] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
+              onClick={() => setChangePass(true)}
+              disabled={isLoading3}
+            >
+              <span className="font-medium">
+                {isLoading3 ? "Loading..." : "Change Password"}
+              </span>
               <span className="text-gray-400">
                 <FaEdit />
               </span>
-            </div>
+            </button>
 
             <div
               className="bg-[#0f3f36] hover:bg-[#124f45] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer"
@@ -287,6 +356,74 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
             </div>
           </div>
         </div>
+
+        {changePass ? (
+          <>
+            <div
+              className="fixed inset-0 bg-black/50"
+              onClick={() => setChangePass(false)}
+            ></div>
+            <div className="fixed bg-emerald-500  flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  ">
+              <div className="w-full flex flex-col gap-3">
+                <h2 className="text-xl font-semibold text-white-800">
+                  Change Password
+                </h2>
+                {error && errorType === "password" ? (
+                  <p className="font-semibold text-red-500">{error}</p>
+                ) : (
+                  ""
+                )}
+                <form
+                  className="w-full flex flex-col gap-3"
+                  onKeyDown={(e) => handleChangePassKey(e)}
+                >
+                  <input
+                    type="password"
+                    placeholder="Current password"
+                    className={`px-4 py-2 border rounded-lg outline-none w-full ${
+                      error && errorType ? "border-red-500" : ""
+                    } `}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    value={currentPassword}
+                  />
+                  <input
+                    type="password"
+                    placeholder="New password"
+                    className={`px-4 py-2 border rounded-lg outline-none w-full ${
+                      error && errorType ? "border-red-500" : ""
+                    } `}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    value={newPassword}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Confirm password"
+                    className={`px-4 py-2 border rounded-lg outline-none w-full ${
+                      error && errorType ? "border-red-500" : ""
+                    } `}
+                    onChange={(e) => setNewConfirmPassword(e.target.value)}
+                    value={confirmNewPassword}
+                  />
+                </form>
+              </div>
+
+              <div className="flex justify-between gap-5 mt-5">
+                <button
+                  onClick={() => setChangePass(false)}
+                  className="bg-[#116852] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleChangePassword()}
+                  className="bg-[#116852] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+          </>
+        ) : null}
       </div>
     </div>
   );
