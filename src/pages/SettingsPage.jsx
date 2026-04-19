@@ -239,6 +239,12 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
     }
   };
 
+  const handleDeleteAccKey = (e) => {
+    if (e.key === "Enter") {
+      handleDeleteAccount();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0f2f2a] flex justify-center items-start text-white px-4">
       <div className="w-full max-w-3xl mt-12 bg-[#116852] rounded-3xl shadow-xl overflow-hidden relative">
@@ -496,6 +502,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 <input
                   type="password"
                   placeholder="Password"
+                  onKeyDown={(e) => handleDeleteAccKey(e)}
                   className={`px-4 py-2 border rounded-lg outline-none w-full ${
                     error && errorType === "deleteaccount"
                       ? "border-red-500"
