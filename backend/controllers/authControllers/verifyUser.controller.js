@@ -1,4 +1,4 @@
-import User from "../model/user.model.js";
+import User from "../../model/user.model.js";
 
 const verifyUserController = async (req, res) => {
   const { code } = req.body;

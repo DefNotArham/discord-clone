@@ -1,4 +1,4 @@
-import User from "../model/user.model.js";
+import User from "../../model/user.model.js";
 
 const changeUsernameController = async (req, res) => {
   const { newUsername } = req.body;

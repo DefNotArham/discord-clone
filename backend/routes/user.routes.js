@@ -1,10 +1,10 @@
 import express from "express";
 import verifyToken from "../middleware/verifyToken.js";
-import changeStatusController from "../controllers/changeStatus.controller.js";
-import editDisplayNameController from "../controllers/editDisplayName.controller.js";
-import changeUsernameController from "../controllers/changeUsername.controller.js";
-import changePasswordController from "../controllers/changePassword.controller.js";
-import deleteAccountController from "../controllers/deleteAccount.controller.js";
+import changeStatusController from "../controllers/userControllers/changeStatus.controller.js";
+import editDisplayNameController from "../controllers/userControllers/editDisplayName.controller.js";
+import changeUsernameController from "../controllers/userControllers/changeUsername.controller.js";
+import changePasswordController from "../controllers/userControllers/changePassword.controller.js";
+import deleteAccountController from "../controllers/userControllers/deleteAccount.controller.js";
 
 const router = express.Router();
 

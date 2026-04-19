@@ -1,6 +1,6 @@
-import User from "../model/user.model.js";
+import User from "../../model/user.model.js";
 import bcrypt from "bcryptjs";
-import { resetPasswordSucessEmail } from "../mail/mailjet.js";
+import { resetPasswordSucessEmail } from "../../mail/mailjet.js";
 
 const resetPasswordController = async (req, res) => {
   const { token } = req.params;

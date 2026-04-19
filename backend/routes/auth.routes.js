@@ -1,13 +1,13 @@
 import express from "express";
 
-import registerController from "../controllers/register.controller.js";
-import loginController from "../controllers/login.controller.js";
+import registerController from "../controllers/authControllers/register.controller.js";
+import loginController from "../controllers/authControllers/login.controller.js";
 import verifyToken from "../middleware/verifyToken.js";
-import checkAuthController from "../controllers/checkAuth.controller.js";
-import logoutController from "../controllers/logout.controller.js";
-import verifyUserController from "../controllers/verifyUser.controller.js";
-import forgotPasswordController from "../controllers/forgotPassword.controller.js";
-import resetPasswordController from "../controllers/resetPassword.controller.js";
+import checkAuthController from "../controllers/authControllers/checkAuth.controller.js";
+import logoutController from "../controllers/authControllers/logout.controller.js";
+import verifyUserController from "../controllers/authControllers/verifyUser.controller.js";
+import forgotPasswordController from "../controllers/authControllers/forgotPassword.controller.js";
+import resetPasswordController from "../controllers/authControllers/resetPassword.controller.js";
 
 const router = express.Router();
 

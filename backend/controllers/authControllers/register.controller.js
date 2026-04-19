@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import User from "../model/user.model.js";
-import { sendVerificationEmail } from "../mail/mailjet.js";
+import User from "../../model/user.model.js";
+import { sendVerificationEmail } from "../../mail/mailjet.js";
 
 const registerController = async (req, res) => {
   let { email, username, password, DOB, displayName } = req.body;

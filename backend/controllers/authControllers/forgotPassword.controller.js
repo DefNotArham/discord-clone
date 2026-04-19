@@ -1,6 +1,6 @@
-import User from "../model/user.model.js";
+import User from "../../model/user.model.js";
 import crypto from "crypto";
-import { resetPasswordEmail } from "../mail/mailjet.js";
+import { resetPasswordEmail } from "../../mail/mailjet.js";
 
 const forgotPasswordController = async (req, res) => {
   const { email } = req.body;
