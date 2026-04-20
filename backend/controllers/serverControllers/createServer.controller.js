@@ -5,7 +5,7 @@ import generateInviteCode from "../../utils/generateInviteCode.js";
 
 const createServerController = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, image } = req.body;
     const user = await User.findById(req.userId);
 
     if (!user)
@@ -22,12 +22,16 @@ const createServerController = async (req, res) => {
 
     const newServer = new Server({
       name,
-      description,
       owner: req.userId,
-      members: [req.userid],
+      members: [req.userId],
       inviteCode: generateInviteCode(),
+      image,
     });
     await newServer.save();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Server created successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({

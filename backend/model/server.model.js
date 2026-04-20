@@ -13,8 +13,7 @@ const serverSchema = new mongoose.Schema({
       ref: "user",
     },
   ],
-  inviteCode: { type: mongoose.Schema.Types.ObjectId, unique: true },
-  image: { type: String, default: "" },
+  inviteCode: { type: String, unique: true },
 });
 
 const Server = mongoose.model("server", serverSchema);

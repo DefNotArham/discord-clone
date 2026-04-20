@@ -13,6 +13,7 @@ import { FaAngleRight } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 
 const Sidebar = ({ setUser, user }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -22,9 +23,6 @@ const Sidebar = ({ setUser, user }) => {
 
   const [copied, setCopied] = useState(false);
 
-  const profileRef = useRef(null);
-  const statusRef = useRef(null);
-
   const [error, setError] = useState("");
   const [errorType, setErrorType] = useState("");
 
@@ -32,7 +30,7 @@ const Sidebar = ({ setUser, user }) => {
   const [createServerPopup, setCreateServerPopup] = useState(false);
   const [joinServerPopup, setJoinServerPopup] = useState(false);
 
-  const [serverImage, setServerImage] = useState(null);
+  const [serverName, setServerName] = useState("");
 
   useEffect(() => {
     setStatus(user.status);
@@ -56,6 +54,8 @@ const Sidebar = ({ setUser, user }) => {
     }
   };
 
+  const profileRef = useRef(null);
+
   useEffect(() => {
     let handler = (e) => {
       if (!profileRef.current.contains(e.target)) {
@@ -69,6 +69,8 @@ const Sidebar = ({ setUser, user }) => {
       document.removeEventListener("mousedown", handler);
     };
   });
+
+  const statusRef = useRef(null);
 
   useEffect(() => {
     let handler = (e) => {
@@ -84,12 +86,33 @@ const Sidebar = ({ setUser, user }) => {
     };
   });
 
+  const serverPopUpRef = useRef(null);
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!serverPopUpRef.current.contains(e.target)) {
+        setServerPopup(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+
   const handleCreateServer = async () => {
     try {
       const response = await axios.post(
         "http://localhost:8000/server/create-server",
-        {},
+        { name: serverName },
+        { withCredentials: true },
       );
+
+      if (response.data.success) {
+        setCreateServerPopup(false);
+      }
     } catch (error) {
       console.log(error);
       setError(error?.response?.data.message);
@@ -124,7 +147,7 @@ const Sidebar = ({ setUser, user }) => {
           >
             <FiPlus size={24} color="white" />
             <div className="absolute top-1 left-12  z-[999] border border-gray-700 bg-black text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
-              Create server
+              Add a server
             </div>
           </div>
 
@@ -138,28 +161,42 @@ const Sidebar = ({ setUser, user }) => {
       </div>
 
       {serverPopup && (
-        <div className="fixed inset-0 bg-black/50 z-[1000] flex justify-center items-center">
-          <div className="bg-[#103f38] p-5 rounded-2xl flex flex-col text-white w-[30%] gap-5 h-46 items-center justify-center">
-            <button
-              className="w-full bg-emerald-600 h-10 rounded-2xl cursor-pointer"
-              onClick={() => {
-                setServerPopup(false);
-                setCreateServerPopup(true);
-              }}
+        <>
+          <div className="fixed inset-0 bg-black/50 z-[1000] flex justify-center items-center">
+            <div
+              className="bg-[#103f38] p-5 rounded-2xl flex flex-col text-white w-[30%] gap-5 h-46 items-center justify-center"
+              ref={serverPopUpRef}
             >
-              Create a server
-            </button>
-            <button
-              className="w-full bg-emerald-600 h-10 rounded-2xl cursor-pointer"
-              onClick={() => {
-                setServerPopup(false);
-                setJoinServerPopup(true);
-              }}
-            >
-              Join a server
-            </button>
+              <div className="w-full flex items-end">
+                {" "}
+                <ImCross
+                  onClick={() => {
+                    setServerPopup(false);
+                  }}
+                  className="cursor-pointer"
+                />
+              </div>
+              <button
+                className="w-full bg-emerald-600 h-10 rounded-2xl cursor-pointer"
+                onClick={() => {
+                  setServerPopup(false);
+                  setCreateServerPopup(true);
+                }}
+              >
+                Create a server
+              </button>
+              <button
+                className="w-full bg-emerald-600 h-10 rounded-2xl cursor-pointer"
+                onClick={() => {
+                  setServerPopup(false);
+                  setJoinServerPopup(true);
+                }}
+              >
+                Join a server
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {createServerPopup && (
@@ -169,32 +206,26 @@ const Sidebar = ({ setUser, user }) => {
               Creare your own server
             </h1>
 
-            <div className="flex flex-col items-center gap-2 mb-4">
-              <label className="cursor-pointer bg-gray-300 text-black px-4 py-2 rounded-lg text-sm font-semibold">
-                Upload Image
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => {
-                    setServerImage(e.target.files[0]);
-                  }}
-                />
-              </label>
-
-              {serverImage && (
-                <img
-                  className="w-16 h-16 rounded-full object-cover"
-                  src={URL.createObjectURL(serverImage)}
-                />
-              )}
-            </div>
-
             <div className="text-start flex flex-col gap-1">
               <label className="">
                 Server name <span className="text-red-500">*</span>
               </label>
-              <input className="w-full bg-gray-300 h-10 rounded-lg px-2 text-black" />
+              <input
+                className={`w-full bg-gray-300 h-10 rounded-lg px-2 text-black ${
+                  error && errorType === "server" ? "border-red-500" : ""
+                }`}
+                onChange={(e) => {
+                  setServerName(e.target.value);
+                }}
+              />
+
+              {error && errorType === "server" ? (
+                <>
+                  <p className="text-red-500 font-semibold mt-3">{error}</p>
+                </>
+              ) : (
+                ""
+              )}
             </div>
             <div className="flex justify-between mt-3">
               <button
@@ -205,7 +236,10 @@ const Sidebar = ({ setUser, user }) => {
               >
                 Back
               </button>
-              <button className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer">
+              <button
+                className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer"
+                onClick={handleCreateServer}
+              >
                 Create
               </button>
             </div>
