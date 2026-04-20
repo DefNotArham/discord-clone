@@ -2,7 +2,9 @@ import User from "../../model/user.model.js";
 
 const checkAuthController = async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select("-password");
+    const user = await User.findById(req.userId)
+      .select("-password")
+      .populate("servers");
 
     if (!user)
       return res.status(400).json({

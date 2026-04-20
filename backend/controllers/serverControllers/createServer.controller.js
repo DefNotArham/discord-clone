@@ -25,9 +25,14 @@ const createServerController = async (req, res) => {
       owner: req.userId,
       members: [req.userId],
       inviteCode: generateInviteCode(),
-      image,
     });
     await newServer.save();
+
+    await User.findByIdAndUpdate(req.userId, {
+      $addToSet: {
+        servers: newServer._id,
+      },
+    });
 
     res
       .status(200)

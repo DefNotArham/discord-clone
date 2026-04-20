@@ -15,6 +15,8 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 
+import getServerInitials from "../../backend/utils/getServerInitials.js";
+
 const Sidebar = ({ setUser, user }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [toggleProfileBox, setToggleProfileBox] = useState(false);
@@ -31,6 +33,22 @@ const Sidebar = ({ setUser, user }) => {
   const [joinServerPopup, setJoinServerPopup] = useState(false);
 
   const [serverName, setServerName] = useState("");
+
+  const loadServers = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/auth/checkAuth",
+        {},
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        setUser(response.data.user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     setStatus(user.status);
@@ -111,6 +129,7 @@ const Sidebar = ({ setUser, user }) => {
       );
 
       if (response.data.success) {
+        await loadServers();
         setCreateServerPopup(false);
       }
     } catch (error) {
@@ -137,6 +156,19 @@ const Sidebar = ({ setUser, user }) => {
         </div>
 
         <div className="w-12 h-[1px] bg-[#424644]"></div>
+
+        <div className="flex flex-col gap-4 mt-[1px]">
+          {user.servers.map((s) => (
+            <div className="bg-[#007453] p-2 rounded-2xl cursor-pointer group relative flex items-center justify-center">
+              <div className="text-white w-6 flex items-center justify-center text-center">
+                {getServerInitials(s.name)}
+              </div>
+              <div className="absolute top-1 left-12  z-[999] border border-gray-700 bg-black text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
+                {s.name}
+              </div>
+            </div>
+          ))}
+        </div>
 
         <div className="flex flex-col gap-4 mt-[1px]">
           <div

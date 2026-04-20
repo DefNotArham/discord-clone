@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema(
     verificationCode: String,
     verificationCodeExpiresAt: Date,
     status: { type: String, default: "Online" },
+    servers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "server",
+      },
+    ],
   },
   { timestamps: true },
 );
