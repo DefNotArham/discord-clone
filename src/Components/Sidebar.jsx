@@ -34,6 +34,8 @@ const Sidebar = ({ setUser, user }) => {
 
   const [serverName, setServerName] = useState("");
 
+  const [inviteCode, setInviteCode] = useState("");
+
   const navigate = useNavigate();
 
   const loadServers = async () => {
@@ -141,6 +143,30 @@ const Sidebar = ({ setUser, user }) => {
       console.log(error);
       setError(error?.response?.data.message);
       setErrorType("server");
+
+      setTimeout(() => {
+        setError("");
+        setErrorType("");
+      }, 3000);
+    }
+  };
+
+  const handleJoinServer = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/server/join-server",
+        { inviteCode },
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        await loadServers();
+        setJoinServerPopup(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error?.response?.data.message);
+      setErrorType("serverJoin");
 
       setTimeout(() => {
         setError("");
@@ -302,7 +328,23 @@ const Sidebar = ({ setUser, user }) => {
                 <label className="">
                   Invite code <span className="text-red-500">*</span>
                 </label>
-                <input className="w-full bg-gray-300 h-10 rounded-lg px-2 text-black" />
+                <input
+                  onChange={(e) => setInviteCode(e.target.value)}
+                  value={inviteCode}
+                  className={`w-full bg-gray-300 h-10 rounded-lg px-2 text-black ${
+                    error && errorType === "serverJoin"
+                      ? "border-red-500 border"
+                      : ""
+                  }`}
+                />
+
+                {error && errorType === "serverJoin" ? (
+                  <>
+                    <p className="text-red-500 font-semibold mt-3">{error}</p>
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="flex justify-between mt-3">
                 <button
@@ -313,7 +355,10 @@ const Sidebar = ({ setUser, user }) => {
                 >
                   Back
                 </button>
-                <button className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer">
+                <button
+                  className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer"
+                  onClick={() => handleJoinServer()}
+                >
                   Create
                 </button>
               </div>

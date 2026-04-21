@@ -4,6 +4,12 @@ import Server from "../../model/server.model.js";
 const joinServerController = async (req, res) => {
   const { inviteCode } = req.body;
   try {
+    if (!inviteCode)
+      return res.status(400).json({
+        success: false,
+        message: "Invite code is required",
+      });
+
     const user = await User.findById(req.userId).select("-password");
 
     if (!user)
