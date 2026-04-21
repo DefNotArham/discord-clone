@@ -35,7 +35,12 @@ const ServerSideBar = ({ server, setInviteToServerPopUp }) => {
             Server Settings
           </button>
 
-          <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer">
+          <button
+            className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer"
+            onClick={() => {
+              setInviteToServerPopUp(true);
+            }}
+          >
             Invite frineds
           </button>
 
