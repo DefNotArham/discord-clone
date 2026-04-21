@@ -1,5 +1,6 @@
 import User from "../../model/user.model.js";
 import Server from "../../model/server.model.js";
+import Channel from "../../model/channel.model.js";
 
 import generateInviteCode from "../../utils/generateInviteCode.js";
 
@@ -26,6 +27,16 @@ const createServerController = async (req, res) => {
       members: [req.userId],
       inviteCode: generateInviteCode(),
     });
+    await newServer.save();
+
+    const defaultChannel = new Channel({
+      name: "New chat",
+      server: newServer._id,
+    });
+
+    await defaultChannel.save();
+
+    newServer.channels.push(defaultChannel._id);
     await newServer.save();
 
     await User.findByIdAndUpdate(req.userId, {
