@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Icons
 import { FiPlus } from "react-icons/fi";
@@ -232,114 +233,91 @@ const Sidebar = ({ setUser, user }) => {
         </div>
       </div>
 
-      {serverPopup && (
-        <>
-          <div className="fixed inset-0 bg-black/50 z-[1000] flex justify-center items-center">
-            <div
-              className="bg-[#103f38] p-5 rounded-2xl flex flex-col text-white w-[30%] gap-5 h-46 items-center justify-center"
-              ref={serverPopUpRef}
+      <AnimatePresence>
+        {serverPopup && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black/50 z-[1000] flex justify-center items-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="w-full flex items-end">
-                {" "}
-                <ImCross
+              <motion.div
+                className="bg-[#103f38] p-5 rounded-2xl flex flex-col text-white w-[30%] gap-5 h-46 items-center justify-center"
+                ref={serverPopUpRef}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="w-full flex items-end">
+                  {" "}
+                  <ImCross
+                    onClick={() => {
+                      setServerPopup(false);
+                    }}
+                    className="cursor-pointer"
+                  />
+                </div>
+                <button
+                  className="w-full bg-emerald-600 h-10 rounded-2xl cursor-pointer"
                   onClick={() => {
                     setServerPopup(false);
+                    setCreateServerPopup(true);
                   }}
-                  className="cursor-pointer"
-                />
-              </div>
-              <button
-                className="w-full bg-emerald-600 h-10 rounded-2xl cursor-pointer"
-                onClick={() => {
-                  setServerPopup(false);
-                  setCreateServerPopup(true);
-                }}
-              >
-                Create a server
-              </button>
-              <button
-                className="w-full bg-emerald-600 h-10 rounded-2xl cursor-pointer"
-                onClick={() => {
-                  setServerPopup(false);
-                  setJoinServerPopup(true);
-                }}
-              >
-                Join a server
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+                >
+                  Create a server
+                </button>
+                <button
+                  className="w-full bg-emerald-600 h-10 rounded-2xl cursor-pointer"
+                  onClick={() => {
+                    setServerPopup(false);
+                    setJoinServerPopup(true);
+                  }}
+                >
+                  Join a server
+                </button>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
-      {createServerPopup && (
-        <div className="fixed inset-0 bg-black/50 z-[1000] flex justify-center items-center">
-          <div className="bg-[#103f38] p-5 rounded-2xl flex flex-col text-white w-[30%] justify-center text-center ">
-            <h1 className="text-2xl font-semibold mb-4">
-              Creare your own server
-            </h1>
-
-            <div className="text-start flex flex-col gap-1">
-              <label className="">
-                Server name <span className="text-red-500">*</span>
-              </label>
-              <input
-                className={`w-full bg-gray-300 h-10 rounded-lg px-2 text-black ${
-                  error && errorType === "server" ? "border-red-500" : ""
-                }`}
-                onChange={(e) => {
-                  setServerName(e.target.value);
-                }}
-              />
-
-              {error && errorType === "server" ? (
-                <>
-                  <p className="text-red-500 font-semibold mt-3">{error}</p>
-                </>
-              ) : (
-                ""
-              )}
-            </div>
-            <div className="flex justify-between mt-3">
-              <button
-                className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer"
-                onClick={() => {
-                  setCreateServerPopup(false);
-                }}
-              >
-                Back
-              </button>
-              <button
-                className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer"
-                onClick={handleCreateServer}
-              >
-                Create
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {joinServerPopup ? (
-        <>
-          <div className="fixed inset-0 bg-black/50 z-[1000] flex justify-center items-center">
-            <div className="bg-[#103f38] p-5 rounded-2xl flex flex-col text-white w-[30%] justify-center text-center ">
-              <h1 className="text-2xl font-semibold mb-4">Join a server</h1>
+      <AnimatePresence>
+        {createServerPopup && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 z-[1000] flex justify-center items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.div
+              className="bg-[#103f38] p-5 rounded-2xl flex flex-col text-white w-[30%] justify-center text-center "
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+            >
+              <h1 className="text-2xl font-semibold mb-4">
+                Creare your own server
+              </h1>
 
               <div className="text-start flex flex-col gap-1">
                 <label className="">
-                  Invite code <span className="text-red-500">*</span>
+                  Server name <span className="text-red-500">*</span>
                 </label>
                 <input
-                  onChange={(e) => setInviteCode(e.target.value)}
-                  value={inviteCode}
                   className={`w-full bg-gray-300 h-10 rounded-lg px-2 text-black ${
-                    error && errorType === "serverJoin"
-                      ? "border-red-500 border"
-                      : ""
+                    error && errorType === "server" ? "border-red-500" : ""
                   }`}
+                  onChange={(e) => {
+                    setServerName(e.target.value);
+                  }}
                 />
 
-                {error && errorType === "serverJoin" ? (
+                {error && errorType === "server" ? (
                   <>
                     <p className="text-red-500 font-semibold mt-3">{error}</p>
                   </>
@@ -351,22 +329,85 @@ const Sidebar = ({ setUser, user }) => {
                 <button
                   className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer"
                   onClick={() => {
-                    setJoinServerPopup(false);
+                    setCreateServerPopup(false);
                   }}
                 >
                   Back
                 </button>
                 <button
                   className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer"
-                  onClick={() => handleJoinServer()}
+                  onClick={handleCreateServer}
                 >
-                  Join
+                  Create
                 </button>
               </div>
-            </div>
-          </div>
-        </>
-      ) : null}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {joinServerPopup ? (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black/50 z-[1000] flex justify-center items-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                className="bg-[#103f38] p-5 rounded-2xl flex flex-col text-white w-[30%] justify-center text-center "
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+              >
+                <h1 className="text-2xl font-semibold mb-4">Join a server</h1>
+
+                <div className="text-start flex flex-col gap-1">
+                  <label className="">
+                    Invite code <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    onChange={(e) => setInviteCode(e.target.value)}
+                    value={inviteCode}
+                    className={`w-full bg-gray-300 h-10 rounded-lg px-2 text-black ${
+                      error && errorType === "serverJoin"
+                        ? "border-red-500 border"
+                        : ""
+                    }`}
+                  />
+
+                  {error && errorType === "serverJoin" ? (
+                    <>
+                      <p className="text-red-500 font-semibold mt-3">{error}</p>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="flex justify-between mt-3">
+                  <button
+                    className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer"
+                    onClick={() => {
+                      setJoinServerPopup(false);
+                    }}
+                  >
+                    Back
+                  </button>
+                  <button
+                    className="bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer"
+                    onClick={() => handleJoinServer()}
+                  >
+                    Join
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        ) : null}
+      </AnimatePresence>
 
       <div
         className="bg-[#103f38] w-84 h-[60px] flex items-center absolute bottom-3 z-[999] left-2 rounded-2xl px-1 justify-between"
@@ -453,79 +494,91 @@ const Sidebar = ({ setUser, user }) => {
         </div>
       </div>
 
-      {toggleProfileBox ? (
-        <>
-          <div
-            className="absolute bottom-20 left-4 z-[999] w-72 rounded-2xl bg-[#103f38] border border-[#2d2d2d] shadow-xl overflow-hidden"
-            ref={profileRef}
-          >
-            <div className="h-16 bg-[#007453]" />
+      <AnimatePresence>
+        {toggleProfileBox ? (
+          <>
+            <motion.div
+              className="absolute bottom-20 left-4 z-[999] w-72 rounded-2xl bg-[#103f38] border border-[#2d2d2d] shadow-xl overflow-hidden"
+              ref={profileRef}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                className="h-16 bg-[#007453]"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+              />
 
-            <div className="px-4 pb-4 -mt-8 flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-2xl border-4 border-[#103f38] overflow-hidden bg-black">
-                <img
-                  className="w-full h-full object-cover"
-                  src="/white_logo.png"
-                  alt="avatar"
-                />
+              <div className="px-4 pb-4 -mt-8 flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-2xl border-4 border-[#103f38] overflow-hidden bg-black">
+                  <img
+                    className="w-full h-full object-cover"
+                    src="/white_logo.png"
+                    alt="avatar"
+                  />
+                </div>
+
+                <h1 className="text-white text-lg font-semibold mt-2">
+                  {user.displayName}
+                </h1>
+
+                <p className="text-gray-400 text-sm cursor-pointer">
+                  @{user.username}
+                </p>
               </div>
 
-              <h1 className="text-white text-lg font-semibold mt-2">
-                {user.displayName}
-              </h1>
-
-              <p className="text-gray-400 text-sm cursor-pointer">
-                @{user.username}
-              </p>
-            </div>
-
-            <div className="px-3 pb-4 flex flex-col gap-2">
-              <Link
-                to="/settings"
-                className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
-              >
-                <MdEdit />
-                Edit Profile
-              </Link>
-
-              <div className="relative">
-                <button
-                  className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex items-center gap-2 justify-center px-5"
-                  onClick={() => setShowStatusMenu(!showStatusMenu)}
+              <motion.div className="px-3 pb-4 flex flex-col gap-2">
+                <Link
+                  to="/settings"
+                  className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
                 >
-                  {status === "Online" ? (
-                    <FaCircle color="green" size={10} className=" " />
-                  ) : status === "Idle" ? (
-                    <FaMoon color="yellow" size={10} className=" " />
-                  ) : status === "Invisible" ? (
-                    <FaCircle color="gray" size={10} className=" " />
-                  ) : status === "Offline" ? (
-                    <FaCircle color="gray" size={10} className=" " />
-                  ) : status === "Do Not Disturb" ? (
-                    <MdDoNotDisturbOn color="red" size={10} className=" " />
-                  ) : null}{" "}
-                  {status} <FaAngleDoubleRight />
+                  <MdEdit />
+                  Edit Profile
+                </Link>
+
+                <div className="relative">
+                  <button
+                    className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex items-center gap-2 justify-center px-5"
+                    onClick={() => setShowStatusMenu(!showStatusMenu)}
+                  >
+                    {status === "Online" ? (
+                      <FaCircle color="green" size={10} className=" " />
+                    ) : status === "Idle" ? (
+                      <FaMoon color="yellow" size={10} className=" " />
+                    ) : status === "Invisible" ? (
+                      <FaCircle color="gray" size={10} className=" " />
+                    ) : status === "Offline" ? (
+                      <FaCircle color="gray" size={10} className=" " />
+                    ) : status === "Do Not Disturb" ? (
+                      <MdDoNotDisturbOn color="red" size={10} className=" " />
+                    ) : null}{" "}
+                    {status} <FaAngleDoubleRight />
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(user.username);
+                    setCopied(true);
+
+                    setTimeout(() => {
+                      setCopied(false);
+                    }, 3000);
+                  }}
+                  className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
+                >
+                  <FaRegUserCircle />
+                  {copied ? "Copied" : "Copy Username"}
                 </button>
-              </div>
-
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(user.username);
-                  setCopied(true);
-
-                  setTimeout(() => {
-                    setCopied(false);
-                  }, 3000);
-                }}
-                className="w-full bg-[#1a4f44] hover:bg-[#007453] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
-              >
-                <FaRegUserCircle />
-                {copied ? "Copied" : "Copy Username"}
-              </button>
-            </div>
-          </div>
-        </>
-      ) : null}
+              </motion.div>
+            </motion.div>
+          </>
+        ) : null}
+      </AnimatePresence>
 
       {showStatusMenu ? (
         <div
