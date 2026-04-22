@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { MdDoNotDisturbOn } from "react-icons/md";
 import { FaCircle } from "react-icons/fa6";
@@ -414,122 +415,148 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
           </div>
         </div>
 
-        {changePass ? (
-          <>
-            <div
-              className="fixed inset-0 bg-black/50"
-              onClick={() => setChangePass(false)}
-            ></div>
-            <div className="fixed bg-emerald-500  flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  ">
-              <div className="w-full flex flex-col gap-3">
-                <h2 className="text-xl font-semibold text-white-800">
-                  Change Password
-                </h2>
-                {error && errorType === "password" ? (
-                  <p className="font-semibold text-red-500">{error}</p>
-                ) : (
-                  ""
-                )}
-                <form
-                  className="w-full flex flex-col gap-3"
-                  onKeyDown={(e) => handleChangePassKey(e)}
-                >
+        <AnimatePresence>
+          {changePass ? (
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/50"
+                onClick={() => setChangePass(false)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              ></motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="fixed bg-emerald-500  flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  "
+              >
+                <div className="w-full flex flex-col gap-3">
+                  <h2 className="text-xl font-semibold text-white-800">
+                    Change Password
+                  </h2>
+                  {error && errorType === "password" ? (
+                    <p className="font-semibold text-red-500">{error}</p>
+                  ) : (
+                    ""
+                  )}
+                  <form
+                    className="w-full flex flex-col gap-3"
+                    onKeyDown={(e) => handleChangePassKey(e)}
+                  >
+                    <input
+                      type="password"
+                      placeholder="Current password"
+                      className={`px-4 py-2 border rounded-lg outline-none w-full ${
+                        error && errorType ? "border-red-500" : ""
+                      } `}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      value={currentPassword}
+                    />
+                    <input
+                      type="password"
+                      placeholder="New password"
+                      className={`px-4 py-2 border rounded-lg outline-none w-full ${
+                        error && errorType ? "border-red-500" : ""
+                      } `}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      value={newPassword}
+                    />
+                    <input
+                      type="password"
+                      placeholder="Confirm password"
+                      className={`px-4 py-2 border rounded-lg outline-none w-full ${
+                        error && errorType === "password"
+                          ? "border-red-500"
+                          : ""
+                      } `}
+                      onChange={(e) => setNewConfirmPassword(e.target.value)}
+                      value={confirmNewPassword}
+                    />
+                  </form>
+                </div>
+
+                <div className="flex justify-between gap-5 mt-5">
+                  <button
+                    onClick={() => setChangePass(false)}
+                    className="bg-[#116852] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handleChangePassword()}
+                    className="bg-[#116852] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
+                  >
+                    Done
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          ) : null}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {deleteAccount ? (
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/50"
+                onClick={() => setDeleteAccount(false)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              ></motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="fixed bg-[#480101] flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  "
+              >
+                <div className="w-full flex flex-col gap-3">
+                  <h2 className="text-xl font-semibold text-white-800">
+                    Delete Account
+                  </h2>
+                  {error && errorType === "deleteaccount" ? (
+                    <p className="font-semibold text-red-500">{error}</p>
+                  ) : (
+                    ""
+                  )}
+
                   <input
                     type="password"
-                    placeholder="Current password"
+                    placeholder="Password"
+                    onKeyDown={(e) => handleDeleteAccKey(e)}
                     className={`px-4 py-2 border rounded-lg outline-none w-full ${
-                      error && errorType ? "border-red-500" : ""
+                      error && errorType === "deleteaccount"
+                        ? "border-red-500"
+                        : ""
                     } `}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    value={currentPassword}
+                    onChange={(e) => setDeleteAccPassword(e.target.value)}
+                    value={deleteAccPassword}
                   />
-                  <input
-                    type="password"
-                    placeholder="New password"
-                    className={`px-4 py-2 border rounded-lg outline-none w-full ${
-                      error && errorType ? "border-red-500" : ""
-                    } `}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    value={newPassword}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Confirm password"
-                    className={`px-4 py-2 border rounded-lg outline-none w-full ${
-                      error && errorType === "password" ? "border-red-500" : ""
-                    } `}
-                    onChange={(e) => setNewConfirmPassword(e.target.value)}
-                    value={confirmNewPassword}
-                  />
-                </form>
-              </div>
+                </div>
 
-              <div className="flex justify-between gap-5 mt-5">
-                <button
-                  onClick={() => setChangePass(false)}
-                  className="bg-[#116852] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => handleChangePassword()}
-                  className="bg-[#116852] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
-                >
-                  Done
-                </button>
-              </div>
-            </div>
-          </>
-        ) : null}
-
-        {deleteAccount ? (
-          <>
-            <div
-              className="fixed inset-0 bg-black/50"
-              onClick={() => setDeleteAccount(false)}
-            ></div>
-            <div className="fixed bg-[#480101] flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  ">
-              <div className="w-full flex flex-col gap-3">
-                <h2 className="text-xl font-semibold text-white-800">
-                  Delete Account
-                </h2>
-                {error && errorType === "deleteaccount" ? (
-                  <p className="font-semibold text-red-500">{error}</p>
-                ) : (
-                  ""
-                )}
-
-                <input
-                  type="password"
-                  placeholder="Password"
-                  onKeyDown={(e) => handleDeleteAccKey(e)}
-                  className={`px-4 py-2 border rounded-lg outline-none w-full ${
-                    error && errorType === "deleteaccount"
-                      ? "border-red-500"
-                      : ""
-                  } `}
-                  onChange={(e) => setDeleteAccPassword(e.target.value)}
-                  value={deleteAccPassword}
-                />
-              </div>
-
-              <div className="flex justify-between gap-5 mt-5">
-                <button
-                  onClick={() => setDeleteAccount(false)}
-                  className="bg-[#6e6e6e] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => handleDeleteAccount()}
-                  className="bg-[#a50303] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </>
-        ) : null}
+                <div className="flex justify-between gap-5 mt-5">
+                  <button
+                    onClick={() => setDeleteAccount(false)}
+                    className="bg-[#6e6e6e] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handleDeleteAccount()}
+                    className="bg-[#a50303] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          ) : null}
+        </AnimatePresence>
       </div>
     </div>
   );
