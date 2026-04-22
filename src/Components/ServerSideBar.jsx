@@ -1,13 +1,38 @@
 import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { RiUserAddFill } from "react-icons/ri";
 import { SiHashicorp } from "react-icons/si";
 import { FaChevronDown } from "react-icons/fa";
 
-const ServerSideBar = ({ server, setInviteToServerPopUp }) => {
+const ServerSideBar = ({ server, setInviteToServerPopUp, setUser }) => {
   const [serverSetting, setServerSetting] = useState(false);
 
   const serverSettingsRef = useRef(null);
+
+  const { serverId } = useParams();
+
+  const [error, setError] = useState("");
+  const [errorType, setErrorType] = useState("");
+
+  const navigate = useNavigate();
+
+  const loadServers = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/auth/checkAuth",
+        {},
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        setUser(response.data.user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     let handler = (e) => {
@@ -21,10 +46,32 @@ const ServerSideBar = ({ server, setInviteToServerPopUp }) => {
 
     document.addEventListener("mousedown", handler);
 
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const handleLeaveServer = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/server/leave-server/${serverId}`,
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        navigate("/");
+        loadServers();
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error?.response?.data.message);
+      setErrorType("leaveServer");
+      console.log(error);
+
+      setTimeout(() => {
+        setError("");
+        setErrorType("");
+      }, 3000);
+    }
+  };
 
   return (
     <div className="bg-side-bar w-[280px] h-screen ml-[70px] fixed left-0 top-0 flex flex-col z-40">
@@ -66,7 +113,10 @@ const ServerSideBar = ({ server, setInviteToServerPopUp }) => {
             Invite frineds
           </button>
 
-          <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer">
+          <button
+            onClick={handleLeaveServer}
+            className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer"
+          >
             Leave Server
           </button>
         </div>
@@ -75,7 +125,7 @@ const ServerSideBar = ({ server, setInviteToServerPopUp }) => {
       <div className="flex flex-col gap-3 mt-10 px-2">
         {server?.channels?.map((c) => (
           <div
-            key={server?._id}
+            key={c?._id}
             className="text-white flex items-center gap-2 bg-[#00ae80] justify-center px-10 rounded-lg h-9 text-sm cursor-pointer"
           >
             <SiHashicorp />

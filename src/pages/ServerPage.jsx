@@ -50,6 +50,7 @@ const ServerPage = ({ setUser, user }) => {
       <ServerSideBar
         server={server}
         setInviteToServerPopUp={setInviteToServerPopUp}
+        setUser={setUser}
       />
       {inviteToServerPopUp && (
         <div className="fixed inset-0 bg-black/50 z-[1000] flex items-center justify-center">

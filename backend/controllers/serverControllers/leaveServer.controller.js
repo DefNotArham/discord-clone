@@ -22,6 +22,13 @@ const leaveServerController = async (req, res) => {
         message: "Server not found",
       });
 
+    if (server.owner.toString() === req.userId.toString())
+      return res.status(400).json({
+        success: false,
+        message:
+          "You must transfer ownership or delete the server before leaving",
+      });
+
     server.members = server.members.filter((m) => m.toString() !== req.userId);
     await server.save();
 
