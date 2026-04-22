@@ -16,13 +16,13 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 
-import getServerInitials from "../../backend/utils/getServerInitials.js";
+import getServerInitials from "../utils/getServerInitials.js";
 
 const Sidebar = ({ setUser, user }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [toggleProfileBox, setToggleProfileBox] = useState(false);
   const [showStatusMenu, setShowStatusMenu] = useState(false);
-  const [status, setStatus] = useState(user.status);
+  const [status, setStatus] = useState(user?.status);
 
   const [copied, setCopied] = useState(false);
 
@@ -56,7 +56,7 @@ const Sidebar = ({ setUser, user }) => {
   };
 
   useEffect(() => {
-    setStatus(user.status);
+    setStatus(user?.status);
   }, [user]);
 
   const handleChangeStatus = async (newStatus) => {
@@ -91,7 +91,7 @@ const Sidebar = ({ setUser, user }) => {
     return () => {
       document.removeEventListener("mousedown", handler);
     };
-  });
+  }, []);
 
   const statusRef = useRef(null);
 
@@ -107,7 +107,7 @@ const Sidebar = ({ setUser, user }) => {
     return () => {
       document.removeEventListener("mousedown", handler);
     };
-  });
+  }, []);
 
   const serverPopUpRef = useRef(null);
 
@@ -126,13 +126,13 @@ const Sidebar = ({ setUser, user }) => {
     return () => {
       document.removeEventListener("mousedown", handler);
     };
-  });
+  }, []);
 
   const handleCreateServer = async () => {
     try {
       const response = await axios.post(
         "http://localhost:8000/server/create-server",
-        { name: serverName },
+        { name: serverName.trim() },
         { withCredentials: true },
       );
 
@@ -156,7 +156,7 @@ const Sidebar = ({ setUser, user }) => {
     try {
       const response = await axios.post(
         "http://localhost:8000/server/join-server",
-        { inviteCode },
+        { inviteCode: inviteCode.trim() },
         { withCredentials: true },
       );
 
@@ -193,7 +193,7 @@ const Sidebar = ({ setUser, user }) => {
         <div className="w-12 h-[1px] bg-[#232424]"></div>
 
         <div className="flex flex-col gap-4 mt-[1px]">
-          {user.servers.map((s) => (
+          {user?.servers?.map((s) => (
             <div
               className="bg-[#007453] p-2 rounded-2xl cursor-pointer group relative flex items-center justify-center"
               key={s._id}
@@ -523,11 +523,11 @@ const Sidebar = ({ setUser, user }) => {
                 </div>
 
                 <h1 className="text-white text-lg font-semibold mt-2">
-                  {user.displayName}
+                  {user?.displayName}
                 </h1>
 
                 <p className="text-gray-400 text-sm cursor-pointer">
-                  @{user.username}
+                  @{user?.username}
                 </p>
               </div>
 
