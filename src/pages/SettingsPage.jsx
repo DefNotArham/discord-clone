@@ -519,7 +519,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
               >
                 <div className="w-full flex flex-col gap-3">
                   <h2 className="text-xl font-semibold text-white-800">
-                    Log out
+                    Are you sure you want to log out?
                   </h2>
                   {error && errorType === "logout" ? (
                     <p className="font-semibold text-red-500">{error}</p>
