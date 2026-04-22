@@ -25,11 +25,11 @@ const RegisterPage = () => {
       const response = await axios.post(
         "http://localhost:8000/auth/register",
         {
-          email,
-          username,
+          email: email.trim(),
+          username: username.trim(),
           password,
           DOB,
-          displayName: displayName || username,
+          displayName: displayName.trim() || username.trim(),
         },
         { withCredentials: true },
       );

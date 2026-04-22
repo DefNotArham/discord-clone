@@ -18,15 +18,6 @@ const ResetPasswordPage = () => {
 
   const handleResetPassword = async () => {
     setIsLoading(true);
-    if (newPassword !== confirmNewPassword) {
-      setError("Password does not match");
-      setIsLoading(false);
-
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-      return;
-    }
 
     if (!newPassword || !confirmNewPassword) {
       setError("All fields are required");
@@ -38,12 +29,20 @@ const ResetPasswordPage = () => {
       return;
     }
 
-    try {
-      setIsLoading(true);
+    if (newPassword !== confirmNewPassword) {
+      setError("Password does not match");
+      setIsLoading(false);
 
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
+    }
+
+    try {
       const response = await axios.post(
         `http://localhost:8000/auth/reset-password/${token}`,
-        { password: newPassword },
+        { password: newPassword.trim() },
         { withCredentials: true },
       );
 

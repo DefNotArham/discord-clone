@@ -17,7 +17,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
   const [editDisplayName, setEditDisplayName] = useState(false);
   const [newDisplayName, setNewDisplayName] = useState(user.displayName);
 
-  const [editUsername, setEditUsername] = useState("");
+  const [editUsername, setEditUsername] = useState(false);
   const [newUsername, setNewUsername] = useState("");
 
   const [error, setError] = useState("");
@@ -88,10 +88,18 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
       return;
     }
 
-    if (newUsername === "") {
-      setEditUsername(false);
+    if (!newUsername.trim()) {
+      setError("Username cannot be empty");
+      setErrorType("username");
+
+      setTimeout(() => {
+        setError("");
+        setErrorType("");
+      }, 3000);
       return;
     }
+
+    setIsLoading2(true);
 
     if (editUsername) {
       setIsLoading2(true);
@@ -135,14 +143,14 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
 
   const handleChangePassword = async () => {
     setIsLoading3(true);
-    setChangePass(true);
+
     try {
       const response = await axios.patch(
         "http://localhost:8000/user/change-password",
         {
-          currentPassword,
-          newPassword,
-          confirmNewPassword,
+          currentPassword: currentPassword.trim(),
+          newPassword: newPassword.trim(),
+          confirmNewPassword: confirmNewPassword.trim(),
         },
         { withCredentials: true },
       );

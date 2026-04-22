@@ -68,7 +68,7 @@ const ServerPage = ({ setUser, user }) => {
     return () => {
       document.removeEventListener("mousedown", handler);
     };
-  });
+  }, []);
 
   const confirmLeaveRef = useRef(null);
 
@@ -101,10 +101,8 @@ const ServerPage = ({ setUser, user }) => {
         loadServers();
       }
     } catch (error) {
-      console.log(error?.response?.data.message);
       setError(error?.response?.data.message);
       setErrorType("leaveServer");
-      console.log(error);
 
       setTimeout(() => {
         setError("");
@@ -164,7 +162,6 @@ const ServerPage = ({ setUser, user }) => {
           <>
             <motion.div
               className="inset-0 bg-black/50 fixed z-[1000] flex justify-center items-center"
-              ref={confirmLeaveRef}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -172,6 +169,7 @@ const ServerPage = ({ setUser, user }) => {
             >
               <motion.div
                 className=" bg-[#480101] flex flex-col gap-3 p-10 rounded-2xl w-[33%] "
+                ref={confirmLeaveRef}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}

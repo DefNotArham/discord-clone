@@ -16,7 +16,7 @@ const VerificationPage = ({ user, setUser }) => {
     try {
       const response = await axios.post(
         "http://localhost:8000/auth/verifyEmail",
-        { code },
+        { code: code.trim() },
         { withCredentials: true },
       );
 

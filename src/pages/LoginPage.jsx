@@ -26,7 +26,7 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
       const response = await axios.post(
         "http://localhost:8000/auth/login",
         {
-          email,
+          email: email.trim(),
           password,
         },
         { withCredentials: true },
@@ -56,7 +56,7 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
     try {
       const response = await axios.post(
         "http://localhost:8000/auth/forgot-password",
-        { email },
+        { email: email.trim() },
         { withCredentials: true },
       );
 
