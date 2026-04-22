@@ -37,6 +37,8 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
   const [deleteAccPassword, setDeleteAccPassword] = useState("");
   const [deleteAccount, setDeleteAccount] = useState(false);
 
+  const [logout, setLogout] = useState(false);
+
   const handleEditDisplay = async () => {
     if (editDisplayName) {
       if (newDisplayName.length < 3 || newDisplayName.length > 20) {
@@ -395,7 +397,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
 
             <button
               className="bg-[#0f3f36] hover:bg-[#124f45] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
-              onClick={() => handleLogout()}
+              onClick={() => setLogout(true)}
             >
               <span className="font-medium">Log out</span>
               <span className="text-gray-400">
@@ -490,6 +492,54 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                     className="bg-[#116852] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
                   >
                     Done
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          ) : null}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {logout ? (
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/50"
+                onClick={() => setLogout(false)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              ></motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="fixed bg-[#480101] flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  "
+              >
+                <div className="w-full flex flex-col gap-3">
+                  <h2 className="text-xl font-semibold text-white-800">
+                    Log out
+                  </h2>
+                  {error && errorType === "logout" ? (
+                    <p className="font-semibold text-red-500">{error}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+
+                <div className="flex justify-between gap-5 mt-5">
+                  <button
+                    onClick={() => setLogout(false)}
+                    className="bg-[#6e6e6e] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handleLogout()}
+                    className="bg-[#a50303] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer"
+                  >
+                    logout
                   </button>
                 </div>
               </motion.div>
