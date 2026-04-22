@@ -5,6 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { RiUserAddFill } from "react-icons/ri";
 import { SiHashicorp } from "react-icons/si";
 import { FaChevronDown } from "react-icons/fa";
+import { IoSettingsSharp } from "react-icons/io5";
+import { IoAddCircle } from "react-icons/io5";
+import { IoIosExit } from "react-icons/io";
+import { IoCreate } from "react-icons/io5";
 
 const ServerSideBar = ({
   server,
@@ -80,27 +84,51 @@ const ServerSideBar = ({
           ref={serverSettingsRef}
         >
           {server.owner.toString() === user._id ? (
-            <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer">
-              Sever settings
-            </button>
+            <>
+              <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer flex items-center justify-between gap-3 group">
+                Sever settings
+                <IoSettingsSharp
+                  size={15}
+                  color="white"
+                  className="mr-3 cursor-pointer group-hover:rotate-180 transition-transform duration-500 ease-in-out"
+                />
+              </button>
+
+              <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer flex items-center justify-between gap-3 group">
+                Create channel
+                <IoCreate
+                  size={15}
+                  color="white"
+                  className="mr-3 cursor-pointer  group-hover:-translate-y-1 group-hover:scale-110 transition-transform duration-200 ease-in-out"
+                />
+              </button>
+            </>
           ) : null}
 
           <button
-            className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer"
+            className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer flex items-center justify-between gap-3 group"
             onClick={() => {
               setInviteToServerPopUp(true);
             }}
           >
             Invite frineds
+            <RiUserAddFill
+              className="mr-3 cursor-pointer group-hover:-translate-y-1 transition-transform duration-500 ease-in-out"
+              size={15}
+            />
           </button>
 
           <button
             onClick={() => {
               setLeaveConfirmPopup(true);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer"
+            className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer flex items-center justify-between gap-3 group"
           >
             Leave Server
+            <IoIosExit
+              className="mr-3 cursor-pointer group-hover:-translate-x-1 transition-transform duration-500 ease-in-out"
+              size={15}
+            />
           </button>
         </div>
       )}
