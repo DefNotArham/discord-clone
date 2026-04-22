@@ -6,15 +6,18 @@ import { RiUserAddFill } from "react-icons/ri";
 import { SiHashicorp } from "react-icons/si";
 import { FaChevronDown } from "react-icons/fa";
 
-const ServerSideBar = ({ server, setInviteToServerPopUp, setUser }) => {
+const ServerSideBar = ({
+  server,
+  setInviteToServerPopUp,
+  setUser,
+  setLeaveConfirmPopup,
+  user,
+}) => {
   const [serverSetting, setServerSetting] = useState(false);
 
   const serverSettingsRef = useRef(null);
 
   const { serverId } = useParams();
-
-  const [error, setError] = useState("");
-  const [errorType, setErrorType] = useState("");
 
   const navigate = useNavigate();
 
@@ -49,30 +52,6 @@ const ServerSideBar = ({ server, setInviteToServerPopUp, setUser }) => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleLeaveServer = async () => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8000/server/leave-server/${serverId}`,
-        { withCredentials: true },
-      );
-
-      if (response.data.success) {
-        navigate("/");
-        loadServers();
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error?.response?.data.message);
-      setErrorType("leaveServer");
-      console.log(error);
-
-      setTimeout(() => {
-        setError("");
-        setErrorType("");
-      }, 3000);
-    }
-  };
-
   return (
     <div className="bg-side-bar w-[280px] h-screen ml-[70px] fixed left-0 top-0 flex flex-col z-40">
       <div className="h-12 flex items-center px-1 text-white font-semibold border-b border-[#424644]  justify-between pr-5 text-sm">
@@ -100,9 +79,11 @@ const ServerSideBar = ({ server, setInviteToServerPopUp, setUser }) => {
           className="bg-[#103f38] w-[260px] fixed top-12 rounded-xl shadow-lg border border-[#2d2d2d] z-[1000] p-2 text-white text-sm"
           ref={serverSettingsRef}
         >
-          <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer">
-            Server Settings
-          </button>
+          {server.owner.toString() === user._id ? (
+            <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer">
+              Sever settings
+            </button>
+          ) : null}
 
           <button
             className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer"
@@ -114,7 +95,9 @@ const ServerSideBar = ({ server, setInviteToServerPopUp, setUser }) => {
           </button>
 
           <button
-            onClick={handleLeaveServer}
+            onClick={() => {
+              setLeaveConfirmPopup(true);
+            }}
             className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer"
           >
             Leave Server

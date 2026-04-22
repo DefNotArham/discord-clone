@@ -10,6 +10,6 @@ const router = express.Router();
 router.post("/create-server", verifyToken, createServerController);
 router.get("/load-server/:serverId", verifyToken, loadServerController);
 router.post("/join-server", verifyToken, joinServerController);
-router.delete("/leave-server/:serverId", verifyToken, leaveServerController);
+router.post("/leave-server/:serverId", verifyToken, leaveServerController);
 
 export default router;
