@@ -257,20 +257,20 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#313338] flex justify-center items-start text-white px-4">
-      <div className="w-full max-w-3xl mt-12 bg-[#2b2d31] rounded-3xl shadow-xl overflow-hidden relative">
+    <div className="min-h-screen bg-discord-bg flex justify-center items-start text-white px-4">
+      <div className="w-full max-w-3xl mt-12 bg-discord-sidebar rounded-3xl shadow-xl overflow-hidden relative">
         <Link
           to="/"
-          className="absolute top-4 right-4 p-2 rounded-xl hover:bg-[#383a40] transition-all ease-in-out hover:-translate-y-1"
+          className="absolute top-4 right-4 p-2 rounded-xl hover:bg-discord-input transition-all ease-in-out hover:-translate-y-1"
         >
-          <IoExit color="#b5bac1" size={28} />
+          <IoExit color="discord-muted" size={28} />
         </Link>
 
-        <div className="h-24 bg-[#5865f2]" />
+        <div className="h-24 bg-discord-blurple" />
 
         <div className="px-6 pb-6 -mt-10">
           <div className="flex items-center gap-4">
-            <div className="w-20 h-20 relative rounded-2xl overflow-hidden border-4 border-[#2b2d31] bg-black">
+            <div className="w-20 h-20 relative rounded-2xl overflow-hidden border-4 border-discord-sidebar bg-black">
               <img
                 src="/white_logo.png"
                 alt="avatar"
@@ -279,22 +279,22 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
 
               {user.status === "Online" ? (
                 <FaCircle
-                  className="absolute bottom-1 right-1 text-[#57f287]"
+                  className="absolute bottom-1 right-1 text-discord-online"
                   size={14}
                 />
               ) : user.status === "Do Not Disturb" ? (
                 <MdDoNotDisturbOn
-                  className="absolute bottom-1 right-1 text-[#ed4245]"
+                  className="absolute bottom-1 right-1 text-discord-dnd"
                   size={16}
                 />
               ) : user.status === "Idle" ? (
                 <FaMoon
-                  className="absolute bottom-1 right-1 text-[#fee75c]"
+                  className="absolute bottom-1 right-1 text-discord-warning"
                   size={14}
                 />
               ) : (
                 <FaCircle
-                  className="absolute bottom-1 right-1 text-[#80848e]"
+                  className="absolute bottom-1 right-1 text-discord-offline"
                   size={14}
                 />
               )}
@@ -307,16 +307,16 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
         </div>
 
         <div className="px-6 pb-8 space-y-4">
-          <div className="bg-[#383a40] p-4 rounded-2xl flex justify-between items-center">
+          <div className="bg-discord-input p-4 rounded-2xl flex justify-between items-center">
             <div>
-              <p className="text-[#b5bac1]">Display Name</p>
+              <p className="text-discord-muted">Display Name</p>
               {editDisplayName ? (
                 <>
                   <input
-                    className={`border p-2 text-sm rounded-2xl mt-2 bg-[#1e1f22] text-white placeholder-[#72767d] ${
+                    className={`border p-2 text-sm rounded-2xl mt-2 bg-discord-deep text-white placeholder-discord-placeholder ${
                       error && errorType === "displayName"
-                        ? "border-[#ed4245]"
-                        : "border-[#1e1f22]"
+                        ? "border-discord-dnd"
+                        : "border-discord-deep"
                     }`}
                     placeholder="Enter new display name"
                     onChange={(e) => setNewDisplayName(e.target.value)}
@@ -333,7 +333,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      className="mb-3 px-3 py-2 rounded-lg bg-[#ed4245]/10 border border-[#ed4245]/30 text-[#ed4245] text-sm flex items-center gap-2 mt-2"
+                      className="mb-3 px-3 py-2 rounded-lg bg-discord-dnd/10 border border-discord-dnd/30 text-discord-dnd text-sm flex items-center gap-2 mt-2"
                     >
                       <span className="font-bold">!</span>
                       <span>{error}</span>
@@ -347,22 +347,22 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
             <button
               onClick={() => handleEditDisplay()}
               disabled={isLoading1}
-              className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-[#5865f2] hover:bg-[#4752c4] px-3 py-1 rounded-lg"
+              className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-discord-blurple hover:bg-discord-blurple-hover px-3 py-1 rounded-lg"
             >
               {isLoading1 ? "Saving..." : editDisplayName ? "Save" : "Edit"}
             </button>
           </div>
 
-          <div className="bg-[#383a40] p-4 rounded-2xl flex justify-between items-center">
+          <div className="bg-discord-input p-4 rounded-2xl flex justify-between items-center">
             <div>
-              <p className="text-[#b5bac1]">Username</p>
+              <p className="text-discord-muted">Username</p>
               {editUsername ? (
                 <>
                   <input
-                    className={`border p-2 text-sm rounded-2xl mt-2 bg-[#1e1f22] text-white placeholder-[#72767d] ${
+                    className={`border p-2 text-sm rounded-2xl mt-2 bg-discord-deep text-white placeholder-discord-placeholder ${
                       error && errorType === "username"
-                        ? "border-[#ed4245]"
-                        : "border-[#1e1f22]"
+                        ? "border-discord-dnd"
+                        : "border-discord-deep"
                     }`}
                     placeholder="Enter new username"
                     onChange={(e) => setNewUsername(e.target.value)}
@@ -379,7 +379,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      className="mb-3 px-3 py-2 rounded-lg bg-[#ed4245]/10 border border-[#ed4245]/30 text-[#ed4245] text-sm flex items-center gap-2 mt-2"
+                      className="mb-3 px-3 py-2 rounded-lg bg-discord-dnd/10 border border-discord-dnd/30 text-discord-dnd text-sm flex items-center gap-2 mt-2"
                     >
                       <span className="font-bold">!</span>
                       <span>{error}</span>
@@ -393,37 +393,37 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
             <button
               onClick={handleChangeUsername}
               disabled={isLoading2}
-              className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-[#5865f2] hover:bg-[#4752c4] px-3 py-1 rounded-lg"
+              className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-discord-blurple hover:bg-discord-blurple-hover px-3 py-1 rounded-lg"
             >
               {isLoading2 ? "Saving..." : editUsername ? "Save" : "Edit"}
             </button>
           </div>
 
-          <div className="bg-[#383a40] p-4 rounded-2xl flex justify-between items-center">
-            <p className="text-[#b5bac1]">Email</p>
+          <div className="bg-discord-input p-4 rounded-2xl flex justify-between items-center">
+            <p className="text-discord-muted">Email</p>
             <span className="font-semibold">{user.email}</span>
           </div>
 
           <div className="space-y-3">
             <button
-              className="bg-[#383a40] hover:bg-[#404249] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
+              className="bg-discord-input hover:bg-[#404249] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
               onClick={() => setChangePass(true)}
               disabled={isLoading3}
             >
               <span className="font-medium">
                 {isLoading3 ? "Loading..." : "Change Password"}
               </span>
-              <span className="text-[#b5bac1]">
+              <span className="text-discord-muted">
                 <FaEdit />
               </span>
             </button>
 
             <button
-              className="bg-[#383a40] hover:bg-[#404249] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
+              className="bg-discord-input hover:bg-[#404249] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
               onClick={() => setLogout(true)}
             >
               <span className="font-medium">Log out</span>
-              <span className="text-[#b5bac1]">
+              <span className="text-discord-muted">
                 <MdArrowOutward />
               </span>
             </button>
@@ -432,10 +432,12 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
               onClick={() => {
                 setDeleteAccount(true);
               }}
-              className="bg-[#ed4245]/10 hover:bg-[#ed4245]/20 transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
+              className="bg-discord-dnd/10 hover:bg-discord-dnd/20 transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
             >
-              <span className="font-medium text-[#ed4245]">Delete Account</span>
-              <span className="text-[#ed4245]">⚠</span>
+              <span className="font-medium text-discord-dnd">
+                Delete Account
+              </span>
+              <span className="text-discord-dnd">⚠</span>
             </button>
           </div>
         </div>
@@ -457,7 +459,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.2 }}
-                className="fixed bg-[#2b2d31] flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="fixed bg-discord-sidebar flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
               >
                 <div className="w-full flex flex-col gap-3">
                   <h2 className="text-xl font-semibold text-white">
@@ -471,10 +473,10 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                     <input
                       type="password"
                       placeholder="Current password"
-                      className={`px-4 py-2 border rounded-lg outline-none w-full bg-[#383a40] text-white placeholder-[#72767d] ${
+                      className={`px-4 py-2 border rounded-lg outline-none w-full bg-discord-input text-white placeholder-discord-placeholder ${
                         error && errorType
-                          ? "border-[#ed4245]"
-                          : "border-[#1e1f22]"
+                          ? "border-discord-dnd"
+                          : "border-discord-deep"
                       }`}
                       onChange={(e) => setCurrentPassword(e.target.value)}
                       value={currentPassword}
@@ -482,10 +484,10 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                     <input
                       type="password"
                       placeholder="New password"
-                      className={`px-4 py-2 border rounded-lg outline-none w-full bg-[#383a40] text-white placeholder-[#72767d] ${
+                      className={`px-4 py-2 border rounded-lg outline-none w-full bg-discord-input text-white placeholder-discord-placeholder ${
                         error && errorType
-                          ? "border-[#ed4245]"
-                          : "border-[#1e1f22]"
+                          ? "border-discord-dnd"
+                          : "border-discord-deep"
                       }`}
                       onChange={(e) => setNewPassword(e.target.value)}
                       value={newPassword}
@@ -493,10 +495,10 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                     <input
                       type="password"
                       placeholder="Confirm password"
-                      className={`px-4 py-2 border rounded-lg outline-none w-full bg-[#383a40] text-white placeholder-[#72767d] ${
+                      className={`px-4 py-2 border rounded-lg outline-none w-full bg-discord-input text-white placeholder-discord-placeholder ${
                         error && errorType === "password"
-                          ? "border-[#ed4245]"
-                          : "border-[#1e1f22]"
+                          ? "border-discord-dnd"
+                          : "border-discord-deep"
                       }`}
                       onChange={(e) => setNewConfirmPassword(e.target.value)}
                       value={confirmNewPassword}
@@ -508,7 +510,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      className="px-3 py-2 rounded-lg bg-[#ed4245]/20 border border-[#ed4245]/50 text-[#ed4245] text-sm flex items-center gap-2"
+                      className="px-3 py-2 rounded-lg bg-discord-dnd/20 border border-discord-dnd/50 text-discord-dnd text-sm flex items-center gap-2"
                     >
                       <span className="font-bold">!</span>
                       <span>{error}</span>
@@ -519,13 +521,13 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 <div className="flex justify-between gap-5 mt-5">
                   <button
                     onClick={() => setChangePass(false)}
-                    className="bg-[#4e5058] hover:bg-[#6d6f78] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
+                    className="bg-discord-btn-neutral hover:bg-discord-btn-neutral-hover px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={() => handleChangePassword()}
-                    className="bg-[#5865f2] hover:bg-[#4752c4] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
+                    className="bg-discord-blurple hover:bg-discord-blurple-hover px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
                   >
                     Done
                   </button>
@@ -552,7 +554,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.2 }}
-                className="fixed bg-[#2b2d31] flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="fixed bg-discord-sidebar flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
               >
                 <div className="w-full flex flex-col gap-3">
                   <h2 className="text-xl font-semibold text-white">
@@ -564,7 +566,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      className="mb-3 px-3 py-2 rounded-lg bg-[#ed4245]/20 border border-[#ed4245]/50 text-[#ed4245] text-sm flex items-center gap-2"
+                      className="mb-3 px-3 py-2 rounded-lg bg-discord-dnd/20 border border-discord-dnd/50 text-discord-dnd text-sm flex items-center gap-2"
                     >
                       <span className="font-bold">!</span>
                       <span>{error}</span>
@@ -575,13 +577,13 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 <div className="flex justify-between gap-5 mt-5">
                   <button
                     onClick={() => setLogout(false)}
-                    className="bg-[#4e5058] hover:bg-[#6d6f78] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
+                    className="bg-discord-btn-neutral hover:bg-discord-btn-neutral-hover px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={() => handleLogout()}
-                    className="bg-[#ed4245] hover:bg-[#c03537] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
+                    className="bg-discord-dnd hover:bg-discord-danger-hover px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
                   >
                     Logout
                   </button>
@@ -608,7 +610,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.2 }}
-                className="fixed bg-[#2b2d31] flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="fixed bg-discord-sidebar flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
               >
                 <div className="w-full flex flex-col gap-3">
                   <h2 className="text-xl font-semibold text-white">
@@ -620,7 +622,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      className="mb-3 px-3 py-2 rounded-lg bg-[#ed4245]/20 border border-[#ed4245]/50 text-[#ed4245] text-sm flex items-center gap-2"
+                      className="mb-3 px-3 py-2 rounded-lg bg-discord-dnd/20 border border-discord-dnd/50 text-discord-dnd text-sm flex items-center gap-2"
                     >
                       <span className="font-bold">!</span>
                       <span>{error}</span>
@@ -631,10 +633,10 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                     type="password"
                     placeholder="Password"
                     onKeyDown={(e) => handleDeleteAccKey(e)}
-                    className={`px-4 py-2 border rounded-lg outline-none w-full bg-[#383a40] text-white placeholder-[#72767d] ${
+                    className={`px-4 py-2 border rounded-lg outline-none w-full bg-discord-input text-white placeholder-discord-placeholder ${
                       error && errorType === "deleteaccount"
-                        ? "border-[#ed4245]"
-                        : "border-[#1e1f22]"
+                        ? "border-discord-dnd"
+                        : "border-discord-deep"
                     }`}
                     onChange={(e) => setDeleteAccPassword(e.target.value)}
                     value={deleteAccPassword}
@@ -644,13 +646,13 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 <div className="flex justify-between gap-5 mt-5">
                   <button
                     onClick={() => setDeleteAccount(false)}
-                    className="bg-[#4e5058] hover:bg-[#6d6f78] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
+                    className="bg-discord-btn-neutral hover:bg-discord-btn-neutral-hover px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={() => handleDeleteAccount()}
-                    className="bg-[#ed4245] hover:bg-[#c03537] px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
+                    className="bg-discord-dnd hover:bg-discord-danger-hover px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
                   >
                     Delete
                   </button>

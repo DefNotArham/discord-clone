@@ -105,10 +105,10 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
     <AuthPages>
       <div className="flex flex-col text-center">
         <h1 className="text-2xl font-semibold text-white">Welcome back!</h1>
-        <p className="text-[#b5bac1]">We are happy to see again!</p>
+        <p className="text-discord-muted">We are happy to see again!</p>
 
         {errorType === "general" && (
-          <p className="text-[#ed4245] text-sm mt-2 ml-2 font-bold flex items-center gap-1">
+          <p className="text-discord-danger text-sm mt-2 ml-2 font-bold flex items-center gap-1">
             <MdError />
             {errorMsg}
           </p>
@@ -122,46 +122,46 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
         className="w-full mt-5 flex flex-col gap-5"
       >
         <div className="flex flex-col items-start">
-          <label className="ml-1 my-2 text-[#b5bac1]">
-            Email Address <span className="text-[#ed4245]">*</span>
+          <label className="ml-1 my-2 text-discord-muted">
+            Email Address <span className="text-discord-danger">*</span>
           </label>
           <input
             type="text"
             placeholder="Email"
-            className={`border p-2 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] w-full transition-all ${
+            className={`border p-2 rounded-xl bg-discord-input text-white placeholder-discord-placeholder w-full transition-all ${
               errorType === "general" || errorType === "email"
-                ? "border-[#ed4245] border-2"
-                : "border-2 border-[#1e1f22]"
+                ? "border-discord-danger border-2"
+                : "border-2 border-discord-deep"
             }`}
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
           {errorType === "email" && (
-            <p className="text-[#ed4245] text-sm mt-1">{errorMsg}</p>
+            <p className="text-discord-danger text-sm mt-1">{errorMsg}</p>
           )}
         </div>
 
         <div className="flex flex-col items-start">
-          <label className="ml-1 my-2 text-[#b5bac1]">
-            Password <span className="text-[#ed4245]">*</span>
+          <label className="ml-1 my-2 text-discord-muted">
+            Password <span className="text-discord-danger">*</span>
           </label>
           <input
             type="Password"
             placeholder="Password"
-            className={`border p-2 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] w-full transition-all ${
+            className={`border p-2 rounded-xl bg-discord-input text-white placeholder-discord-placeholder w-full transition-all ${
               errorType === "general" || errorType === "password"
-                ? "border-[#ed4245] border-2"
-                : "border-2 border-[#1e1f22]"
+                ? "border-discord-danger border-2"
+                : "border-2 border-discord-deep"
             }`}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
           {errorType === "password" && (
-            <p className="text-[#ed4245] text-sm mt-1">{errorMsg}</p>
+            <p className="text-discord-danger text-sm mt-1">{errorMsg}</p>
           )}
           <a
             onClick={handleForgotPassword}
-            className="mt-2 ml-1 underline text-sm text-[#b5bac1] hover:text-white cursor-pointer"
+            className="mt-2 ml-1 underline text-sm text-discord-muted hover:text-white cursor-pointer transition-all duration-200"
           >
             Forgot your password?
           </a>
@@ -170,7 +170,7 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
         <div className="w-full mt-7 flex flex-col items-center text-center">
           <button
             onClick={handleLogin}
-            className="bg-[#5865f2] hover:bg-[#4752c4] w-[80%] py-4 rounded-xl text-sm text-white cursor-pointer flex justify-center items-center transition-colors"
+            className="bg-discord-blurple hover:bg-discord-blurple-hover w-[80%] py-4 rounded-xl text-sm text-white cursor-pointer flex justify-center items-center transition-all duration-200"
             disabled={isLoading}
           >
             {isLoading ? (
@@ -188,11 +188,11 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
               "Log in"
             )}
           </button>
-          <p className="mt-3 text-[#b5bac1]">
+          <p className="mt-3 text-discord-muted">
             Need an account?{" "}
             <Link
               to="/register"
-              className="underline text-[#5865f2] hover:text-[#4752c4]"
+              className="underline text-discord-blurple hover:text-discord-blurple-hover transition-all duration-200"
             >
               Register
             </Link>
@@ -204,8 +204,8 @@ const LoginPage = ({ setIsAuthentication, setUser, user }) => {
         <>
           <div className="fixed inset-0 bg-black/50 z-40"></div>
 
-          <div className="fixed bg-[#57f287] p-6 rounded-2xl top-10 z-50">
-            <div className="flex items-center gap-3 text-lg font-semibold justify-center text-[#1e1f22]">
+          <div className="fixed bg-discord-success p-6 rounded-2xl top-10 z-50">
+            <div className="flex items-center gap-3 text-lg font-semibold justify-center text-discord-deep">
               <h1>Check your email to reset your password</h1>
               <IoCloseSharp
                 size={25}

@@ -40,24 +40,26 @@ const VerificationPage = ({ user, setUser }) => {
             <h1 className="text-2xl font-semibold text-white">
               Verify your email address
             </h1>
-            <p className="text-sm mt-3 text-[#b5bac1]">
+            <p className="text-sm mt-3 text-discord-muted">
               We emailed you a six-digit code. Enter the code below to confirm
               your email address{" "}
             </p>
           </div>
         ) : null}
 
-        {error && <p className="text-[#ed4245] mt-3 font-semibold">{error}</p>}
+        {error && (
+          <p className="text-discord-danger mt-3 font-semibold">{error}</p>
+        )}
 
         <div>
           {success ? (
             <>
-              <p className="text-[#57f287] mt-5 text-center font-semibold text-2xl">
+              <p className="text-discord-success mt-5 text-center font-semibold text-2xl">
                 {success}
               </p>
               <Link
                 to="/login"
-                className="underline cursor-pointer text-[#5865f2] hover:text-[#4752c4]"
+                className="underline cursor-pointer text-discord-blurple hover:text-discord-blurple-hover"
               >
                 Go to Login
               </Link>
@@ -68,10 +70,10 @@ const VerificationPage = ({ user, setUser }) => {
                 type="text"
                 maxLength={6}
                 placeholder="Enter code"
-                className={`border-2 outline-none p-3 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] text-center text-lg tracking-widest w-full mt-5 ${
+                className={`border-2 outline-none p-3 rounded-xl bg-discord-input text-white placeholder-discord-placeholder text-center text-lg tracking-widest w-full mt-5 ${
                   error
-                    ? "border-[#ed4245]"
-                    : "border-[#1e1f22] focus:border-[#5865f2]"
+                    ? "border-discord-danger"
+                    : "border-discord-deep focus:border-discord-blurple"
                 }`}
                 onChange={(e) => setCode(e.target.value)}
                 value={code}
@@ -79,7 +81,7 @@ const VerificationPage = ({ user, setUser }) => {
               <button
                 onClick={handleVerify}
                 disabled={isLoading}
-                className="p-3 font-semibold cursor-pointer text-sm rounded-xl mx-auto mt-3 w-full bg-[#5865f2] hover:bg-[#4752c4] text-white flex justify-center items-center transition-colors"
+                className="p-3 font-semibold cursor-pointer text-sm rounded-xl mx-auto mt-3 w-full bg-discord-blurple hover:bg-discord-blurple-hover text-white flex justify-center items-center transition-colors"
               >
                 {isLoading ? (
                   <Oval

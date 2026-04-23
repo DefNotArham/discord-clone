@@ -66,11 +66,11 @@ const ResetPasswordPage = () => {
             <h1 className="text-3xl font-semibold text-white">
               Change Your Password
             </h1>
-            <p className="mt-2 text-[#b5bac1]">
+            <p className="mt-2 text-discord-muted">
               Enter a new password below to change your password.
             </p>
             {error ? (
-              <p className="text-[#ed4245] text-sm mt-2 ml-2 font-bold">
+              <p className="text-discord-danger text-sm mt-2 ml-2 font-bold">
                 {error}
               </p>
             ) : (
@@ -82,10 +82,10 @@ const ResetPasswordPage = () => {
               <input
                 type="password"
                 placeholder="New password"
-                className={`border p-2 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] w-full transition-all ${
+                className={`border p-2 rounded-xl bg-discord-input text-white placeholder-discord-placeholder w-full transition-all ${
                   error
-                    ? "border-[#ed4245] border-2"
-                    : "border-2 border-[#1e1f22]"
+                    ? "border-discord-danger border-2"
+                    : "border-2 border-discord-deep"
                 }`}
                 onChange={(e) => setNewPassword(e.target.value)}
                 onKeyDown={handleEnter}
@@ -95,10 +95,10 @@ const ResetPasswordPage = () => {
               <input
                 type="password"
                 placeholder="Confirm new password"
-                className={`border p-2 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] w-full transition-all ${
+                className={`border p-2 rounded-xl bg-discord-input text-white placeholder-discord-placeholder w-full transition-all ${
                   error
-                    ? "border-[#ed4245] border-2"
-                    : "border-2 border-[#1e1f22]"
+                    ? "border-discord-danger border-2"
+                    : "border-2 border-discord-deep"
                 }`}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
                 onKeyDown={handleEnter}
@@ -108,7 +108,7 @@ const ResetPasswordPage = () => {
           <button
             onClick={handleResetPassword}
             disabled={isLoading}
-            className="bg-[#5865f2] hover:bg-[#4752c4] w-[80%] py-4 rounded-xl text-sm text-white cursor-pointer mt-3 flex items-center justify-center transition-colors"
+            className="bg-discord-blurple hover:bg-discord-blurple-hover w-[80%] py-4 rounded-xl text-sm text-white cursor-pointer mt-3 flex items-center justify-center transition-colors"
           >
             {isLoading ? (
               <Oval
@@ -128,9 +128,11 @@ const ResetPasswordPage = () => {
         </>
       ) : (
         <div className="flex flex-col text-center">
-          <h1 className="text-[#57f287] text-2xl font-semibold">{success}</h1>
+          <h1 className="text-discord-success text-2xl font-semibold">
+            {success}
+          </h1>
           <Link
-            className="underline text-[#5865f2] hover:text-[#4752c4]"
+            className="underline text-discord-blurple hover:text-discord-blurple-hover"
             to="/login"
           >
             Login page

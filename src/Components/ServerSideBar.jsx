@@ -63,12 +63,15 @@ const ServerSideBar = ({
     <div className="bg-[#2b2d31] w-[280px] h-screen ml-[70px] fixed left-0 top-0 flex flex-col z-40">
       <div className="h-12 flex items-center px-1 text-white font-semibold border-b border-[#1e1f22] justify-between px-5 text-sm">
         <div
-          className="flex items-center gap-2 cursor-pointer"
+          className="flex items-center gap-2 cursor-pointer "
           onClick={() => {
             setServerSetting(!serverSetting);
           }}
         >
-          <h1> {server?.name ?? "Loading..."}</h1>
+          <h1 className="text-white truncate max-w-[180px]">
+            {" "}
+            {server?.name ?? "Loading..."}
+          </h1>
           <FaChevronDown className="" />
         </div>
         <RiUserAddFill
@@ -150,10 +153,12 @@ const ServerSideBar = ({
         {server?.channels?.map((c) => (
           <div
             key={c?._id}
-            className="text-[#b5bac1] hover:text-white flex items-center gap-2 hover:bg-[#383a40] justify-center px-10 rounded-lg h-9 text-sm cursor-pointer transition-colors"
+            className="text-[#b5bac1] bg-[#3c3f44] hover:text-white transition-all flex items-center gap-2 hover:bg-[#383a40]  px-3 rounded-lg h-9 text-sm cursor-pointer w-full overflow-hidden justify-between"
           >
-            <SiHashicorp />
-            <p>{c?.name}</p>
+            <p className="truncate text-[#b5bac1] hover:text-white">
+              {c?.name}
+            </p>
+            <IoSettingsSharp />
           </div>
         ))}
       </div>

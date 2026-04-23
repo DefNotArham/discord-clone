@@ -61,7 +61,7 @@ const RegisterPage = () => {
     <AuthPages>
       <h1 className="text-2xl font-semibold text-white">Create an account</h1>
       {errorType === "general" ? (
-        <p className="text-[#ed4245] text-sm mt-2 ml-2 font-bold flex items-center gap-1">
+        <p className="text-discord-danger text-sm mt-2 ml-2 font-bold flex items-center gap-1">
           <MdError />
           {errorMsg}
         </p>
@@ -77,23 +77,23 @@ const RegisterPage = () => {
         }}
       >
         <div className="flex flex-col items-start">
-          <label className="ml-1 my-2 text-[#b5bac1]">
-            Email Address <span className="text-[#ed4245]">*</span>
+          <label className="ml-1 my-2 text-discord-muted">
+            Email Address <span className="text-discord-danger">*</span>
           </label>
           <input
             type="email"
             placeholder="Email"
-            className={`border p-2 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] w-full transition-all ${
+            className={`border p-2 rounded-xl bg-discord-input text-white placeholder-discord-placeholder w-full transition-all ${
               errorType === "email" || errorType === "general"
-                ? "border-[#ed4245] border-2"
-                : "border-2 border-[#1e1f22]"
+                ? "border-discord-danger border-2"
+                : "border-2 border-discord-deep"
             }`}
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             onKeyDown={handleEnter}
           />
           {errorType === "email" ? (
-            <p className="text-[#ed4245] text-xs mt-2 ml-2 font-bold flex items-center gap-1">
+            <p className="text-discord-danger text-xs mt-2 ml-2 font-bold flex items-center gap-1">
               <MdError />
               {errorMsg}
             </p>
@@ -103,22 +103,22 @@ const RegisterPage = () => {
         </div>
 
         <div className="flex flex-col items-start">
-          <label className="ml-1 my-2 text-[#b5bac1]">
-            Username <span className="text-[#ed4245]">*</span>
+          <label className="ml-1 my-2 text-discord-muted">
+            Username <span className="text-discord-danger">*</span>
           </label>
           <input
             type="text"
             placeholder="Username"
-            className={`border p-2 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] w-full transition-all ${
+            className={`border p-2 rounded-xl bg-discord-input text-white placeholder-discord-placeholder w-full transition-all ${
               errorType === "username" || errorType === "general"
-                ? "border-[#ed4245] border-2"
-                : "border-2 border-[#1e1f22]"
+                ? "border-discord-danger border-2"
+                : "border-2 border-discord-deep"
             }`}
             onChange={(e) => setUsername(e.target.value)}
             value={username}
           />
           {errorType === "username" ? (
-            <p className="text-[#ed4245] text-xs mt-2 ml-2 font-bold flex items-center gap-1">
+            <p className="text-discord-danger text-xs mt-2 ml-2 font-bold flex items-center gap-1">
               <MdError />
               {errorMsg}
             </p>
@@ -128,20 +128,20 @@ const RegisterPage = () => {
         </div>
 
         <div className="flex flex-col items-start">
-          <label className="ml-1 my-2 text-[#b5bac1]">Display name</label>
+          <label className="ml-1 my-2 text-discord-muted">Display name</label>
           <input
             type="text"
             placeholder="Display name (optional)"
-            className={`border p-2 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] w-full transition-all ${
+            className={`border p-2 rounded-xl bg-discord-input text-white placeholder-discord-placeholder w-full transition-all ${
               errorType === "general" || errorType === "displayName"
-                ? "border-[#ed4245] border-2"
-                : "border-2 border-[#1e1f22]"
+                ? "border-discord-danger border-2"
+                : "border-2 border-discord-deep"
             }`}
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
           />
           {errorType === "displayName" ? (
-            <p className="text-[#ed4245] text-xs mt-2 ml-2 font-bold flex items-center gap-1">
+            <p className="text-discord-danger text-xs mt-2 ml-2 font-bold flex items-center gap-1">
               <MdError />
               {errorMsg}
             </p>
@@ -151,23 +151,23 @@ const RegisterPage = () => {
         </div>
 
         <div className="flex flex-col items-start">
-          <label className="ml-1 my-2 text-[#b5bac1]">
-            Password <span className="text-[#ed4245]">*</span>
+          <label className="ml-1 my-2 text-discord-muted">
+            Password <span className="text-discord-danger">*</span>
           </label>
           <input
             type="Password"
             placeholder="Password"
-            className={`border p-2 rounded-xl bg-[#383a40] text-white placeholder-[#72767d] w-full transition-all ${
+            className={`border p-2 rounded-xl bg-discord-input text-white placeholder-discord-placeholder w-full transition-all ${
               errorType === "password" || errorType === "general"
-                ? "border-[#ed4245] border-2"
-                : "border-2 border-[#1e1f22]"
+                ? "border-discord-danger border-2"
+                : "border-2 border-discord-deep"
             }`}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
 
           {errorType === "password" ? (
-            <p className="text-[#ed4245] text-xs mt-2 ml-2 font-bold flex items-center gap-1">
+            <p className="text-discord-danger text-xs mt-2 ml-2 font-bold flex items-center gap-1">
               <MdError />
               {errorMsg}
             </p>
@@ -185,21 +185,21 @@ const RegisterPage = () => {
         </div>
 
         <div className="flex flex-col items-start">
-          <label className="ml-1 my-2 text-[#b5bac1]">
-            Date of Birth <span className="text-[#ed4245]">*</span>
+          <label className="ml-1 my-2 text-discord-muted">
+            Date of Birth <span className="text-discord-danger">*</span>
           </label>
           <input
             type="date"
-            className={`border p-2 rounded-xl bg-[#383a40] text-white w-full transition-all ${
+            className={`border p-2 rounded-xl bg-discord-input text-white w-full transition-all ${
               errorType === "dob" || errorType === "general"
-                ? "border-[#ed4245] border-2"
-                : "border-2 border-[#1e1f22]"
+                ? "border-discord-danger border-2"
+                : "border-2 border-discord-deep"
             }`}
             onChange={(e) => setDOB(e.target.value)}
             value={DOB}
           />
           {errorType === "dob" ? (
-            <p className="text-[#ed4245] text-xs mt-2 ml-2 font-bold flex items-center gap-1">
+            <p className="text-discord-danger text-xs mt-2 ml-2 font-bold flex items-center gap-1">
               <MdError />
               {errorMsg}
             </p>
@@ -211,7 +211,7 @@ const RegisterPage = () => {
 
       <div className="w-full mt-7 flex flex-col items-center text-center">
         <button
-          className="bg-[#5865f2] hover:bg-[#4752c4] w-[80%] py-4 rounded-xl text-sm text-white cursor-pointer flex items-center justify-center transition-colors"
+          className="bg-discord-blurple hover:bg-discord-blurple-hover w-[80%] py-4 rounded-xl text-sm text-white cursor-pointer flex items-center justify-center transition-colors"
           onClick={handleCreateAccount}
           disabled={isLoading}
         >
@@ -230,11 +230,11 @@ const RegisterPage = () => {
             "Create account"
           )}
         </button>
-        <p className="mt-3 text-[#b5bac1]">
+        <p className="mt-3 text-discord-muted">
           Already have an account?{" "}
           <Link
             to="/login"
-            className="underline text-[#5865f2] hover:text-[#4752c4]"
+            className="underline text-discord-blurple hover:text-discord-blurple-hover"
           >
             Login
           </Link>

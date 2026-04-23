@@ -172,24 +172,24 @@ const Sidebar = ({ setUser, user }) => {
 
   return (
     <div className="flex">
-      <div className="bg-[#1e1f22] w-[70px] h-screen fixed top-0 left-0 flex flex-col items-center py-6 gap-6 z-50">
+      <div className="bg-discord-deep w-[70px] h-screen fixed top-0 left-0 flex flex-col items-center py-6 gap-6 z-50">
         <div
-          className="bg-[#5865f2] flex items-center justify-center p-2 rounded-2xl cursor-pointer group relative"
+          className="bg-discord-blurple flex items-center justify-center p-2 rounded-2xl cursor-pointer group relative"
           onClick={() => navigate("/")}
         >
           <img className="w-6" src="/white_logo.png" alt="logo" />
 
-          <div className="pointer-events-none absolute top-1 left-12 z-[999] border border-[#1e1f22] bg-[#111214] text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
+          <div className="pointer-events-none absolute top-1 left-12 z-[999] border border-discord-deep bg-discord-tooltip text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
             Direct message
           </div>
         </div>
 
-        <div className="w-12 h-[1px] bg-[#35363c]"></div>
+        <div className="w-12 h-[1px] bg-discord-divider"></div>
 
         <div className="flex flex-col gap-4 mt-[1px]">
           {user?.servers?.map((s) => (
             <div
-              className="bg-[#313338] hover:bg-[#5865f2] p-2 rounded-2xl cursor-pointer group relative flex items-center justify-center transition-colors"
+              className="bg-discord-bg hover:bg-discord-blurple p-2 rounded-2xl cursor-pointer group relative flex items-center justify-center transition-colors"
               key={s._id}
               onClick={() => {
                 navigate(`/server/${s._id}`);
@@ -198,7 +198,7 @@ const Sidebar = ({ setUser, user }) => {
               <div className="text-white w-6 flex items-center justify-center text-center">
                 {getServerInitials(s.name)}
               </div>
-              <div className="pointer-events-none absolute top-1 left-12 z-[999] border border-[#1e1f22] bg-[#111214] text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
+              <div className="pointer-events-none absolute top-1 left-12 z-[999] border border-discord-deep bg-discord-tooltip text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
                 {s.name}
               </div>
             </div>
@@ -207,20 +207,20 @@ const Sidebar = ({ setUser, user }) => {
 
         <div className="flex flex-col gap-4 mt-[1px]">
           <div
-            className="bg-[#313338] hover:bg-[#57f287] p-2 rounded-2xl cursor-pointer group relative transition-colors"
+            className="bg-discord-bg hover:bg-[#57f287] p-2 rounded-2xl cursor-pointer group relative transition-colors"
             onClick={() => {
               setServerPopup(true);
             }}
           >
             <FiPlus size={24} color="white" />
-            <div className="pointer-events-none absolute top-1 left-12 z-[999] border border-[#1e1f22] bg-[#111214] text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
+            <div className="pointer-events-none absolute top-1 left-12 z-[999] border border-discord-deep bg-discord-tooltip text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
               Add a server
             </div>
           </div>
 
-          <div className="bg-[#313338] hover:bg-[#57f287] p-2 rounded-2xl cursor-pointer group relative transition-colors">
+          <div className="bg-discord-bg hover:bg-[#57f287] p-2 rounded-2xl cursor-pointer group relative transition-colors">
             <MdOutlineSearch size={24} color="white" />
-            <div className="pointer-events-none absolute top-1 left-12 z-[999] border border-[#1e1f22] bg-[#111214] text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
+            <div className="pointer-events-none absolute top-1 left-12 z-[999] border border-discord-deep bg-discord-tooltip text-white text-xs px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
               Discover servers
             </div>
           </div>
@@ -238,7 +238,7 @@ const Sidebar = ({ setUser, user }) => {
               transition={{ duration: 0.2 }}
             >
               <motion.div
-                className="bg-[#2b2d31] p-5 rounded-2xl flex flex-col text-white w-[30%] gap-5 h-46 items-center justify-center"
+                className="bg-discord-sidebar p-5 rounded-2xl flex flex-col text-white w-[30%] gap-5 h-46 items-center justify-center"
                 ref={serverPopUpRef}
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -254,7 +254,7 @@ const Sidebar = ({ setUser, user }) => {
                   />
                 </div>
                 <button
-                  className="w-full bg-[#5865f2] hover:bg-[#4752c4] h-10 rounded-2xl cursor-pointer transition-colors"
+                  className="w-full bg-discord-blurple hover:bg-discord-blurple-hover h-10 rounded-2xl cursor-pointer transition-colors"
                   onClick={() => {
                     setServerPopup(false);
                     setCreateServerPopup(true);
@@ -263,7 +263,7 @@ const Sidebar = ({ setUser, user }) => {
                   Create a server
                 </button>
                 <button
-                  className="w-full bg-[#5865f2] hover:bg-[#4752c4] h-10 rounded-2xl cursor-pointer transition-colors"
+                  className="w-full bg-discord-blurple hover:bg-discord-blurple-hover h-10 rounded-2xl cursor-pointer transition-colors"
                   onClick={() => {
                     setServerPopup(false);
                     setJoinServerPopup(true);
@@ -287,7 +287,7 @@ const Sidebar = ({ setUser, user }) => {
             transition={{ duration: 0.2 }}
           >
             <motion.div
-              className="bg-[#2b2d31] p-5 rounded-2xl flex flex-col text-white w-[30%] justify-center text-center"
+              className="bg-discord-sidebar p-5 rounded-2xl flex flex-col text-white w-[30%] justify-center text-center"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
@@ -299,13 +299,13 @@ const Sidebar = ({ setUser, user }) => {
               </h1>
 
               <div className="text-start flex flex-col gap-1">
-                <label className="text-[#b5bac1]">
-                  Server name <span className="text-[#ed4245]">*</span>
+                <label className="text-discord-muted">
+                  Server name <span className="text-discord-danger">*</span>
                 </label>
                 <input
-                  className={`w-full bg-[#383a40] text-white h-10 rounded-lg px-2 placeholder-[#72767d] ${
+                  className={`w-full bg-discord-input text-white h-10 rounded-lg px-2 placeholder-discord-placeholder ${
                     error && errorType === "server"
-                      ? "border border-[#ed4245]"
+                      ? "border border-discord-danger"
                       : ""
                   }`}
                   onChange={(e) => {
@@ -318,16 +318,16 @@ const Sidebar = ({ setUser, user }) => {
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -5 }}
-                    className="px-3 py-2 rounded-lg bg-[#ed4245]/20 border border-[#ed4245]/50 text-[#ed4245] text-sm flex items-center gap-2 mt-2"
+                    className="px-3 py-2 rounded-lg bg-discord-danger/20 border border-discord-danger/50 text-discord-danger text-sm flex items-center gap-2 mt-2"
                   >
-                    <span className="text-[#ed4245] font-bold">!</span>
+                    <span className="text-discord-danger font-bold">!</span>
                     <span>{error}</span>
                   </motion.div>
                 )}
               </div>
               <div className="flex justify-between mt-3">
                 <button
-                  className="bg-[#4e5058] hover:bg-[#6d6f78] px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors"
+                  className="bg-discord-btn-neutral hover:bg-discord-btn-neutral-hover px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors"
                   onClick={() => {
                     setCreateServerPopup(false);
                   }}
@@ -335,7 +335,7 @@ const Sidebar = ({ setUser, user }) => {
                   Back
                 </button>
                 <button
-                  className="bg-[#5865f2] hover:bg-[#4752c4] px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors"
+                  className="bg-discord-blurple hover:bg-discord-blurple-hover px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors"
                   onClick={handleCreateServer}
                 >
                   Create
@@ -357,7 +357,7 @@ const Sidebar = ({ setUser, user }) => {
               transition={{ duration: 0.2 }}
             >
               <motion.div
-                className="bg-[#2b2d31] p-5 rounded-2xl flex flex-col text-white w-[30%] justify-center text-center"
+                className="bg-discord-sidebar p-5 rounded-2xl flex flex-col text-white w-[30%] justify-center text-center"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
@@ -367,15 +367,15 @@ const Sidebar = ({ setUser, user }) => {
                 <h1 className="text-2xl font-semibold mb-4">Join a server</h1>
 
                 <div className="text-start flex flex-col gap-1">
-                  <label className="text-[#b5bac1]">
-                    Invite code <span className="text-[#ed4245]">*</span>
+                  <label className="text-discord-muted">
+                    Invite code <span className="text-discord-danger">*</span>
                   </label>
                   <input
                     onChange={(e) => setInviteCode(e.target.value)}
                     value={inviteCode}
-                    className={`w-full bg-[#383a40] text-white h-10 rounded-lg px-2 placeholder-[#72767d] ${
+                    className={`w-full bg-discord-input text-white h-10 rounded-lg px-2 placeholder-discord-placeholder ${
                       error && errorType === "serverJoin"
-                        ? "border border-[#ed4245]"
+                        ? "border border-discord-danger"
                         : ""
                     }`}
                   />
@@ -385,16 +385,16 @@ const Sidebar = ({ setUser, user }) => {
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      className="px-3 py-2 rounded-lg bg-[#ed4245]/20 border border-[#ed4245]/50 text-[#ed4245] text-sm flex items-center gap-2 mt-2"
+                      className="px-3 py-2 rounded-lg bg-discord-danger/20 border border-discord-danger/50 text-discord-danger text-sm flex items-center gap-2 mt-2"
                     >
-                      <span className="text-[#ed4245] font-bold">!</span>
+                      <span className="text-discord-danger font-bold">!</span>
                       <span>{error}</span>
                     </motion.div>
                   )}
                 </div>
                 <div className="flex justify-between mt-3">
                   <button
-                    className="bg-[#4e5058] hover:bg-[#6d6f78] px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors"
+                    className="bg-discord-btn-neutral hover:bg-discord-btn-neutral-hover px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors"
                     onClick={() => {
                       setJoinServerPopup(false);
                     }}
@@ -402,7 +402,7 @@ const Sidebar = ({ setUser, user }) => {
                     Back
                   </button>
                   <button
-                    className="bg-[#5865f2] hover:bg-[#4752c4] px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors"
+                    className="bg-discord-blurple hover:bg-discord-blurple-hover px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer transition-colors"
                     onClick={() => handleJoinServer()}
                   >
                     Join
@@ -415,12 +415,12 @@ const Sidebar = ({ setUser, user }) => {
       </AnimatePresence>
 
       <div
-        className="bg-[#1e1f22] w-84 h-[60px] flex items-center absolute bottom-3 z-[999] left-2 rounded-2xl px-1 justify-between"
+        className="bg-discord-deep w-84 h-[60px] flex items-center absolute bottom-3 z-[999] left-2 rounded-2xl px-1 justify-between"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
         <div
-          className="flex gap-3 items-center hover:bg-[#383a40] cursor-pointer rounded-xl px-3 py-1 transition-all w-50"
+          className="flex gap-3 items-center hover:bg-discord-input cursor-pointer rounded-xl px-3 py-1 transition-all w-50"
           onClick={() => setToggleProfileBox(!toggleProfileBox)}
         >
           <div className="w-6 rounded-2xl relative">
@@ -464,7 +464,7 @@ const Sidebar = ({ setUser, user }) => {
 
           <div className="">
             <h1 className="text-white">{user.displayName}</h1>
-            <p className="text-xs text-[#b5bac1] relative h-4 w-23">
+            <p className="text-xs text-discord-muted relative h-4 w-23">
               <span
                 className={`absolute transition-opacity duration-300 ${
                   isHovering ? "opacity-0" : "opacity-100"
@@ -493,7 +493,7 @@ const Sidebar = ({ setUser, user }) => {
             />
           </Link>
 
-          <div className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 border border-[#1e1f22] bg-[#111214] text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
+          <div className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 border border-discord-deep bg-discord-tooltip text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap">
             Settings
           </div>
         </div>
@@ -503,7 +503,7 @@ const Sidebar = ({ setUser, user }) => {
         {toggleProfileBox ? (
           <>
             <motion.div
-              className="absolute bottom-20 left-4 z-[999] w-72 rounded-2xl bg-[#111214] border border-[#1e1f22] shadow-xl overflow-hidden"
+              className="absolute bottom-20 left-4 z-[999] w-72 rounded-2xl bg-discord-tooltip border border-discord-deep shadow-xl overflow-hidden"
               ref={profileRef}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -511,7 +511,7 @@ const Sidebar = ({ setUser, user }) => {
               transition={{ duration: 0.2 }}
             >
               <motion.div
-                className="h-16 bg-[#5865f2]"
+                className="h-16 bg-discord-blurple"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
@@ -519,7 +519,7 @@ const Sidebar = ({ setUser, user }) => {
               />
 
               <div className="px-4 pb-4 -mt-8 flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-2xl border-4 border-[#111214] overflow-hidden bg-black">
+                <div className="w-16 h-16 rounded-2xl border-4 border-discord-tooltip overflow-hidden bg-black">
                   <img
                     className="w-full h-full object-cover"
                     src="/white_logo.png"
@@ -531,7 +531,7 @@ const Sidebar = ({ setUser, user }) => {
                   {user?.displayName}
                 </h1>
 
-                <p className="text-[#b5bac1] text-sm cursor-pointer">
+                <p className="text-discord-muted text-sm cursor-pointer">
                   @{user?.username}
                 </p>
               </div>
@@ -539,7 +539,7 @@ const Sidebar = ({ setUser, user }) => {
               <motion.div className="px-3 pb-4 flex flex-col gap-2">
                 <Link
                   to="/settings"
-                  className="w-full bg-[#2b2d31] hover:bg-[#383a40] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
+                  className="w-full bg-discord-sidebar hover:bg-discord-input transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
                 >
                   <MdEdit />
                   Edit Profile
@@ -547,7 +547,7 @@ const Sidebar = ({ setUser, user }) => {
 
                 <div className="relative">
                   <button
-                    className="w-full bg-[#2b2d31] hover:bg-[#383a40] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex items-center gap-2 justify-center px-5"
+                    className="w-full bg-discord-sidebar hover:bg-discord-input transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex items-center gap-2 justify-center px-5"
                     onClick={() => setShowStatusMenu(!showStatusMenu)}
                   >
                     {status === "Online" ? (
@@ -574,7 +574,7 @@ const Sidebar = ({ setUser, user }) => {
                       setCopied(false);
                     }, 3000);
                   }}
-                  className="w-full bg-[#2b2d31] hover:bg-[#383a40] transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
+                  className="w-full bg-discord-sidebar hover:bg-discord-input transition-all text-white py-2 rounded-xl text-sm cursor-pointer flex justify-center items-center gap-2"
                 >
                   <FaRegUserCircle />
                   {copied ? "Copied" : "Copy Username"}
@@ -588,7 +588,7 @@ const Sidebar = ({ setUser, user }) => {
       <AnimatePresence>
         {showStatusMenu ? (
           <motion.div
-            className="absolute bg-[#111214] left-78 bottom-20 text-white p-3 rounded-2xl flex flex-col w-60 gap-2 z-[999] border border-[#1e1f22]"
+            className="absolute bg-discord-tooltip left-78 bottom-20 text-white p-3 rounded-2xl flex flex-col w-60 gap-2 z-[999] border border-discord-deep"
             ref={statusRef}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -596,7 +596,7 @@ const Sidebar = ({ setUser, user }) => {
             transition={{ duration: 0.2 }}
           >
             <button
-              className="flex items-center gap-2 cursor-pointer hover:bg-[#383a40] py-1 px-2 rounded-xl transition-all"
+              className="flex items-center gap-2 cursor-pointer hover:bg-discord-input py-1 px-2 rounded-xl transition-all"
               onClick={() => {
                 const newStatus = "Online";
                 setStatus(newStatus);
@@ -607,7 +607,7 @@ const Sidebar = ({ setUser, user }) => {
               <FaCircle color="#57f287" size={10} /> Online
             </button>
             <button
-              className="flex items-center gap-2 cursor-pointer hover:bg-[#383a40] py-1 px-2 rounded-xl transition-all"
+              className="flex items-center gap-2 cursor-pointer hover:bg-discord-input py-1 px-2 rounded-xl transition-all"
               onClick={() => {
                 const newStatus = "Idle";
                 setStatus(newStatus);
@@ -619,7 +619,7 @@ const Sidebar = ({ setUser, user }) => {
               Idle
             </button>
             <button
-              className="flex items-center gap-2 cursor-pointer hover:bg-[#383a40] py-1 px-2 rounded-2xl transition-all"
+              className="flex items-center gap-2 cursor-pointer hover:bg-discord-input py-1 px-2 rounded-2xl transition-all"
               onClick={() => {
                 const newStatus = "Do Not Disturb";
                 setStatus(newStatus);
@@ -631,7 +631,7 @@ const Sidebar = ({ setUser, user }) => {
               Do Not Disturb
             </button>
             <button
-              className="flex items-center gap-2 cursor-pointer hover:bg-[#383a40] py-1 px-2 rounded-2xl transition-all"
+              className="flex items-center gap-2 cursor-pointer hover:bg-discord-input py-1 px-2 rounded-2xl transition-all"
               onClick={() => {
                 const newStatus = "Invisible";
                 setStatus(newStatus);

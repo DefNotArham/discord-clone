@@ -1,8 +1,41 @@
 @import "tailwindcss";
-
 @theme {
-  --color-chat-bg: #0b2b26;
-  --color-box-bg: #235347;
-  --color-side-bar: #111817;
+  /* ── Backgrounds ── */
+  --color-discord-deep: #1e1f22;
+  --color-discord-sidebar: #2b2d31;
+  --color-discord-bg: #313338;
+  --color-discord-input: #383a40;
+  --color-discord-tooltip: #111214;
+
+  /* ── Text ── */
+  --color-discord-white: #ffffff;
+  --color-discord-muted: #b5bac1;
+  --color-discord-placeholder: #72767d;
+  --color-discord-subtle: #80848e;
+
+  /* ── Brand ── */
+  --color-discord-blurple: #5865f2;
+  --color-discord-blurple-hover: #4752c4;
+
+  /* ── Status ── */
+  --color-discord-online: #57f287;
+  --color-discord-idle: #fee75c;
+  --color-discord-dnd: #ed4245;
+  --color-discord-offline: #80848e;
+
+  /* ── Semantic ── */
+  --color-discord-danger: #ed4245;
+  --color-discord-danger-hover: #c03537;
+  --color-discord-success: #57f287;
+  --color-discord-warning: #fee75c;
+
+  /* ── Neutral buttons ── */
+  --color-discord-btn-neutral: #4e5058;
+  --color-discord-btn-neutral-hover: #6d6f78;
+
+  /* ── Borders ── */
+  --color-discord-border: #1e1f22;
+  --color-discord-divider: #35363c;
+
   --breakpoint-custom1: 600px;
 }
