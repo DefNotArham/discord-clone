@@ -18,6 +18,7 @@ const ServerSideBar = ({
   setUser,
   setLeaveConfirmPopup,
   user,
+  setChannelPopup,
 }) => {
   const [serverSetting, setServerSetting] = useState(false);
 
@@ -101,7 +102,12 @@ const ServerSideBar = ({
                   />
                 </button>
 
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer flex items-center justify-between gap-3 group">
+                <button
+                  className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#007453] transition cursor-pointer flex items-center justify-between gap-3 group"
+                  onClick={() => {
+                    setChannelPopup(true);
+                  }}
+                >
                   Create channel
                   <IoCreate
                     size={15}

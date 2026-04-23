@@ -328,10 +328,16 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                     }}
                   />
 
-                  {error && errorType === "displayName" ? (
-                    <p className="text-red-500 text-xs mt-2 ml-2"> {error}</p>
-                  ) : (
-                    ""
+                  {error && errorType === "displayName" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="mb-3 px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-2 mt-2"
+                    >
+                      <span className="text-red-400 font-bold">!</span>
+                      <span>{error}</span>
+                    </motion.div>
                   )}
                 </>
               ) : (
@@ -365,10 +371,17 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       }
                     }}
                   />
-                  {error && errorType === "username" ? (
-                    <p className="text-red-500 text-xs mt-2 ml-2"> {error}</p>
-                  ) : (
-                    ""
+
+                  {error && errorType === "username" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="mb-3 px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-2 mt-2"
+                    >
+                      <span className="text-red-400 font-bold">!</span>
+                      <span>{error}</span>
+                    </motion.div>
                   )}
                 </>
               ) : (
@@ -441,17 +454,13 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.2 }}
-                className="fixed bg-emerald-500  flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  "
+                className="fixed bg-emerald-700  flex flex-col gap-3 p-10 rounded-2xl w-[33%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  "
               >
                 <div className="w-full flex flex-col gap-3">
                   <h2 className="text-xl font-semibold text-white-800">
                     Change Password
                   </h2>
-                  {error && errorType === "password" ? (
-                    <p className="font-semibold text-red-500">{error}</p>
-                  ) : (
-                    ""
-                  )}
+
                   <form
                     className="w-full flex flex-col gap-3"
                     onKeyDown={(e) => handleChangePassKey(e)}
@@ -486,6 +495,18 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       value={confirmNewPassword}
                     />
                   </form>
+
+                  {error && errorType === "password" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className=" px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/50 text-red-500 text-sm flex items-center gap-2"
+                    >
+                      <span className="text-red-400 font-bold">!</span>
+                      <span>{error}</span>
+                    </motion.div>
+                  )}
                 </div>
 
                 <div className="flex justify-between gap-5 mt-5">
@@ -529,10 +550,17 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                   <h2 className="text-xl font-semibold text-white-800">
                     Are you sure you want to log out?
                   </h2>
-                  {error && errorType === "logout" ? (
-                    <p className="font-semibold text-red-500">{error}</p>
-                  ) : (
-                    ""
+
+                  {error && errorType === "logout" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="mb-3 px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/50 text-red-500 text-sm flex items-center gap-2"
+                    >
+                      <span className="text-red-400 font-bold">!</span>
+                      <span>{error}</span>
+                    </motion.div>
                   )}
                 </div>
 
@@ -577,10 +605,17 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                   <h2 className="text-xl font-semibold text-white-800">
                     Delete Account
                   </h2>
-                  {error && errorType === "deleteaccount" ? (
-                    <p className="font-semibold text-red-500">{error}</p>
-                  ) : (
-                    ""
+
+                  {error && errorType === "deleteaccount" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="mb-3 px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/50 text-red-500 text-sm flex items-center gap-2"
+                    >
+                      <span className="text-red-400 font-bold">!</span>
+                      <span>{error}</span>
+                    </motion.div>
                   )}
 
                   <input

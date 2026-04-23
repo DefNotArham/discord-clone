@@ -17,6 +17,9 @@ const ServerPage = ({ setUser, user }) => {
   const [error, setError] = useState("");
   const [errorType, setErrorType] = useState("");
 
+  const [newChannel, setNewChannel] = useState("");
+  const [channelPopup, setChannelPopup] = useState(false);
+
   const navigate = useNavigate();
 
   const loadServers = async () => {
@@ -87,6 +90,23 @@ const ServerPage = ({ setUser, user }) => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const createChannelRef = useRef(null);
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (
+        createChannelRef.current &&
+        !createChannelRef.current.contains(e.target)
+      ) {
+        setChannelPopup(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
   const handleLeaveServer = async () => {
     try {
       const response = await axios.post(
@@ -111,6 +131,29 @@ const ServerPage = ({ setUser, user }) => {
     }
   };
 
+  const handleCreateChannel = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/server/channel/create-channel/${serverId}`,
+        { channelName: newChannel.trim() },
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        loadServers();
+        setChannelPopup(false);
+      }
+    } catch (error) {
+      setError(error?.response?.data.message);
+      setErrorType("createChannel");
+
+      setTimeout(() => {
+        setError("");
+        setErrorType("");
+      }, 3000);
+    }
+  };
+
   return (
     <>
       <Sidebar setUser={setUser} user={user} />
@@ -120,6 +163,7 @@ const ServerPage = ({ setUser, user }) => {
         setUser={setUser}
         setLeaveConfirmPopup={setLeaveConfirmPopup}
         user={user}
+        setChannelPopup={setChannelPopup}
       />
       <AnimatePresence>
         {inviteToServerPopUp && (
@@ -179,12 +223,17 @@ const ServerPage = ({ setUser, user }) => {
                   Are you sure you want to leave the server?
                 </h2>
 
-                {error && errorType === "leaveServer" ? (
-                  <div className="flex flex-col items-center justify-center gap-3">
-                    <PiWarningFill className="text-red-500" size={30} />
-                    <p className="text-red-500 text-center">{error}</p>
-                  </div>
-                ) : null}
+                {error && errorType === "leaveServer" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    className="mb-3 px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-2"
+                  >
+                    <span className="text-red-400 font-bold">!</span>
+                    <span className="text-center">{error}</span>
+                  </motion.div>
+                )}
 
                 <div className="flex items-center gap-3 mt-3">
                   <button
@@ -206,6 +255,64 @@ const ServerPage = ({ setUser, user }) => {
             </motion.div>
           </>
         ) : null}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {channelPopup && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-[#103f38] w-[350px] p-5 rounded-2xl text-white"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              ref={createChannelRef}
+            >
+              <h2 className="text-xl font-semibold mb-4">Create Channel</h2>
+
+              <input
+                type="text"
+                placeholder="Channel name"
+                className="w-full h-10 px-3 rounded-lg bg-gray-200 text-black outline-none mb-4"
+                onChange={(e) => setNewChannel(e.target.value)}
+                value={newChannel}
+              />
+
+              {error && errorType === "createChannel" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  className="mb-3 px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-2"
+                >
+                  <span className="text-red-400 font-bold">!</span>
+                  <span>{error}</span>
+                </motion.div>
+              )}
+
+              <div className="flex justify-between">
+                <button
+                  onClick={() => setChannelPopup(false)}
+                  className="px-4 py-2 rounded-lg bg-gray-600 hover:bg-gray-500 transition cursor-pointer"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 transition cursor-pointer"
+                  onClick={handleCreateChannel}
+                >
+                  Create
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </>
   );
