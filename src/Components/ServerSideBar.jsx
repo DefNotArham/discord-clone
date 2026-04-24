@@ -149,18 +149,18 @@ const ServerSideBar = ({
         )}
       </AnimatePresence>
 
-      <div className="flex flex-col gap-3 mt-10 px-2">
-        {server?.channels?.map((c) => (
-          <div
-            key={c?._id}
-            className="text-[#b5bac1] bg-[#3c3f44] hover:text-white transition-all flex items-center gap-2 hover:bg-[#383a40]  px-3 rounded-lg h-9 text-sm cursor-pointer w-full overflow-hidden justify-between"
-          >
-            <p className="truncate text-[#b5bac1] hover:text-white">
-              {c?.name}
-            </p>
-            <IoSettingsSharp />
-          </div>
-        ))}
+      <div className="overflow-y-auto h-[85%]">
+        <div className="flex flex-col gap-3 mt-10 px-2">
+          {server?.channels?.map((c) => (
+            <div
+              key={c?._id}
+              className="text-[#b5bac1] bg-[#3c3f44] hover:text-white transition-all flex items-center gap-2 hover:bg-[#383a40] px-3 rounded-lg h-9 text-sm cursor-pointer w-full"
+            >
+              <p className="truncate flex-1">{c?.name}</p>
+              <IoSettingsSharp className="shrink-0" />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
