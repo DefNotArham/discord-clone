@@ -63,6 +63,8 @@ const App = () => {
 
   return (
     <Routes>
+      {/*  pages */}
+
       <Route
         path="/"
         element={
@@ -97,6 +99,13 @@ const App = () => {
           </ProtectedRoutes>
         }
       />
+
+      <Route
+        path="/server/:serverId/channel/:channelId/settings"
+        element={<ProtectedRoutes></ProtectedRoutes>}
+      />
+
+      {/* Auth pages */}
 
       <Route
         path="/register"

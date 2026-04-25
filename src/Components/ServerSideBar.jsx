@@ -175,7 +175,7 @@ const ServerSideBar = ({
             >
               <p
                 onClick={() => {
-                  navigate(`/server/${server._id}/channel/${c?._id}`);
+                  navigate(`/server/${server?._id}/channel/${c?._id}`);
                 }}
                 className="truncate flex-1"
               >
@@ -185,7 +185,11 @@ const ServerSideBar = ({
                 <IoSettingsSharp
                   className="shrink-0"
                   size={16}
-                  onClick={() => {}}
+                  onClick={() => {
+                    navigate(
+                      `/server/${server?._id}/channel/${c?._id}/settings`,
+                    );
+                  }}
                 />
               ) : (
                 <RiUserAddFill
@@ -204,4 +208,4 @@ const ServerSideBar = ({
   );
 };
 
-export default ServerSideBar; 
+export default ServerSideBar;
