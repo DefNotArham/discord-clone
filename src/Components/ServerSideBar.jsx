@@ -59,6 +59,23 @@ const ServerSideBar = ({
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const handleDeleteChannel = async (channelId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/server/channel/delete-channel/${serverId}/channel/${channelId}`,
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        loadServers();
+        setChannelSetting(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setChannelSetting(false);
+    }
+  };
+
   return (
     <div className="bg-[#2b2d31] w-[280px] h-screen ml-[70px] fixed left-0 top-0 flex flex-col z-40">
       <div className="h-12 flex items-center px-1 text-white font-semibold border-b border-[#1e1f22] justify-between px-5 text-sm">
@@ -156,8 +173,29 @@ const ServerSideBar = ({
               key={c?._id}
               className="text-[#b5bac1] bg-[#3c3f44] hover:text-white transition-all flex items-center gap-2 hover:bg-[#383a40] px-3 rounded-lg h-9 text-sm cursor-pointer w-full"
             >
-              <p className="truncate flex-1">{c?.name}</p>
-              <IoSettingsSharp className="shrink-0" />
+              <p
+                onClick={() => {
+                  navigate(`/server/${server._id}/channel/${c?._id}`);
+                }}
+                className="truncate flex-1"
+              >
+                {c?.name}
+              </p>
+              {server.owner === user._id ? (
+                <IoSettingsSharp
+                  className="shrink-0"
+                  size={16}
+                  onClick={() => {}}
+                />
+              ) : (
+                <RiUserAddFill
+                  className="cursor-pointer"
+                  size={16}
+                  onClick={() => {
+                    setInviteToServerPopUp(true);
+                  }}
+                />
+              )}
             </div>
           ))}
         </div>
@@ -166,4 +204,4 @@ const ServerSideBar = ({
   );
 };
 
-export default ServerSideBar;
+export default ServerSideBar; 
