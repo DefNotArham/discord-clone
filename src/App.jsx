@@ -2,13 +2,13 @@ import React, { Children, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
-import DirectMessagePage from "./pages/DirectMessagePage";
-import VerificationPage from "./pages/VerificationPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
-import SettingsPage from "./pages/SettingsPage";
-import ServerPage from "./pages/ServerPage";
+import RegisterPage from "./pages/Auth/RegisterPage";
+import LoginPage from "./pages/Auth/LoginPage";
+import DirectMessagePage from "./pages/app/DirectMessagePage";
+import VerificationPage from "./pages/Auth/VerificationPage";
+import ResetPasswordPage from "./pages/Auth/ResetPasswordPage";
+import SettingsPage from "./pages/app/SettingsPage";
+import ServerPage from "./pages/app/ServerPage";
 
 const App = () => {
   const [isAuthentication, setIsAuthentication] = useState(false);

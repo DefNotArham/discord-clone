@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthPages from "../Components/AuthPages";
 import axios from "axios";
 import { MdError } from "react-icons/md";
 import { Oval } from "react-loader-spinner";
+
+import AuthPages from "../../Components/AuthPages";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");

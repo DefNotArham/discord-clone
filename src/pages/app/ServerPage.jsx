@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
 
-import Sidebar from "../Components/Sidebar";
-import ServerSideBar from "../Components/ServerSideBar";
+import Sidebar from "../../Components/Sidebar";
+import ServerSideBar from "../../Components/ServerSideBar";
 
 import { PiWarningFill } from "react-icons/pi";
 

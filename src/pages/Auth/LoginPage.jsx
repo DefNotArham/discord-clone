@@ -5,7 +5,7 @@ import { MdError } from "react-icons/md";
 import { IoCloseSharp } from "react-icons/io5";
 import { Oval } from "react-loader-spinner";
 
-import AuthPages from "../Components/AuthPages";
+import AuthPages from "../../Components/AuthPages";
 
 const LoginPage = ({ setIsAuthentication, setUser, user }) => {
   const [email, setEmail] = useState("");

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import AuthPages from "../Components/AuthPages";
+
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
+
+import AuthPages from "../../Components/AuthPages";
 
 const ResetPasswordPage = () => {
   const [newPassword, setNewPassword] = useState("");

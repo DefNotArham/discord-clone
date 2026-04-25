@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthPages from "../Components/AuthPages";
+import AuthPages from "../../Components/AuthPages";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 
