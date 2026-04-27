@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import axios from "axios";
 
 import DefaultBackground from "../../Components/DefaultBackground";
 
 import { MdDeleteForever } from "react-icons/md";
-import axios from "axios";
+import { FaCircleXmark } from "react-icons/fa6";
 
 const ChannelSettings = ({ setUser, user }) => {
   const [selectedTab, setSelectedTab] = useState("overview");
@@ -135,6 +136,16 @@ const ChannelSettings = ({ setUser, user }) => {
               />
             </div>
           ) : null}
+        </div>
+
+        <div className="bg-discord-sidebar flex flex-col items-end px-20 pt-10">
+          <FaCircleXmark
+            size={28}
+            className="cursor-pointer text-discord-muted"
+            onClick={() => {
+              navigate(`/server/${serverId}`);
+            }}
+          />
         </div>
       </div>
       <AnimatePresence>

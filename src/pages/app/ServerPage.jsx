@@ -155,6 +155,12 @@ const ServerPage = ({ setUser, user }) => {
     }
   };
 
+  const handleCreateChannelKey = (e) => {
+    if (e.key === "Enter") {
+      handleCreateChannel();
+    }
+  };
+
   return (
     <>
       <Sidebar setUser={setUser} user={user} />
@@ -288,6 +294,7 @@ const ServerPage = ({ setUser, user }) => {
                 className="w-full h-10 px-3 rounded-lg bg-discord-input text-white placeholder-discord-placeholder outline-none mb-4"
                 onChange={(e) => setNewChannel(e.target.value)}
                 value={newChannel}
+                onKeyDown={(e) => handleCreateChannelKey(e)}
               />
 
               {error && errorType === "createChannel" && (

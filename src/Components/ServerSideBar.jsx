@@ -77,8 +77,8 @@ const ServerSideBar = ({
   };
 
   return (
-    <div className="bg-[#2b2d31] w-[280px] h-screen ml-[70px] fixed left-0 top-0 flex flex-col z-40">
-      <div className="h-12 flex items-center px-1 text-white font-semibold border-b border-[#1e1f22] justify-between px-5 text-sm">
+    <div className="bg-[#2b2d31] w-[280px]  h-screen ml-[70px] fixed left-0 top-0 flex flex-col z-40">
+      <div className="h-12 flex items-center text-white font-semibold border-b border-[#1e1f22] justify-between px-5 text-sm">
         <div
           className="flex items-center gap-2 cursor-pointer "
           onClick={() => {
