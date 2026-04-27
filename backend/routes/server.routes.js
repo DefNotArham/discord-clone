@@ -6,6 +6,7 @@ import joinServerController from "../controllers/serverControllers/joinServer.co
 import leaveServerController from "../controllers/serverControllers/leaveServer.controller.js";
 import createChannelController from "../controllers/channelControllers/createChannel.controller.js";
 import deleteChannelController from "../controllers/channelControllers/deleteChannel.controller.js";
+import loadChannelController from "../controllers/channelControllers/loadChannel.controller.js";
 
 const router = express.Router();
 
@@ -25,6 +26,12 @@ router.delete(
   "/channel/delete-channel/:serverId/channel/:channelId",
   verifyToken,
   deleteChannelController,
+);
+
+router.post(
+  "/channel/load-channel/:serverId/channel/:channelId",
+  verifyToken,
+  loadChannelController,
 );
 
 export default router;

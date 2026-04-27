@@ -1,14 +1,16 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { Children, use, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 
 import RegisterPage from "./pages/Auth/RegisterPage";
 import LoginPage from "./pages/Auth/LoginPage";
-import DirectMessagePage from "./pages/app/DirectMessagePage";
 import VerificationPage from "./pages/Auth/VerificationPage";
 import ResetPasswordPage from "./pages/Auth/ResetPasswordPage";
+
+import DirectMessagePage from "./pages/app/DirectMessagePage";
 import SettingsPage from "./pages/app/SettingsPage";
 import ServerPage from "./pages/app/ServerPage";
+import ChannelSettings from "./pages/app/ChannelSettings";
 
 const App = () => {
   const [isAuthentication, setIsAuthentication] = useState(false);
@@ -102,7 +104,11 @@ const App = () => {
 
       <Route
         path="/server/:serverId/channel/:channelId/settings"
-        element={<ProtectedRoutes></ProtectedRoutes>}
+        element={
+          <ProtectedRoutes>
+            <ChannelSettings setUser={setUser} user={user} />
+          </ProtectedRoutes>
+        }
       />
 
       {/* Auth pages */}
