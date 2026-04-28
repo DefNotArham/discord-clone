@@ -20,6 +20,8 @@ const ChannelSettings = ({ setUser, user }) => {
 
   const [channelSidebar, setChannelSidebar] = useState(false);
 
+  const [editChannelName, setEditChannelName] = useState(false);
+
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -141,7 +143,6 @@ const ChannelSettings = ({ setUser, user }) => {
                 exit={{ x: -300 }}
                 transition={{ type: "tween", duration: 0.2 }}
               >
-                {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-sm text-discord-muted uppercase tracking-wide">
                     Channel Settings
@@ -154,7 +155,6 @@ const ChannelSettings = ({ setUser, user }) => {
                   />
                 </div>
 
-                {/* Tabs */}
                 <div className="flex flex-col gap-2">
                   <button
                     className={`text-left px-3 py-2 rounded-md text-sm cursor-pointer ${
@@ -211,13 +211,21 @@ const ChannelSettings = ({ setUser, user }) => {
                 Channel Name
               </label>
 
-              <input
-                type="text"
-                placeholder="Enter channel name"
-                value={channelName}
-                onChange={(e) => setChannelName(e.target.value)}
-                className="w-full bg-discord-input text-white px-3 py-2 rounded-md outline-none border border-transparent focus:border-discord-blurple"
-              />
+              <div className="w-full bg-discord-input text-white px-3 py-2 rounded-md outline-none border border-transparent focus:border-discord-blurple flex justify-between">
+                <input
+                  type="text"
+                  placeholder="Enter channel name"
+                  value={channelName}
+                  onChange={(e) => {
+                    setChannelName(e.target.value);
+                  }}
+                  className="w-[80%] outline-0 "
+                />
+
+                <button className="bg-discord-success text-xs px-3 py-1 rounded-md cursor-pointer">
+                  Save
+                </button>
+              </div>
             </div>
           ) : null}
         </div>
