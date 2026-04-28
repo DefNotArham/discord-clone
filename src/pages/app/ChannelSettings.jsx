@@ -121,6 +121,12 @@ const ChannelSettings = ({ setUser, user }) => {
     }
   };
 
+  const handleEditChannelnameKey = (e) => {
+    if (e.key === "Enter") {
+      handleEditChannelName();
+    }
+  };
+
   return (
     <DefaultBackground>
       <div className="flex h-screen text-discord-white w-full ">
@@ -252,6 +258,7 @@ const ChannelSettings = ({ setUser, user }) => {
                   onChange={(e) => {
                     setChannelName(e.target.value);
                   }}
+                  onKeyDown={(e) => handleEditChannelnameKey(e)}
                   className="w-[80%] outline-0 "
                 />
 
