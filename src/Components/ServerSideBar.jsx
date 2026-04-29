@@ -110,7 +110,7 @@ const ServerSideBar = ({
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.2 }}
           >
-            {server.owner.toString() === user._id ? (
+            {server?.owner?.toString() === user?._id ? (
               <>
                 <button
                   className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#5865f2] transition cursor-pointer flex items-center justify-between gap-3 group"
@@ -186,7 +186,7 @@ const ServerSideBar = ({
               >
                 {c?.name}
               </p>
-              {server.owner === user._id ? (
+              {server?.owner?.toString() === user?._id ? (
                 <IoSettingsSharp
                   className="shrink-0"
                   size={16}
