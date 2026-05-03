@@ -7,10 +7,20 @@ import Sidebar from "../../Components/Sidebar";
 import ServerSideBar from "../../Components/ServerSideBar";
 
 import { PiWarningFill } from "react-icons/pi";
+import useAuthStore from "../../Stores/Auth.Store";
+import useServerStore from "../../Stores/Server.Store";
 
-const ServerPage = ({ setUser, user }) => {
+const ServerPage = () => {
+  const { user } = useAuthStore();
+  const {
+    currentServer,
+    loadCurrentServer,
+    serverError,
+    errorType,
+    leaveServer,
+  } = useServerStore();
+
   const { serverId } = useParams();
-  const [server, setServer] = useState(null);
 
   const [inviteToServerPopUp, setInviteToServerPopUp] = useState(false);
   const [leaveConfirmPopup, setLeaveConfirmPopup] = useState(false);
@@ -18,44 +28,26 @@ const ServerPage = ({ setUser, user }) => {
   const [newChannel, setNewChannel] = useState("");
   const [channelPopup, setChannelPopup] = useState(false);
 
-  const [error, setError] = useState("");
-  const [errorType, setErrorType] = useState("");
-
   const navigate = useNavigate();
 
-  const loadServers = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/auth/checkAuth",
-        {},
-        { withCredentials: true },
-      );
+  // const loadServers = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:8000/auth/checkAuth",
+  //       {},
+  //       { withCredentials: true },
+  //     );
 
-      if (response.data.success) {
-        setUser(response.data.user);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (response.data.success) {
+  //       setUser(response.data.user);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
-    const handleLoadServer = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/server/load-server/${serverId}`,
-          { withCredentials: true },
-        );
-
-        if (response.data.success) {
-          setServer(response?.data.server);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    handleLoadServer();
+    loadCurrentServer(serverId);
   }, [serverId]);
 
   const inviteCodeRef = useRef(null);
@@ -108,27 +100,36 @@ const ServerPage = ({ setUser, user }) => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // const handleLeaveServer = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `http://localhost:8000/server/leave-server/${serverId}`,
+  //       {},
+  //       { withCredentials: true },
+  //     );
+
+  //     if (response.data.success) {
+  //       setLeaveConfirmPopup(false);
+  //       navigate("/");
+  //       loadServers();
+  //     }
+  //   } catch (error) {
+  //     setError(error?.response?.data.message);
+  //     setErrorType("leaveServer");
+
+  //     setTimeout(() => {
+  //       setError("");
+  //       setErrorType("");
+  //     }, 3000);
+  //   }
+  // };
+
   const handleLeaveServer = async () => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/server/leave-server/${serverId}`,
-        {},
-        { withCredentials: true },
-      );
+    const result = await leaveServer(serverId);
 
-      if (response.data.success) {
-        setLeaveConfirmPopup(false);
-        navigate("/");
-        loadServers();
-      }
-    } catch (error) {
-      setError(error?.response?.data.message);
-      setErrorType("leaveServer");
-
-      setTimeout(() => {
-        setError("");
-        setErrorType("");
-      }, 3000);
+    if (result.success) {
+      setLeaveConfirmPopup(false);
+      navigate("/");
     }
   };
 
@@ -163,7 +164,7 @@ const ServerPage = ({ setUser, user }) => {
 
   return (
     <>
-      <Sidebar setUser={setUser} user={user} />
+      <Sidebar />
       <ServerSideBar
         server={server}
         setInviteToServerPopUp={setInviteToServerPopUp}
@@ -172,6 +173,16 @@ const ServerPage = ({ setUser, user }) => {
         user={user}
         setChannelPopup={setChannelPopup}
       />
+
+      {/* <Sidebar setUser={setUser} user={user} />
+      <ServerSideBar
+        server={server}
+        setInviteToServerPopUp={setInviteToServerPopUp}
+        setUser={setUser}
+        setLeaveConfirmPopup={setLeaveConfirmPopup}
+        user={user}
+        setChannelPopup={setChannelPopup}
+      /> */}
 
       {/* Invite to Server popup */}
       <AnimatePresence>

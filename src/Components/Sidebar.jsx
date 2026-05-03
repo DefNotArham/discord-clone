@@ -119,29 +119,6 @@ const Sidebar = () => {
       setServerName("");
     }
   };
-  // const handleJoinServer = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8000/server/join-server",
-  //       { inviteCode: inviteCode.trim() },
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       await loadServers();
-  //       setJoinServerPopup(false);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     setError(error?.response?.data.message);
-  //     setErrorType("serverJoin");
-
-  //     setTimeout(() => {
-  //       setError("");
-  //       setErrorType("");
-  //     }, 3000);
-  //   }
-  // };
 
   const handleJoinServer = async () => {
     const result = await joinServer(inviteCode);

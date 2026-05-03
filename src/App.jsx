@@ -16,6 +16,7 @@ import ChannelSettings from "./pages/app/ChannelSettings";
 import ServerSettings from "./pages/app/ServerSettings";
 
 import LoadingUi from "./Components/LoadingUi";
+import useServerStore from "./Stores/Server.Store";
 
 const ProtectedRoutes = ({ children }) => {
   const { isAuthenticated, user, loading } = useAuthStore();
@@ -39,31 +40,10 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
 const ProtectedSettingsRoutes = ({ children }) => {
   const { isAuthenticated, user, loading } = useAuthStore();
+  const { servers } = useServerStore();
   const { serverId } = useParams();
-  const [server, setServer] = useState(null);
 
   const [checkingServer, setCheckingServer] = useState(true);
-
-  useEffect(() => {
-    const fetchdata = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/server/load-server/${serverId}`,
-          { withCredentials: true },
-        );
-
-        if (response.data.success) {
-          setServer(response.data.server);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setCheckingServer(false);
-      }
-    };
-
-    fetchdata();
-  }, [serverId]);
 
   if (loading || checkingServer) return null;
 
@@ -71,6 +51,7 @@ const ProtectedSettingsRoutes = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
+  const server = servers.find((s) => s._id === serverId);
   if (!server || server?.owner !== user?._id) {
     return <Navigate to="/" replace />;
   }
@@ -97,6 +78,15 @@ const App = () => {
         }
       />
 
+      <Route
+        path="/server/:serverId"
+        element={
+          <ProtectedRoutes>
+            <ServerPage />
+          </ProtectedRoutes>
+        }
+      />
+
       {/* 
 
       <Route
@@ -112,14 +102,7 @@ const App = () => {
         }
       />
 
-      <Route
-        path="/server/:serverId"
-        element={
-          <ProtectedRoutes>
-            <ServerPage user={user} setUser={setUser} />
-          </ProtectedRoutes>
-        }
-      />
+  
 
       <Route
         path="/server/:serverId/channel/:channelId/settings"

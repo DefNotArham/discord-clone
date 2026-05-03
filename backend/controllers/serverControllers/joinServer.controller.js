@@ -8,6 +8,7 @@ const joinServerController = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Invite code is required",
+        typeError: "serverJoin",
       });
 
     const user = await User.findById(req.userId).select("-password");
