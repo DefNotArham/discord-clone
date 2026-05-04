@@ -87,20 +87,18 @@ const App = () => {
         }
       />
 
-      {/* 
-
       <Route
         path="/settings"
         element={
           <ProtectedRoutes>
-            <SettingsPage
-              user={user}
-              setUser={setUser}
-              setIsAuthentication={setIsAuthentication}
-            />
+            <SettingsPage />
           </ProtectedRoutes>
         }
       />
+
+      {/* 
+
+  
 
   
 

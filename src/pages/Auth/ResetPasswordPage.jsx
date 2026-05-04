@@ -104,9 +104,9 @@ const ResetPasswordPage = () => {
           </h1>
           <Link
             className="underline text-discord-blurple hover:text-discord-blurple-hover"
-            to="/login"
+            to="/"
           >
-            Login page
+            Go to Home
           </Link>
         </div>
       )}

@@ -10,8 +10,14 @@ import { FaMoon } from "react-icons/fa";
 import { IoExit } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 import { MdArrowOutward } from "react-icons/md";
+import useAuthStore from "../../Stores/Auth.Store";
+import useUserStore from "../../Stores/User.Store";
 
-const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
+const SettingsPage = () => {
+  const { user } = useAuthStore();
+  const { changeDisplayName, editDisplayError, errorType, displayNameLoading } =
+    useUserStore();
+
   const navigate = useNavigate();
 
   const [editDisplayName, setEditDisplayName] = useState(false);
@@ -20,10 +26,6 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
   const [editUsername, setEditUsername] = useState(false);
   const [newUsername, setNewUsername] = useState("");
 
-  const [error, setError] = useState("");
-  const [errorType, setErrorType] = useState("");
-
-  const [isLoading1, setIsLoading1] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
   const [isLoading3, setIsLoading3] = useState(false);
   const [isLoading4, setIsLoading4] = useState(false);
@@ -39,47 +41,55 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
 
   const [logout, setLogout] = useState(false);
 
+  // const handleEditDisplay = async () => {
+  //   if (editDisplayName) {
+  //     if (newDisplayName.length < 3 || newDisplayName.length > 20) {
+  //       setError("Display name must be 3–20 characters");
+  //       setErrorType("displayName");
+
+  //       setTimeout(() => {
+  //         setError("");
+  //         setErrorType("");
+  //       }, 3000);
+  //       return;
+  //     }
+
+  //     setIsLoading1(true);
+  //     try {
+  //       const response = await axios.patch(
+  //         "http://localhost:8000/user/change-displayName",
+  //         { newDisplayName },
+  //         { withCredentials: true },
+  //       );
+
+  //       setUser((prev) => ({
+  //         ...prev,
+  //         displayName: newDisplayName,
+  //       }));
+
+  //       setIsLoading1(false);
+  //     } catch (error) {
+  //       console.log(error);
+  //       setError(error.response?.data?.message);
+  //       setErrorType("displayName");
+  //       setIsLoading1(false);
+
+  //       setTimeout(() => {
+  //         setError("");
+  //         setErrorType("");
+  //       }, 3000);
+  //     }
+  //   }
+
+  //   setEditDisplayName(!editDisplayName);
+  // };
+
   const handleEditDisplay = async () => {
-    if (editDisplayName) {
-      if (newDisplayName.length < 3 || newDisplayName.length > 20) {
-        setError("Display name must be 3–20 characters");
-        setErrorType("displayName");
+    const result = await changeDisplayName(newDisplayName);
 
-        setTimeout(() => {
-          setError("");
-          setErrorType("");
-        }, 3000);
-        return;
-      }
-
-      setIsLoading1(true);
-      try {
-        const response = await axios.patch(
-          "http://localhost:8000/user/change-displayName",
-          { newDisplayName },
-          { withCredentials: true },
-        );
-
-        setUser((prev) => ({
-          ...prev,
-          displayName: newDisplayName,
-        }));
-
-        setIsLoading1(false);
-      } catch (error) {
-        console.log(error);
-        setError(error.response?.data?.message);
-        setErrorType("displayName");
-        setIsLoading1(false);
-
-        setTimeout(() => {
-          setError("");
-          setErrorType("");
-        }, 3000);
-      }
+    if (result.success) {
+      setEditDisplayName(!editDisplayName);
     }
-
-    setEditDisplayName(!editDisplayName);
   };
 
   const handleChangeUsername = async () => {
@@ -301,7 +311,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
             </div>
 
             <div>
-              <h1 className="text-2xl font-bold">{user.displayName}</h1>
+              <h1 className="text-2xl font-bold">{user?.displayName}</h1>
             </div>
           </div>
         </div>
@@ -314,7 +324,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                 <>
                   <input
                     className={`border p-2 text-sm rounded-2xl mt-2 bg-discord-deep text-white placeholder-discord-placeholder ${
-                      error && errorType === "displayName"
+                      editDisplayError && errorType === "displayName"
                         ? "border-discord-dnd"
                         : "border-discord-deep"
                     }`}
@@ -328,7 +338,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                     }}
                   />
 
-                  {error && errorType === "displayName" && (
+                  {editDisplayError && errorType === "displayName" && (
                     <motion.div
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -336,7 +346,7 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
                       className="mb-3 px-3 py-2 rounded-lg bg-discord-dnd/10 border border-discord-dnd/30 text-discord-dnd text-sm flex items-center gap-2 mt-2"
                     >
                       <span className="font-bold">!</span>
-                      <span>{error}</span>
+                      <span>{editDisplayError}</span>
                     </motion.div>
                   )}
                 </>
@@ -346,10 +356,14 @@ const SettingsPage = ({ user, setUser, setIsAuthentication }) => {
             </div>
             <button
               onClick={() => handleEditDisplay()}
-              disabled={isLoading1}
+              disabled={displayNameLoading}
               className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-discord-blurple hover:bg-discord-blurple-hover px-3 py-1 rounded-lg"
             >
-              {isLoading1 ? "Saving..." : editDisplayName ? "Save" : "Edit"}
+              {displayNameLoading
+                ? "Saving..."
+                : editDisplayName
+                  ? "Save"
+                  : "Edit"}
             </button>
           </div>
 
