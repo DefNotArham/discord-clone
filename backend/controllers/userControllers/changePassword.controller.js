@@ -25,6 +25,7 @@ const changePasswordController = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "New password and confirmation do not match",
+        typeError: "password",
       });
 
     const isSame = await bcrypt.compare(newPassword, user.password);
@@ -34,6 +35,7 @@ const changePasswordController = async (req, res) => {
         success: false,
         message:
           "Your new password cannot be the same as your current password.",
+        typeError: "password",
       });
 
     const isMatch = await bcrypt.compare(currentPassword, user.password);

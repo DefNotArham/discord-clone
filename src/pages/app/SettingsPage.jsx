@@ -17,15 +17,20 @@ const SettingsPage = () => {
   const { user } = useAuthStore();
   const {
     errorType,
-    // DisplayName
+    // change DisplayName
     changeDisplayName,
     editDisplayError,
     displayNameLoading,
 
-    // username
+    // Change username
     changeUsername,
     userNameLoading,
     editUsernameError,
+
+    // Change password
+    changePasswordError,
+    changePassword,
+    changePasswordLoading,
   } = useUserStore();
 
   const navigate = useNavigate();
@@ -36,7 +41,6 @@ const SettingsPage = () => {
   const [editUsername, setEditUsername] = useState(false);
   const [newUsername, setNewUsername] = useState(user?.username);
 
-  const [isLoading3, setIsLoading3] = useState(false);
   const [isLoading4, setIsLoading4] = useState(false);
   const [isLoading5, setIsLoading5] = useState(false);
 
@@ -96,7 +100,7 @@ const SettingsPage = () => {
   const handleEditDisplay = async () => {
     const result = await changeDisplayName(newDisplayName);
 
-    if (result.success) {
+    if (result?.success) {
       setEditDisplayName(!editDisplayName);
     }
   };
@@ -174,48 +178,63 @@ const SettingsPage = () => {
   // };
 
   const handleChangePassword = async () => {
-    setIsLoading3(true);
+    const result = await changePassword(
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
+    );
 
-    try {
-      const response = await axios.patch(
-        "http://localhost:8000/user/change-password",
-        {
-          currentPassword: currentPassword.trim(),
-          newPassword: newPassword.trim(),
-          confirmNewPassword: confirmNewPassword.trim(),
-        },
-        { withCredentials: true },
-      );
-
-      if (response.data.success) {
-        setChangePass(false);
-        setIsLoading3(false);
-
-        setCurrentPassword("");
-        setNewPassword("");
-        setNewConfirmPassword("");
-
-        setUser((prev) => ({
-          ...prev,
-          password: newPassword,
-        }));
-      }
-    } catch (error) {
-      console.log(error);
-      setIsLoading3(false);
-      setError(error?.response?.data.message);
-      setErrorType("password");
-
+    if (result?.success) {
+      setChangePass(false);
       setCurrentPassword("");
       setNewPassword("");
       setNewConfirmPassword("");
-
-      setTimeout(() => {
-        setError("");
-        setErrorType("");
-      }, 3000);
     }
   };
+
+  // const handleChangePassword = async () => {
+  //   setIsLoading3(true);
+
+  //   try {
+  //     const response = await axios.patch(
+  //       "http://localhost:8000/user/change-password",
+  //       {
+  //         currentPassword: currentPassword.trim(),
+  //         newPassword: newPassword.trim(),
+  //         confirmNewPassword: confirmNewPassword.trim(),
+  //       },
+  //       { withCredentials: true },
+  //     );
+
+  //     if (response.data.success) {
+  //       setChangePass(false);
+  //       setIsLoading3(false);
+
+  //       setCurrentPassword("");
+  //       setNewPassword("");
+  //       setNewConfirmPassword("");
+
+  //       setUser((prev) => ({
+  //         ...prev,
+  //         password: newPassword,
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading3(false);
+  //     setError(error?.response?.data.message);
+  //     setErrorType("password");
+
+  //     setCurrentPassword("");
+  //     setNewPassword("");
+  //     setNewConfirmPassword("");
+
+  //     setTimeout(() => {
+  //       setError("");
+  //       setErrorType("");
+  //     }, 3000);
+  //   }
+  // };
 
   const handleChangePassKey = (e) => {
     if (e.key === "Enter") {
@@ -444,10 +463,10 @@ const SettingsPage = () => {
             <button
               className="bg-discord-input hover:bg-[#404249] transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
               onClick={() => setChangePass(true)}
-              disabled={isLoading3}
+              disabled={changePasswordLoading}
             >
               <span className="font-medium">
-                {isLoading3 ? "Loading..." : "Change Password"}
+                {changePasswordLoading ? "Loading..." : "Change Password"}
               </span>
               <span className="text-discord-muted">
                 <FaEdit />
@@ -510,7 +529,7 @@ const SettingsPage = () => {
                       type="password"
                       placeholder="Current password"
                       className={`px-4 py-2 border rounded-lg outline-none w-full bg-discord-input text-white placeholder-discord-placeholder ${
-                        error && errorType
+                        changePasswordError && errorType
                           ? "border-discord-dnd"
                           : "border-discord-deep"
                       }`}
@@ -521,7 +540,7 @@ const SettingsPage = () => {
                       type="password"
                       placeholder="New password"
                       className={`px-4 py-2 border rounded-lg outline-none w-full bg-discord-input text-white placeholder-discord-placeholder ${
-                        error && errorType
+                        changePasswordError && errorType
                           ? "border-discord-dnd"
                           : "border-discord-deep"
                       }`}
@@ -532,7 +551,7 @@ const SettingsPage = () => {
                       type="password"
                       placeholder="Confirm password"
                       className={`px-4 py-2 border rounded-lg outline-none w-full bg-discord-input text-white placeholder-discord-placeholder ${
-                        error && errorType === "password"
+                        changePasswordError && errorType === "password"
                           ? "border-discord-dnd"
                           : "border-discord-deep"
                       }`}
@@ -541,7 +560,7 @@ const SettingsPage = () => {
                     />
                   </form>
 
-                  {error && errorType === "password" && (
+                  {changePasswordError && errorType === "password" && (
                     <motion.div
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -549,7 +568,7 @@ const SettingsPage = () => {
                       className="px-3 py-2 rounded-lg bg-discord-dnd/20 border border-discord-dnd/50 text-discord-dnd text-sm flex items-center gap-2"
                     >
                       <span className="font-bold">!</span>
-                      <span>{error}</span>
+                      <span>{changePasswordError}</span>
                     </motion.div>
                   )}
                 </div>

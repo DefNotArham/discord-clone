@@ -7,10 +7,12 @@ const useUserStore = create((set) => ({
 
   editDisplayError: null,
   editUsernameError: null,
+  changePasswordError: null,
   errorType: null,
 
   displayNameLoading: false,
   userNameLoading: false,
+  changePasswordLoading: false,
 
   changeStatus: async (newStatus) => {
     try {
@@ -88,6 +90,37 @@ const useUserStore = create((set) => ({
         errorType: "username",
       });
       setTimeout(() => set({ editUsernameError: "", errorType: "" }), 3000);
+      return { success: false };
+    }
+  },
+  changePassword: async (currentPassword, newPassword, confirmNewPassword) => {
+    set({ changePasswordLoading: true });
+    try {
+      const response = await axios.patch(
+        "http://localhost:8000/user/change-password",
+        {
+          currentPassword: currentPassword.trim(),
+          newPassword: newPassword.trim(),
+          confirmNewPassword: confirmNewPassword.trim(),
+        },
+        { withCredentials: true },
+      );
+
+      if (response?.data?.success) {
+        set({ changePasswordLoading: false });
+        return { success: true };
+      }
+    } catch (error) {
+      console.log(error);
+      set({
+        changePasswordLoading: false,
+        changePasswordError: error?.response?.data?.message,
+        errorType: "password",
+      });
+
+      setTimeout(() => {
+        set({ changePasswordError: "", errorType: "" });
+      }, 3000);
       return { success: false };
     }
   },
