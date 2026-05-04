@@ -15,18 +15,27 @@ import useUserStore from "../../Stores/User.Store";
 
 const SettingsPage = () => {
   const { user } = useAuthStore();
-  const { changeDisplayName, editDisplayError, errorType, displayNameLoading } =
-    useUserStore();
+  const {
+    errorType,
+    // DisplayName
+    changeDisplayName,
+    editDisplayError,
+    displayNameLoading,
+
+    // username
+    changeUsername,
+    userNameLoading,
+    editUsernameError,
+  } = useUserStore();
 
   const navigate = useNavigate();
 
   const [editDisplayName, setEditDisplayName] = useState(false);
-  const [newDisplayName, setNewDisplayName] = useState(user.displayName);
+  const [newDisplayName, setNewDisplayName] = useState(user?.displayName);
 
   const [editUsername, setEditUsername] = useState(false);
-  const [newUsername, setNewUsername] = useState("");
+  const [newUsername, setNewUsername] = useState(user?.username);
 
-  const [isLoading2, setIsLoading2] = useState(false);
   const [isLoading3, setIsLoading3] = useState(false);
   const [isLoading4, setIsLoading4] = useState(false);
   const [isLoading5, setIsLoading5] = useState(false);
@@ -98,58 +107,71 @@ const SettingsPage = () => {
       return;
     }
 
-    if (!newUsername.trim()) {
-      setError("Username cannot be empty");
-      setErrorType("username");
-
-      setTimeout(() => {
-        setError("");
-        setErrorType("");
-      }, 3000);
-      return;
-    }
-
-    setIsLoading2(true);
-
-    if (editUsername) {
-      setIsLoading2(true);
-      try {
-        const response = await axios.patch(
-          "http://localhost:8000/user/change-username",
-          { newUsername },
-          { withCredentials: true },
-        );
-
-        if (!response.data.success) {
-          setError(response.data.message);
-          setErrorType("username");
-          setTimeout(() => {
-            setError("");
-            setErrorType("");
-          }, 3000);
-
-          return;
-        }
-
-        setUser((prev) => ({
-          ...prev,
-          username: newUsername,
-        }));
-
-        setIsLoading2(false);
-      } catch (error) {
-        console.log(error);
-        setError(error?.response?.data.message);
-        setErrorType("username");
-        setIsLoading2(false);
-
-        setTimeout(() => {
-          setError("");
-          setErrorType("");
-        }, 3000);
-      }
+    const result = await changeUsername(newUsername);
+    if (result?.success) {
+      setEditUsername(false);
+      setNewUsername("");
     }
   };
+
+  // const handleChangeUsername = async () => {
+  //   if (!editUsername) {
+  //     setEditUsername(true);
+  //     return;
+  //   }
+
+  //   if (!newUsername.trim()) {
+  //     setError("Username cannot be empty");
+  //     setErrorType("username");
+
+  //     setTimeout(() => {
+  //       setError("");
+  //       setErrorType("");
+  //     }, 3000);
+  //     return;
+  //   }
+
+  //   setIsLoading2(true);
+
+  //   if (editUsername) {
+  //     setIsLoading2(true);
+  //     try {
+  //       const response = await axios.patch(
+  //         "http://localhost:8000/user/change-username",
+  //         { newUsername },
+  //         { withCredentials: true },
+  //       );
+
+  //       if (!response.data.success) {
+  //         setError(response.data.message);
+  //         setErrorType("username");
+  //         setTimeout(() => {
+  //           setError("");
+  //           setErrorType("");
+  //         }, 3000);
+
+  //         return;
+  //       }
+
+  //       setUser((prev) => ({
+  //         ...prev,
+  //         username: newUsername,
+  //       }));
+
+  //       setIsLoading2(false);
+  //     } catch (error) {
+  //       console.log(error);
+  //       setError(error?.response?.data.message);
+  //       setErrorType("username");
+  //       setIsLoading2(false);
+
+  //       setTimeout(() => {
+  //         setError("");
+  //         setErrorType("");
+  //       }, 3000);
+  //     }
+  //   }
+  // };
 
   const handleChangePassword = async () => {
     setIsLoading3(true);
@@ -374,7 +396,7 @@ const SettingsPage = () => {
                 <>
                   <input
                     className={`border p-2 text-sm rounded-2xl mt-2 bg-discord-deep text-white placeholder-discord-placeholder ${
-                      error && errorType === "username"
+                      editUsernameError && errorType === "username"
                         ? "border-discord-dnd"
                         : "border-discord-deep"
                     }`}
@@ -388,7 +410,7 @@ const SettingsPage = () => {
                     }}
                   />
 
-                  {error && errorType === "username" && (
+                  {editUsernameError && errorType === "username" && (
                     <motion.div
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -396,26 +418,26 @@ const SettingsPage = () => {
                       className="mb-3 px-3 py-2 rounded-lg bg-discord-dnd/10 border border-discord-dnd/30 text-discord-dnd text-sm flex items-center gap-2 mt-2"
                     >
                       <span className="font-bold">!</span>
-                      <span>{error}</span>
+                      <span>{editUsernameError}</span>
                     </motion.div>
                   )}
                 </>
               ) : (
-                <span className="font-semibold">@{user.username}</span>
+                <span className="font-semibold">@{user?.username}</span>
               )}
             </div>
             <button
               onClick={handleChangeUsername}
-              disabled={isLoading2}
+              disabled={userNameLoading}
               className="text-sm text-white hover:underline cursor-pointer hover:-translate-y-1 transition-all ease-in-out bg-discord-blurple hover:bg-discord-blurple-hover px-3 py-1 rounded-lg"
             >
-              {isLoading2 ? "Saving..." : editUsername ? "Save" : "Edit"}
+              {userNameLoading ? "Saving..." : editUsername ? "Save" : "Edit"}
             </button>
           </div>
 
           <div className="bg-discord-input p-4 rounded-2xl flex justify-between items-center">
             <p className="text-discord-muted">Email</p>
-            <span className="font-semibold">{user.email}</span>
+            <span className="font-semibold">{user?.email}</span>
           </div>
 
           <div className="space-y-3">

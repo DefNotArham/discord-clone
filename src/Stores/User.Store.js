@@ -6,9 +6,11 @@ const useUserStore = create((set) => ({
   status: "online",
 
   editDisplayError: null,
+  editUsernameError: null,
   errorType: null,
 
   displayNameLoading: false,
+  userNameLoading: false,
 
   changeStatus: async (newStatus) => {
     try {
@@ -61,6 +63,31 @@ const useUserStore = create((set) => ({
         set({ editDisplayError: "", errorType: "" });
       }, 3000);
 
+      return { success: false };
+    }
+  },
+  changeUsername: async (newUsername) => {
+    set({ userNameLoading: true, editUsernameError: "", errorType: "" });
+    try {
+      const response = await axios.patch(
+        "http://localhost:8000/user/change-username",
+        { newUsername },
+        { withCredentials: true },
+      );
+      if (response?.data?.success) {
+        const { user } = useAuthStore.getState();
+        useAuthStore.setState({ user: { ...user, username: newUsername } });
+        set({ userNameLoading: false });
+        return { success: true };
+      }
+    } catch (error) {
+      set({
+        userNameLoading: false,
+        editUsernameError:
+          error?.response?.data?.message || "Something went wrong",
+        errorType: "username",
+      });
+      setTimeout(() => set({ editUsernameError: "", errorType: "" }), 3000);
       return { success: false };
     }
   },
