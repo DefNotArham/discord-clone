@@ -14,7 +14,17 @@ import useAuthStore from "../../Stores/Auth.Store";
 import useUserStore from "../../Stores/User.Store";
 
 const SettingsPage = () => {
-  const { user } = useAuthStore();
+  const {
+    user,
+    loading,
+    error,
+    errorType: authErrorType,
+    // Logout
+    logoutUser,
+
+    // Delete account
+    deleteAccount,
+  } = useAuthStore();
   const {
     errorType,
     // change DisplayName
@@ -50,7 +60,7 @@ const SettingsPage = () => {
   const [confirmNewPassword, setNewConfirmPassword] = useState("");
 
   const [deleteAccPassword, setDeleteAccPassword] = useState("");
-  const [deleteAccount, setDeleteAccount] = useState(false);
+  const [deleteAccountPopup, setDeleteAccountPopup] = useState(false);
 
   const [logout, setLogout] = useState(false);
 
@@ -98,10 +108,13 @@ const SettingsPage = () => {
   // };
 
   const handleEditDisplay = async () => {
+    if (!editDisplayName) {
+      setEditDisplayName(true);
+      return;
+    }
     const result = await changeDisplayName(newDisplayName);
-
     if (result?.success) {
-      setEditDisplayName(!editDisplayName);
+      setEditDisplayName(false);
     }
   };
 
@@ -243,63 +256,50 @@ const SettingsPage = () => {
   };
 
   const handleLogout = async () => {
-    setIsLoading4(true);
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/auth/logout",
-        {},
-        { withCredentials: true },
-      );
-
-      if (response.data.success) {
-        setUser(null);
-        setIsAuthentication(false);
-        navigate("/login");
-        setIsLoading4(false);
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error?.response?.data.message);
-      setErrorType("logout");
-
-      setIsLoading4(false);
-
-      setTimeout(() => {
-        setError("");
-        setErrorType("");
-      }, 3000);
+    const result = await logoutUser();
+    if (result.success) {
+      navigate("/login");
     }
   };
 
   const handleDeleteAccount = async () => {
-    try {
-      setIsLoading5(true);
-      const response = await axios.delete(
-        "http://localhost:8000/user/delete-account",
-        {
-          data: { password: deleteAccPassword },
-          withCredentials: true,
-        },
-      );
+    const result = await deleteAccount(deleteAccPassword);
 
-      if (response.data.success) {
-        setIsLoading5(false);
-        setDeleteAccount(false);
-        setIsAuthentication(false);
-        navigate("/login");
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error?.response?.data.message);
-      setErrorType("deleteaccount");
-      setIsLoading5(false);
-
-      setTimeout(() => {
-        setError("");
-        setErrorType("");
-      }, 3000);
+    if (result.success) {
+      setDeleteAccountPopup(false);
+      navigate("/login");
     }
   };
+
+  // const handleDeleteAccount = async () => {
+  //   try {
+  //     setIsLoading5(true);
+  //     const response = await axios.delete(
+  //       "http://localhost:8000/user/delete-account",
+  //       {
+  //         data: { password: deleteAccPassword },
+  //         withCredentials: true,
+  //       },
+  //     );
+
+  //     if (response.data.success) {
+  //       setIsLoading5(false);
+  //       setDeleteAccount(false);
+  //       setIsAuthentication(false);
+  //       navigate("/login");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setError(error?.response?.data.message);
+  //     setErrorType("deleteaccount");
+  //     setIsLoading5(false);
+
+  //     setTimeout(() => {
+  //       setError("");
+  //       setErrorType("");
+  //     }, 3000);
+  //   }
+  // };
 
   const handleDeleteAccKey = (e) => {
     if (e.key === "Enter") {
@@ -485,7 +485,7 @@ const SettingsPage = () => {
 
             <button
               onClick={() => {
-                setDeleteAccount(true);
+                setDeleteAccountPopup(true);
               }}
               className="bg-discord-dnd/10 hover:bg-discord-dnd/20 transition p-4 rounded-2xl flex justify-between items-center cursor-pointer w-full"
             >
@@ -616,7 +616,7 @@ const SettingsPage = () => {
                     Are you sure you want to log out?
                   </h2>
 
-                  {error && errorType === "logout" && (
+                  {error && authErrorType === "logout" && (
                     <motion.div
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -650,11 +650,11 @@ const SettingsPage = () => {
 
         {/* Delete Account modal */}
         <AnimatePresence>
-          {deleteAccount ? (
+          {deleteAccountPopup ? (
             <>
               <motion.div
                 className="fixed inset-0 bg-black/50"
-                onClick={() => setDeleteAccount(false)}
+                onClick={() => setDeleteAccountPopup(false)}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -672,7 +672,7 @@ const SettingsPage = () => {
                     Delete Account
                   </h2>
 
-                  {error && errorType === "deleteaccount" && (
+                  {error && authErrorType === "deleteaccount" && (
                     <motion.div
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -689,7 +689,7 @@ const SettingsPage = () => {
                     placeholder="Password"
                     onKeyDown={(e) => handleDeleteAccKey(e)}
                     className={`px-4 py-2 border rounded-lg outline-none w-full bg-discord-input text-white placeholder-discord-placeholder ${
-                      error && errorType === "deleteaccount"
+                      error && authErrorType === "deleteaccount"
                         ? "border-discord-dnd"
                         : "border-discord-deep"
                     }`}
@@ -700,7 +700,7 @@ const SettingsPage = () => {
 
                 <div className="flex justify-between gap-5 mt-5">
                   <button
-                    onClick={() => setDeleteAccount(false)}
+                    onClick={() => setDeleteAccountPopup(false)}
                     className="bg-discord-btn-neutral hover:bg-discord-btn-neutral-hover px-5 text-sm font-semibold py-3 rounded-lg w-[50%] cursor-pointer transition-colors"
                   >
                     Cancel

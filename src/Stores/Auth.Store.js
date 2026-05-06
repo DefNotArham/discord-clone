@@ -241,7 +241,8 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  logout: async () => {
+  logoutUser: async () => {
+    set({ loading: true });
     try {
       await axios.post(
         "http://localhost:8000/auth/logout",
@@ -252,9 +253,46 @@ const useAuthStore = create((set) => ({
       set({
         user: null,
         isAuthenticated: false,
+        loading: false,
       });
     } catch (error) {
       console.log(error);
+      set({
+        loading: false,
+        error: error.response?.data?.message || "Something went wrong",
+        errorType: "logout",
+      });
+
+      setTimeout(() => {
+        set({ error: "", errorType: "" });
+      }, 3000);
+    }
+  },
+
+  deleteAccount: async (deleteAccPassword) => {
+    set({ loading: true });
+    try {
+      const response = await axios.delete(
+        "http://localhost:8000/user/delete-account",
+        {
+          data: { password: deleteAccPassword },
+          withCredentials: true,
+        },
+      );
+      if (response?.data?.success) {
+        set({ loading: false, isAuthenticated: false });
+        return { success: true };
+      }
+    } catch (error) {
+      console.log(error);
+      set({
+        error: error?.response?.data?.message || "Something went wrong",
+        errorType: "deleteaccount",
+      });
+
+      setInterval(() => {
+        set({ error: "", errorType: "" });
+      }, 3000);
     }
   },
 }));
