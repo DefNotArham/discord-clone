@@ -15,13 +15,17 @@ const ServerSettings = () => {
     editServername,
     serverError,
     errorType,
+    deleteServer,
+    loadingDeleteServer,
   } = useServerStore();
 
   const [tab, setTab] = useState("overview");
+  const [deleteServerPopup, setDeleteServerPopup] = useState(false);
   const navigate = useNavigate();
 
   const { serverId } = useParams();
   const [serverName, setServerName] = useState(currentServer?.name);
+  const [deleteInput, setDeleteInput] = useState("");
 
   useEffect(() => {
     loadMembers(serverId);
@@ -35,6 +39,15 @@ const ServerSettings = () => {
 
   const handleEditServerName = async () => {
     const result = await editServername(serverId, serverName);
+  };
+
+  const handleDeleteServer = async () => {
+    const result = await deleteServer(serverId, deleteInput);
+
+    if (result?.success) {
+      setDeleteServerPopup(false);
+      navigate("/");
+    }
   };
 
   return (
@@ -222,7 +235,10 @@ const ServerSettings = () => {
                   messages, and members.
                 </p>
 
-                <button className="bg-discord-danger px-4 py-2 rounded-md text-sm hover:opacity-80 flex items-center gap-2">
+                <button
+                  onClick={() => setDeleteServerPopup(true)}
+                  className="cursor-pointer bg-discord-danger px-4 py-2 rounded-md text-sm hover:opacity-80 flex items-center gap-2"
+                >
                   <MdDeleteForever /> Delete Server
                 </button>
               </div>
@@ -240,6 +256,65 @@ const ServerSettings = () => {
           }}
         />
       </div>
+
+      <AnimatePresence>
+        {deleteServerPopup && (
+          <motion.div
+            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-discord-deep w-[420px] p-6 rounded-lg border border-discord-danger/40"
+            >
+              <h2 className="text-lg font-bold text-discord-danger mb-2">
+                Delete Server
+              </h2>
+
+              <p className="text-sm text-discord-muted mb-4">
+                Type{" "}
+                <span className="text-white font-semibold">
+                  {currentServer?.name}
+                </span>{" "}
+                to confirm.
+              </p>
+
+              <input
+                value={deleteInput}
+                onChange={(e) => setDeleteInput(e.target.value)}
+                placeholder="Enter server name"
+                className="w-full px-3 py-2 rounded-md bg-discord-input mb-4 outline-none"
+              />
+
+              <div className="flex justify-end gap-2">
+                <button
+                  onClick={() => setDeleteServerPopup(false)}
+                  className="px-3 py-1 bg-discord-btn-neutral rounded-md text-xs cursor-pointer"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  disabled={deleteInput !== currentServer?.name}
+                  onClick={handleDeleteServer}
+                  className={`px-3 py-2 rounded-md text-xs flex items-center gap-2 cursor-pointer ${
+                    deleteInput === currentServer?.name
+                      ? "bg-discord-danger"
+                      : "bg-discord-danger/40 cursor-not-allowed"
+                  }`}
+                >
+                  <MdDeleteForever />
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

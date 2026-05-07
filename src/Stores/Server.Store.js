@@ -199,7 +199,7 @@ const useServerStore = create((set) => ({
     set({ loadingDeleteServer: true });
     try {
       const response = await axios.delete(
-        `http://localhost:8000/user/delete-server/${serverId}`,
+        `http://localhost:8000/server/delete-server/${serverId}`,
         {
           data: { serverName: serverName },
           withCredentials: true,
