@@ -30,7 +30,7 @@ const editServerName = async (req, res) => {
         typeError: "editServername",
       });
 
-    server.name === newServerName;
+    server.name = newServerName;
     await server.save();
 
     res.status(200).json({

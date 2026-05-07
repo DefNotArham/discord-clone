@@ -6,8 +6,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaCircleXmark } from "react-icons/fa6";
 
 const ServerSettings = () => {
-  const { currentServer, loadMembers, members, loadingMembers } =
-    useServerStore();
+  const {
+    currentServer,
+    loadMembers,
+    members,
+    loadingMembers,
+    loadingEditServerName,
+    editServername,
+    serverError,
+    errorType,
+  } = useServerStore();
 
   const [tab, setTab] = useState("overview");
   const navigate = useNavigate();
@@ -18,6 +26,16 @@ const ServerSettings = () => {
   useEffect(() => {
     loadMembers(serverId);
   }, [serverId]);
+
+  useEffect(() => {
+    if (currentServer) {
+      setServerName(currentServer.name);
+    }
+  }, [currentServer]);
+
+  const handleEditServerName = async () => {
+    const result = await editServername(serverId, serverName);
+  };
 
   return (
     <div className="min-h-screen w-full bg-discord-bg text-white flex">
@@ -91,13 +109,31 @@ const ServerSettings = () => {
                     placeholder="Enter server name"
                     value={serverName}
                     onChange={(e) => setServerName(e.target.value)}
-                    className="w-[85%] outline-0 "
+                    className="w-[84%] outline-0 "
                   />
-                  <button className="bg-discord-success text-xs px-3 py-1 rounded-md cursor-pointer">
-                    {false ? "Loading..." : "Save"}
+                  <button
+                    disabled={loadingEditServerName}
+                    className="bg-discord-success text-xs px-3 py-1 rounded-md cursor-pointer"
+                    onClick={() => {
+                      handleEditServerName();
+                    }}
+                  >
+                    {loadingEditServerName ? "Loading" : "Save"}
                   </button>
                 </div>
               </div>
+
+              {serverError && errorType === "editServername" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  className="mb-3 px-3 py-2 rounded-lg bg-discord-danger/10 border border-discord-danger/30 text-discord-danger text-sm flex items-center gap-2 mt-3"
+                >
+                  <span className="font-bold">!</span>
+                  <span>{serverError}</span>
+                </motion.div>
+              )}
             </motion.div>
           )}
 
@@ -138,7 +174,8 @@ const ServerSettings = () => {
                           </div>
                         </div>
 
-                        {currentServer?.owner !== m._id && (
+                        {currentServer?.owner.toString() !==
+                          m._id.toString() && (
                           <button className="text-xs text-discord-danger hover:underline cursor-pointer">
                             Kick
                           </button>

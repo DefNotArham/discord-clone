@@ -13,6 +13,7 @@ const useServerStore = create((set) => ({
   loadingJoin: false,
   loadingServer: false,
   loadingMembers: false,
+  loadingEditServerName: false,
 
   // Error
   serverError: "",
@@ -154,6 +155,40 @@ const useServerStore = create((set) => ({
 
       setTimeout(() => {
         set({ loading: false, serverError: "", errorType: "" });
+      }, 3000);
+      return { success: false };
+    }
+  },
+
+  editServername: async (serverId, newServerName) => {
+    set({ loadingEditServerName: true });
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/server/editServername/${serverId}`,
+        { newServerName },
+        { withCredentials: true },
+      );
+
+      if (response?.data?.success) {
+        set((state) => ({
+          currentServer: { ...state.currentServer, name: newServerName },
+          servers: state.servers.map((s) =>
+            s._id === serverId ? { ...s, name: newServerName } : s,
+          ),
+          loadingEditServerName: false,
+        }));
+
+        return { success: true };
+      }
+    } catch (error) {
+      set({
+        loadingEditServerName: false,
+        serverError: error?.response?.data?.message || "Something went wrong",
+        errorType: error?.response?.data?.typeError || "leaveServer",
+      });
+
+      setTimeout(() => {
+        set({ loadingEditServerName: false, serverError: "", errorType: "" });
       }, 3000);
       return { success: false };
     }

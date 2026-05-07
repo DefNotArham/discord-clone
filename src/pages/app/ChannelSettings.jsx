@@ -50,22 +50,6 @@ const ChannelSettings = () => {
     }
   }, [currentChannel]);
 
-  // const loadServers = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8000/auth/checkAuth",
-  //       {},
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       setUser(response.data.user);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleDeleteChannel = async () => {
     const result = await deleteChannel(serverId, channelId);
 
@@ -74,82 +58,9 @@ const ChannelSettings = () => {
     }
   };
 
-  // const handleDeleteChannel = async () => {
-  //   try {
-  //     const response = await axios.delete(
-  //       `http://localhost:8000/server/channel/delete-channel/${serverId}/channel/${channelId}`,
-  //       {
-  //         withCredentials: true,
-  //       },
-  //     );
-
-  //     if (response.data.success) {
-  //       navigate(`/server/${serverId}`);
-  //       loadServers();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     setError(error?.response?.data.message);
-  //     setErrorType("deletechannel");
-
-  //     setTimeout(() => {
-  //       setError("");
-  //       setErrorType("");
-  //     }, 3000);
-  //   }
-  // };
-
-  // const handleLoadChannel = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8000/server/channel/load-channel/${serverId}/channel/${channelId}`,
-  //       {
-  //         withCredentials: true,
-  //       },
-  //     );
-
-  //     if (response?.data.success) {
-  //       setChannel(response.data.channel);
-  //       setChannelName(response.data.channel.name);
-  //       setIsLoading(false);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const handleEditChannelName = async () => {
     const result = await editChannelName(serverId, channelId, channelName);
   };
-
-  // const handleEditChannelName = async () => {
-  //   setEditChannelLoading(true);
-
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:8000/server/channel/edit-channelName/${serverId}/channel/${channelId}`,
-  //       { newChannelName: channelName },
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       loadServers();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     setError(error?.response?.data.message);
-  //     setErrorType("editChannel");
-
-  //     setTimeout(() => {
-  //       setError("");
-  //       setErrorType("");
-  //     }, 3000);
-  //   } finally {
-  //     setEditChannelLoading(false);
-  //   }
-  // };
 
   const handleEditChannelnameKey = (e) => {
     if (e.key === "Enter") {

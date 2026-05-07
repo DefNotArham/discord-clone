@@ -83,7 +83,7 @@ const useChannelStore = create((set) => ({
   editChannelName: async (serverId, channelId, channelName) => {
     set({ loadingEditChannelName: true, channelError: "", errorType: "" });
     try {
-      const response = await axios.post(
+      const response = await axios.patch(
         `http://localhost:8000/server/channel/edit-channelName/${serverId}/channel/${channelId}`,
         { newChannelName: channelName },
         { withCredentials: true },
