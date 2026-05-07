@@ -9,129 +9,155 @@ import LoadingUi from "../../Components/LoadingUi";
 import { MdDeleteForever } from "react-icons/md";
 import { FaCircleXmark, FaSketch } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
+import useAuthStore from "../../Stores/Auth.Store";
+import useChannelStore from "../../Stores/Channel.Store";
 
-const ChannelSettings = ({ setUser, user }) => {
+const ChannelSettings = () => {
+  const { user } = useAuthStore();
+  const {
+    deleteChannel,
+    loadChannel,
+    currentChannel,
+    loadingChannel,
+    editChannelName,
+    loadingEditChannelName,
+    channelError,
+    errorType,
+  } = useChannelStore();
+
   const [selectedTab, setSelectedTab] = useState("overview");
-  const [deleteChannel, setDeleteChannel] = useState(false);
+  const [deleteChannelPopup, setDeleteChannelPopup] = useState(false);
 
   const { serverId, channelId } = useParams();
 
-  const [channel, setChannel] = useState(null);
-  const [channelName, setChannelName] = useState(channel?.name);
+  const [channelName, setChannelName] = useState(currentChannel?.name);
 
   const [channelSidebar, setChannelSidebar] = useState(false);
 
-  const [editChannelName, setEditChannelName] = useState(false);
-  const [editChannelLoading, setEditChannelLoading] = useState(false);
-
-  const [isLoading, setIsLoading] = useState(false);
+  const [editChannelNamePopup, setEditChannelNamePopup] = useState(false);
 
   const navigate = useNavigate();
 
-  const [error, setError] = useState("");
-  const [errorType, setErrorType] = useState("");
+  useEffect(() => {
+    if (serverId && channelId) {
+      loadChannel(serverId, channelId);
+    }
+  }, [serverId, channelId]);
 
   useEffect(() => {
-    handleLoadChannel();
-  }, []);
-
-  const loadServers = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/auth/checkAuth",
-        {},
-        { withCredentials: true },
-      );
-
-      if (response.data.success) {
-        setUser(response.data.user);
-      }
-    } catch (error) {
-      console.log(error);
+    if (currentChannel) {
+      setChannelName(currentChannel.name);
     }
-  };
+  }, [currentChannel]);
+
+  // const loadServers = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:8000/auth/checkAuth",
+  //       {},
+  //       { withCredentials: true },
+  //     );
+
+  //     if (response.data.success) {
+  //       setUser(response.data.user);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleDeleteChannel = async () => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8000/server/channel/delete-channel/${serverId}/channel/${channelId}`,
-        {
-          withCredentials: true,
-        },
-      );
+    const result = await deleteChannel(serverId, channelId);
 
-      if (response.data.success) {
-        navigate(`/server/${serverId}`);
-        loadServers();
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error?.response?.data.message);
-      setErrorType("deletechannel");
-
-      setTimeout(() => {
-        setError("");
-        setErrorType("");
-      }, 3000);
+    if (result.success) {
+      navigate(`/server/${serverId}`);
     }
   };
 
-  const handleLoadChannel = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/server/channel/load-channel/${serverId}/channel/${channelId}`,
-        {
-          withCredentials: true,
-        },
-      );
+  // const handleDeleteChannel = async () => {
+  //   try {
+  //     const response = await axios.delete(
+  //       `http://localhost:8000/server/channel/delete-channel/${serverId}/channel/${channelId}`,
+  //       {
+  //         withCredentials: true,
+  //       },
+  //     );
 
-      if (response?.data.success) {
-        setChannel(response.data.channel);
-        setChannelName(response.data.channel.name);
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-    }
-  };
+  //     if (response.data.success) {
+  //       navigate(`/server/${serverId}`);
+  //       loadServers();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setError(error?.response?.data.message);
+  //     setErrorType("deletechannel");
+
+  //     setTimeout(() => {
+  //       setError("");
+  //       setErrorType("");
+  //     }, 3000);
+  //   }
+  // };
+
+  // const handleLoadChannel = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:8000/server/channel/load-channel/${serverId}/channel/${channelId}`,
+  //       {
+  //         withCredentials: true,
+  //       },
+  //     );
+
+  //     if (response?.data.success) {
+  //       setChannel(response.data.channel);
+  //       setChannelName(response.data.channel.name);
+  //       setIsLoading(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleEditChannelName = async () => {
-    setEditChannelLoading(true);
-
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/server/channel/edit-channelName/${serverId}/channel/${channelId}`,
-        { newChannelName: channelName },
-        { withCredentials: true },
-      );
-
-      if (response.data.success) {
-        loadServers();
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error?.response?.data.message);
-      setErrorType("editChannel");
-
-      setTimeout(() => {
-        setError("");
-        setErrorType("");
-      }, 3000);
-    } finally {
-      setEditChannelLoading(false);
-    }
+    const result = await editChannelName(serverId, channelId, channelName);
   };
+
+  // const handleEditChannelName = async () => {
+  //   setEditChannelLoading(true);
+
+  //   try {
+  //     const response = await axios.post(
+  //       `http://localhost:8000/server/channel/edit-channelName/${serverId}/channel/${channelId}`,
+  //       { newChannelName: channelName },
+  //       { withCredentials: true },
+  //     );
+
+  //     if (response.data.success) {
+  //       loadServers();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setError(error?.response?.data.message);
+  //     setErrorType("editChannel");
+
+  //     setTimeout(() => {
+  //       setError("");
+  //       setErrorType("");
+  //     }, 3000);
+  //   } finally {
+  //     setEditChannelLoading(false);
+  //   }
+  // };
 
   const handleEditChannelnameKey = (e) => {
     if (e.key === "Enter") {
       handleEditChannelName();
     }
   };
-  if (isLoading) {
-    return <LoadingUi />;
-  }
+
+  if (loadingChannel || !currentChannel) return <LoadingUi />;
 
   return (
     <DefaultBackground>
@@ -161,7 +187,7 @@ const ChannelSettings = ({ setUser, user }) => {
 
             <button
               className="text-left px-3 py-2 rounded-md bg-discord-danger text-white mt-2 text-sm cursor-pointer flex items-center justify-between"
-              onClick={() => setDeleteChannel(true)}
+              onClick={() => setDeleteChannelPopup(true)}
             >
               Delete Channel <MdDeleteForever size={16} />
             </button>
@@ -230,7 +256,7 @@ const ChannelSettings = ({ setUser, user }) => {
                   <button
                     className="text-left px-3 py-2 rounded-md bg-discord-danger text-white mt-2 text-sm cursor-pointer flex items-center justify-between"
                     onClick={() => {
-                      setDeleteChannel(true);
+                      setDeleteChannelPopup(true);
                       setChannelSidebar(false);
                     }}
                   >
@@ -258,7 +284,7 @@ const ChannelSettings = ({ setUser, user }) => {
                 <input
                   type="text"
                   placeholder={
-                    editChannelLoading ? "Loading..." : "Enter channel name"
+                    loadingEditChannelName ? "Loading..." : "Enter channel name"
                   }
                   value={channelName}
                   onChange={(e) => {
@@ -272,11 +298,11 @@ const ChannelSettings = ({ setUser, user }) => {
                   onClick={handleEditChannelName}
                   className="bg-discord-success text-xs px-3 py-1 rounded-md cursor-pointer"
                 >
-                  {editChannelLoading ? "Loading..." : "Save"}
+                  {loadingEditChannelName ? "Loading..." : "Save"}
                 </button>
               </div>
 
-              {error && errorType === "editChannel" && (
+              {channelError && errorType === "editChannel" && (
                 <motion.div
                   initial={{ opacity: 0, y: -5 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -284,7 +310,7 @@ const ChannelSettings = ({ setUser, user }) => {
                   className="mb-3 px-3 py-2 rounded-lg bg-discord-danger/10 border border-discord-danger/30 text-discord-danger text-sm flex items-center gap-2 mt-3"
                 >
                   <span className="font-bold">!</span>
-                  <span>{error}</span>
+                  <span>{channelError}</span>
                 </motion.div>
               )}
             </div>
@@ -302,7 +328,7 @@ const ChannelSettings = ({ setUser, user }) => {
         </div>
       </div>
       <AnimatePresence>
-        {deleteChannel ? (
+        {deleteChannelPopup ? (
           <motion.div
             className="inset-0 fixed bg-black/50 flex items-center justify-center z-[1000]"
             initial={{ opacity: 0 }}
@@ -326,7 +352,7 @@ const ChannelSettings = ({ setUser, user }) => {
 
               <div className="flex justify-end gap-3">
                 <button
-                  onClick={() => setDeleteChannel(false)}
+                  onClick={() => setDeleteChannelPopup(false)}
                   className="px-4 py-2 rounded-md bg-discord-btn-neutral hover:bg-discord-btn-neutral-hover text-sm cursor-pointer"
                 >
                   Cancel

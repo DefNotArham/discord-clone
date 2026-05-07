@@ -35,7 +35,12 @@ const editChannelController = async (req, res) => {
         message: "Enter new server name",
       });
 
-    if (newChannelName === channel.name) return;
+    if (newChannelName === channel.name)
+      return res.status(400).json({
+        success: false,
+        message: "Channel name is already the same",
+        typeError: "editChannel",
+      });
 
     channel.name = newChannelName;
     await channel.save();

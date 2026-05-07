@@ -43,18 +43,13 @@ const ProtectedSettingsRoutes = ({ children }) => {
   const { servers } = useServerStore();
   const { serverId } = useParams();
 
-  const [checkingServer, setCheckingServer] = useState(true);
-
-  if (loading || checkingServer) return null;
-
-  if (!isAuthenticated || !user?.isVerified) {
+  if (loading) return null;
+  if (!isAuthenticated || !user?.isVerified)
     return <Navigate to="/login" replace />;
-  }
 
   const server = servers.find((s) => s._id === serverId);
-  if (!server || server?.owner !== user?._id) {
+  if (!server || server?.owner !== user?._id)
     return <Navigate to="/" replace />;
-  }
 
   return children;
 };
@@ -96,22 +91,24 @@ const App = () => {
         }
       />
 
+      <Route
+        path="/server/:serverId/channel/:channelId/settings"
+        element={
+          <ProtectedRoutes>
+            <ProtectedSettingsRoutes>
+              <ChannelSettings />
+            </ProtectedSettingsRoutes>
+          </ProtectedRoutes>
+        }
+      />
+
       {/* 
 
   
 
   
 
-      <Route
-        path="/server/:serverId/channel/:channelId/settings"
-        element={
-          <ProtectedRoutes>
-            <ProtectedSettingsRoutes>
-              <ChannelSettings setUser={setUser} user={user} />
-            </ProtectedSettingsRoutes>
-          </ProtectedRoutes>
-        }
-      />
+
 
       <Route
         path="/server/:serverId/settings"
