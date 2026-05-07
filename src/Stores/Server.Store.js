@@ -115,9 +115,9 @@ const useServerStore = create((set) => ({
       );
 
       if (response?.data?.success) {
-        set({
-          servers: servers.filter((s) => s._id !== serverId),
-        });
+        set((state) => ({
+          servers: state.servers.filter((s) => s._id !== serverId),
+        }));
 
         return { success: true };
       }
@@ -126,7 +126,7 @@ const useServerStore = create((set) => ({
       set({
         loading: false,
         serverError: error?.response?.data?.message || "Something went wrong",
-        errorType: error?.response?.data?.typeError || "server",
+        errorType: error?.response?.data?.typeError || "leaveServer",
       });
 
       setTimeout(() => {
