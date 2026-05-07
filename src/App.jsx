@@ -102,14 +102,6 @@ const App = () => {
         }
       />
 
-      {/* 
-
-  
-
-  
-
-
-
       <Route
         path="/server/:serverId/settings"
         element={
@@ -119,7 +111,7 @@ const App = () => {
             </ProtectedSettingsRoutes>
           </ProtectedRoutes>
         }
-      /> */}
+      />
 
       {/* Auth pages */}
 

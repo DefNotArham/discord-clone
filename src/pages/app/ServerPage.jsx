@@ -334,7 +334,7 @@ const ServerPage = () => {
                   className="mb-3 px-3 py-2 rounded-lg bg-discord-danger/10 border border-discord-danger/30 text-discord-danger text-sm flex items-center gap-2"
                 >
                   <span className="font-bold">!</span>
-                  <span>{error}</span>
+                  <span>{channelError}</span>
                 </motion.div>
               )}
 
