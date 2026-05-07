@@ -14,6 +14,7 @@ const useServerStore = create((set) => ({
   loadingServer: false,
   loadingMembers: false,
   loadingEditServerName: false,
+  loadingDeleteServer: false,
 
   // Error
   serverError: "",
@@ -190,6 +191,42 @@ const useServerStore = create((set) => ({
       setTimeout(() => {
         set({ loadingEditServerName: false, serverError: "", errorType: "" });
       }, 3000);
+      return { success: false };
+    }
+  },
+
+  deleteServer: async (serverId, serverName) => {
+    set({ loadingDeleteServer: true });
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/user/delete-server/${serverId}`,
+        {
+          data: { serverName: serverName },
+          withCredentials: true,
+        },
+      );
+
+      if (response?.data?.success) {
+        set((state) => ({
+          servers: state.servers.filter((s) => s._id !== serverId),
+          loadingDeleteServer: false,
+        }));
+
+        return { success: true };
+      }
+    } catch (error) {
+      console.log(error);
+
+      set({
+        loadingDeleteServer: false,
+        serverError: error?.response?.data?.message || "Something went wrong",
+        errorType: error?.response?.data?.typeError || "leaveServer",
+      });
+
+      setTimeout(() => {
+        set({ loadingDeleteServer: false, serverError: "", errorType: "" });
+      }, 3000);
+
       return { success: false };
     }
   },

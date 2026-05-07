@@ -27,7 +27,7 @@ router.post("/leave-server/:serverId", verifyToken, leaveServerController);
 router.get("/get-servers", verifyToken, getServersController);
 router.get("/get-members/:serverId", verifyToken, loadMembersController);
 router.patch("/editServername/:serverId", verifyToken, editServerName);
-router.delete("/delete-server", verifyToken, deleteServerController);
+router.delete("/delete-server/:serverId", verifyToken, deleteServerController);
 
 // channels
 router.post(
