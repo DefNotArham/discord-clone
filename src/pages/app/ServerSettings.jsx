@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdDeleteForever } from "react-icons/md";
+import useServerStore from "../../Stores/Server.Store";
 
 const ServerSettings = () => {
+  const { currentServer } = useServerStore();
+
   const [tab, setTab] = useState("overview");
 
   return (
@@ -92,9 +95,9 @@ const ServerSettings = () => {
               <h1 className="text-xl font-semibold mb-6">Members</h1>
 
               <div className="bg-discord-deep p-4 rounded-lg">
-                <p className="text-discord-muted text-sm">
-                  Member management coming soon...
-                </p>
+                {currentServer.members.map((m) => (
+                  <p>{m}</p>
+                ))}
               </div>
             </motion.div>
           )}

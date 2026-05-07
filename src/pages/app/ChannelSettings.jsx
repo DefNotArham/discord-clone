@@ -274,47 +274,69 @@ const ChannelSettings = () => {
         />
 
         <div className=" bg-discord-sidebar w-full flex flex-col pl-30 pt-5">
-          {selectedTab === "overview" ? (
-            <div className="mb-8 custom2:max-w-[500px] ">
-              <label className="block text-xs text-discord-uted mb-2 uppercase tracking-wide">
-                Channel Name
-              </label>
+          <AnimatePresence mode="wait">
+            {selectedTab === "overview" ? (
+              <motion.div
+                key={"overview"}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="mb-8 custom2:max-w-[500px] "
+              >
+                <label className="block text-xs text-discord-uted mb-2 uppercase tracking-wide">
+                  Channel Name
+                </label>
 
-              <div className="w-full bg-discord-input text-white px-3 py-2 rounded-md outline-none border border-transparent focus:border-discord-blurple flex justify-between">
-                <input
-                  type="text"
-                  placeholder={
-                    loadingEditChannelName ? "Loading..." : "Enter channel name"
-                  }
-                  value={channelName}
-                  onChange={(e) => {
-                    setChannelName(e.target.value);
-                  }}
-                  onKeyDown={(e) => handleEditChannelnameKey(e)}
-                  className="w-[80%] outline-0 "
-                />
+                <div className="w-full bg-discord-input text-white px-3 py-2 rounded-md outline-none border border-transparent focus:border-discord-blurple flex justify-between">
+                  <input
+                    type="text"
+                    placeholder={
+                      loadingEditChannelName
+                        ? "Loading..."
+                        : "Enter channel name"
+                    }
+                    value={channelName}
+                    onChange={(e) => {
+                      setChannelName(e.target.value);
+                    }}
+                    onKeyDown={(e) => handleEditChannelnameKey(e)}
+                    className="w-[80%] outline-0 "
+                  />
 
-                <button
-                  onClick={handleEditChannelName}
-                  className="bg-discord-success text-xs px-3 py-1 rounded-md cursor-pointer"
-                >
-                  {loadingEditChannelName ? "Loading..." : "Save"}
-                </button>
-              </div>
+                  <button
+                    onClick={handleEditChannelName}
+                    className="bg-discord-success text-xs px-3 py-1 rounded-md cursor-pointer"
+                  >
+                    {loadingEditChannelName ? "Loading..." : "Save"}
+                  </button>
+                </div>
 
-              {channelError && errorType === "editChannel" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  className="mb-3 px-3 py-2 rounded-lg bg-discord-danger/10 border border-discord-danger/30 text-discord-danger text-sm flex items-center gap-2 mt-3"
-                >
-                  <span className="font-bold">!</span>
-                  <span>{channelError}</span>
-                </motion.div>
-              )}
-            </div>
-          ) : null}
+                {channelError && errorType === "editChannel" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    className="mb-3 px-3 py-2 rounded-lg bg-discord-danger/10 border border-discord-danger/30 text-discord-danger text-sm flex items-center gap-2 mt-3"
+                  >
+                    <span className="font-bold">!</span>
+                    <span>{channelError}</span>
+                  </motion.div>
+                )}
+              </motion.div>
+            ) : null}
+
+            {selectedTab === "permission" && (
+              <motion.div
+                key="permission"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="text-sm text-discord-muted"
+              >
+                Permissions coming soon...
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="bg-discord-sidebar flex flex-col items-end px-10 custom2:px-20 pt-10">

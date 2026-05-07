@@ -7,6 +7,7 @@ import loadServerController from "../controllers/serverControllers/loadServer.co
 import joinServerController from "../controllers/serverControllers/joinServer.controller.js";
 import leaveServerController from "../controllers/serverControllers/leaveServer.controller.js";
 import getServersController from "../controllers/serverControllers/getServers.controller.js";
+import loadMembersController from "../controllers/serverControllers/loadMembers.controller.js";
 
 // Channel
 import createChannelController from "../controllers/channelControllers/createChannel.controller.js";
@@ -22,6 +23,7 @@ router.get("/load-server/:serverId", verifyToken, loadServerController);
 router.post("/join-server", verifyToken, joinServerController);
 router.post("/leave-server/:serverId", verifyToken, leaveServerController);
 router.get("/get-servers", verifyToken, getServersController);
+router.get("/get-members/:serverId", verifyToken, loadMembersController);
 
 // channels
 router.post(
