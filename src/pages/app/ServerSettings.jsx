@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdDeleteForever } from "react-icons/md";
 import useServerStore from "../../Stores/Server.Store";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { FaCircleXmark } from "react-icons/fa6";
 
 const ServerSettings = () => {
   const { currentServer, loadMembers, members, loadingMembers } =
     useServerStore();
 
   const [tab, setTab] = useState("overview");
+  const navigate = useNavigate();
 
   const { serverId } = useParams();
-
   const [serverName, setServerName] = useState(currentServer?.name);
 
   useEffect(() => {
@@ -84,13 +85,18 @@ const ServerSettings = () => {
                   Server Name
                 </label>
 
-                <input
-                  type="text"
-                  className="w-full mt-2 px-3 py-2 bg-discord-input rounded-md outline-none focus:border-discord-blurple border border-transparent"
-                  placeholder="Enter server name"
-                  value={serverName}
-                  onChange={(e) => setServerName(e.target.value)}
-                />
+                <div className="w-full mt-2 px-3 py-2 bg-discord-input rounded-md outline-none focus:border-discord-blurple border border-transparent">
+                  <input
+                    type="text"
+                    placeholder="Enter server name"
+                    value={serverName}
+                    onChange={(e) => setServerName(e.target.value)}
+                    className="w-[85%] outline-0 "
+                  />
+                  <button className="bg-discord-success text-xs px-3 py-1 rounded-md cursor-pointer">
+                    {false ? "Loading..." : "Save"}
+                  </button>
+                </div>
               </div>
             </motion.div>
           )}
@@ -186,6 +192,16 @@ const ServerSettings = () => {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+
+      <div className=" flex flex-col items-end px-10 custom2:px-20 pt-10">
+        <FaCircleXmark
+          size={28}
+          className="cursor-pointer text-discord-muted"
+          onClick={() => {
+            navigate(`/server/${serverId}`);
+          }}
+        />
       </div>
     </div>
   );
