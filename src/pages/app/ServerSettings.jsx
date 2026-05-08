@@ -187,6 +187,13 @@ const ServerSettings = () => {
                           </div>
                         </div>
 
+                        {currentServer?.owner.toString() ===
+                          m._id.toString() && (
+                          <button className="text-sm cursor-pointer text-discord-blurple">
+                            Owner
+                          </button>
+                        )}
+
                         {currentServer?.owner.toString() !==
                           m._id.toString() && (
                           <button className="text-xs text-discord-danger hover:underline cursor-pointer">
