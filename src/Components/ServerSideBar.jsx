@@ -39,22 +39,6 @@ const ServerSideBar = ({
     }
   }, [serverId]);
 
-  // const loadServers = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8000/auth/checkAuth",
-  //       {},
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       setUser(response.data.user);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
     let handler = (e) => {
       if (
@@ -69,23 +53,6 @@ const ServerSideBar = ({
 
     return () => document.removeEventListener("mousedown", handler);
   }, []);
-
-  // const handleDeleteChannel = async (channelId) => {
-  //   try {
-  //     const response = await axios.delete(
-  //       `http://localhost:8000/server/channel/delete-channel/${serverId}/channel/${channelId}`,
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       loadServers();
-  //       setChannelSetting(false);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     setChannelSetting(false);
-  //   }
-  // };
 
   return (
     <div className="bg-[#2b2d31] w-[200px] md:w-[280px]  h-screen ml-[70px] fixed left-0 top-0 flex flex-col z-40">

@@ -64,49 +64,6 @@ const SettingsPage = () => {
 
   const [logout, setLogout] = useState(false);
 
-  // const handleEditDisplay = async () => {
-  //   if (editDisplayName) {
-  //     if (newDisplayName.length < 3 || newDisplayName.length > 20) {
-  //       setError("Display name must be 3–20 characters");
-  //       setErrorType("displayName");
-
-  //       setTimeout(() => {
-  //         setError("");
-  //         setErrorType("");
-  //       }, 3000);
-  //       return;
-  //     }
-
-  //     setIsLoading1(true);
-  //     try {
-  //       const response = await axios.patch(
-  //         "http://localhost:8000/user/change-displayName",
-  //         { newDisplayName },
-  //         { withCredentials: true },
-  //       );
-
-  //       setUser((prev) => ({
-  //         ...prev,
-  //         displayName: newDisplayName,
-  //       }));
-
-  //       setIsLoading1(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //       setError(error.response?.data?.message);
-  //       setErrorType("displayName");
-  //       setIsLoading1(false);
-
-  //       setTimeout(() => {
-  //         setError("");
-  //         setErrorType("");
-  //       }, 3000);
-  //     }
-  //   }
-
-  //   setEditDisplayName(!editDisplayName);
-  // };
-
   const handleEditDisplay = async () => {
     if (!editDisplayName) {
       setEditDisplayName(true);
@@ -131,65 +88,6 @@ const SettingsPage = () => {
     }
   };
 
-  // const handleChangeUsername = async () => {
-  //   if (!editUsername) {
-  //     setEditUsername(true);
-  //     return;
-  //   }
-
-  //   if (!newUsername.trim()) {
-  //     setError("Username cannot be empty");
-  //     setErrorType("username");
-
-  //     setTimeout(() => {
-  //       setError("");
-  //       setErrorType("");
-  //     }, 3000);
-  //     return;
-  //   }
-
-  //   setIsLoading2(true);
-
-  //   if (editUsername) {
-  //     setIsLoading2(true);
-  //     try {
-  //       const response = await axios.patch(
-  //         "http://localhost:8000/user/change-username",
-  //         { newUsername },
-  //         { withCredentials: true },
-  //       );
-
-  //       if (!response.data.success) {
-  //         setError(response.data.message);
-  //         setErrorType("username");
-  //         setTimeout(() => {
-  //           setError("");
-  //           setErrorType("");
-  //         }, 3000);
-
-  //         return;
-  //       }
-
-  //       setUser((prev) => ({
-  //         ...prev,
-  //         username: newUsername,
-  //       }));
-
-  //       setIsLoading2(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //       setError(error?.response?.data.message);
-  //       setErrorType("username");
-  //       setIsLoading2(false);
-
-  //       setTimeout(() => {
-  //         setError("");
-  //         setErrorType("");
-  //       }, 3000);
-  //     }
-  //   }
-  // };
-
   const handleChangePassword = async () => {
     const result = await changePassword(
       currentPassword,
@@ -204,50 +102,6 @@ const SettingsPage = () => {
       setNewConfirmPassword("");
     }
   };
-
-  // const handleChangePassword = async () => {
-  //   setIsLoading3(true);
-
-  //   try {
-  //     const response = await axios.patch(
-  //       "http://localhost:8000/user/change-password",
-  //       {
-  //         currentPassword: currentPassword.trim(),
-  //         newPassword: newPassword.trim(),
-  //         confirmNewPassword: confirmNewPassword.trim(),
-  //       },
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       setChangePass(false);
-  //       setIsLoading3(false);
-
-  //       setCurrentPassword("");
-  //       setNewPassword("");
-  //       setNewConfirmPassword("");
-
-  //       setUser((prev) => ({
-  //         ...prev,
-  //         password: newPassword,
-  //       }));
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     setIsLoading3(false);
-  //     setError(error?.response?.data.message);
-  //     setErrorType("password");
-
-  //     setCurrentPassword("");
-  //     setNewPassword("");
-  //     setNewConfirmPassword("");
-
-  //     setTimeout(() => {
-  //       setError("");
-  //       setErrorType("");
-  //     }, 3000);
-  //   }
-  // };
 
   const handleChangePassKey = (e) => {
     if (e.key === "Enter") {
@@ -270,36 +124,6 @@ const SettingsPage = () => {
       navigate("/login");
     }
   };
-
-  // const handleDeleteAccount = async () => {
-  //   try {
-  //     setIsLoading5(true);
-  //     const response = await axios.delete(
-  //       "http://localhost:8000/user/delete-account",
-  //       {
-  //         data: { password: deleteAccPassword },
-  //         withCredentials: true,
-  //       },
-  //     );
-
-  //     if (response.data.success) {
-  //       setIsLoading5(false);
-  //       setDeleteAccount(false);
-  //       setIsAuthentication(false);
-  //       navigate("/login");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     setError(error?.response?.data.message);
-  //     setErrorType("deleteaccount");
-  //     setIsLoading5(false);
-
-  //     setTimeout(() => {
-  //       setError("");
-  //       setErrorType("");
-  //     }, 3000);
-  //   }
-  // };
 
   const handleDeleteAccKey = (e) => {
     if (e.key === "Enter") {

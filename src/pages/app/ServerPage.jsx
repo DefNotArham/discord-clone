@@ -46,22 +46,6 @@ const ServerPage = () => {
     }
   }, [serverId]);
 
-  // const loadServers = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:8000/auth/checkAuth",
-  //       {},
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       setUser(response.data.user);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const inviteCodeRef = useRef(null);
 
   useEffect(() => {
@@ -112,30 +96,6 @@ const ServerPage = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // const handleLeaveServer = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:8000/server/leave-server/${serverId}`,
-  //       {},
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       setLeaveConfirmPopup(false);
-  //       navigate("/");
-  //       loadServers();
-  //     }
-  //   } catch (error) {
-  //     setError(error?.response?.data.message);
-  //     setErrorType("leaveServer");
-
-  //     setTimeout(() => {
-  //       setError("");
-  //       setErrorType("");
-  //     }, 3000);
-  //   }
-  // };
-
   const handleLeaveServer = async () => {
     const result = await leaveServer(serverId);
 
@@ -144,29 +104,6 @@ const ServerPage = () => {
       navigate("/");
     }
   };
-
-  // const handleCreateChannel = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:8000/server/channel/create-channel/${serverId}`,
-  //       { channelName: newChannel.trim() },
-  //       { withCredentials: true },
-  //     );
-
-  //     if (response.data.success) {
-  //       loadServers();
-  //       setChannelPopup(false);
-  //     }
-  //   } catch (error) {
-  //     setError(error?.response?.data.message);
-  //     setErrorType("createChannel");
-
-  //     setTimeout(() => {
-  //       setError("");
-  //       setErrorType("");
-  //     }, 3000);
-  //   }
-  // };
 
   const handleCreateChannel = async () => {
     const result = await createChannel(serverId, newChannel);
