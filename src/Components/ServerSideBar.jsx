@@ -30,6 +30,7 @@ const ServerSideBar = ({
   const serverSettingsRef = useRef(null);
 
   const { serverId } = useParams();
+  const { channelId } = useParams();
 
   const navigate = useNavigate();
 
@@ -154,12 +155,15 @@ const ServerSideBar = ({
           {channels?.map((c) => (
             <div
               key={c?._id}
-              className="text-[#b5bac1] bg-[#3c3f44] hover:text-white transition-all flex items-center gap-2 hover:bg-[#383a40] px-3 rounded-lg h-9 text-sm cursor-pointer w-full"
+              onClick={() => {
+                navigate(`/server/${currentServer?._id}/channel/${c?._id}`);
+              }}
+              className={`text-[#b5bac1] bg-[#3c3f44] hover:text-white transition-all flex items-center gap-2 px-3 rounded-lg h-9 text-sm cursor-pointer w-full ${c?._id.toString() === channelId?.toString() ? "bg-discord-border" : ""} `}
             >
               <p
-                onClick={() => {
-                  navigate(`/server/${currentServer?._id}/channel/${c?._id}`);
-                }}
+                // onClick={() => {
+                //   navigate(`/server/${currentServer?._id}/channel/${c?._id}`);
+                // }}
                 className="truncate flex-1"
               >
                 #{c?.name}

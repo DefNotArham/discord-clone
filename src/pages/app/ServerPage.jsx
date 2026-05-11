@@ -137,7 +137,7 @@ const ServerPage = () => {
       {!channelId ? (
         <div className="ml-70 flex justify-center items-center h-screen">
           <h1 className="text-white text-4xl font-bold text-center">
-            Welcome to {currentServer?.name}
+            Welcome to {currentServer?.name || ""}
           </h1>
         </div>
       ) : (
