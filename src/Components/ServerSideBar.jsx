@@ -15,6 +15,8 @@ import useAuthStore from "../Stores/Auth.Store";
 import useServerStore from "../Stores/Server.Store";
 import useChannelStore from "../Stores/Channel.Store";
 
+import replaceSpaces from "../utils/replaceSpaces.js";
+
 const ServerSideBar = ({
   setInviteToServerPopUp,
   setLeaveConfirmPopup,
@@ -160,14 +162,7 @@ const ServerSideBar = ({
               }}
               className={`text-[#b5bac1] bg-[#3c3f44] hover:text-white transition-all flex items-center gap-2 px-3 rounded-lg h-9 text-sm cursor-pointer w-full ${c?._id.toString() === channelId?.toString() ? "bg-discord-border" : ""} `}
             >
-              <p
-                // onClick={() => {
-                //   navigate(`/server/${currentServer?._id}/channel/${c?._id}`);
-                // }}
-                className="truncate flex-1"
-              >
-                #{c?.name}
-              </p>
+              <p className="truncate flex-1"># {replaceSpaces(c?.name)}</p>
               {currentServer?.owner?.toString() === user?._id ? (
                 <IoSettingsSharp
                   className="shrink-0"

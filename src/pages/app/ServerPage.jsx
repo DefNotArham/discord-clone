@@ -7,6 +7,7 @@ import Sidebar from "../../Components/Sidebar";
 import ServerSideBar from "../../Components/ServerSideBar";
 import MessageInput from "../../Components/MessageInput";
 import ServerMembers from "../../Components/ServerMembers";
+import ShowMessages from "../../Components/ShowMessages";
 
 import { PiWarningFill } from "react-icons/pi";
 import useAuthStore from "../../Stores/Auth.Store";
@@ -143,7 +144,7 @@ const ServerPage = () => {
       ) : (
         <div className="ml-90 flex justify-between h-screen">
           <div className="flex flex-col justify-between w-screen">
-            <div></div>
+            <ShowMessages />
             <MessageInput />
           </div>
           <ServerMembers />
