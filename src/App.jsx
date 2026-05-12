@@ -1,6 +1,7 @@
 import React, { Children, use, useEffect, useState } from "react";
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
+import socket from "./socket/socket.js";
 
 import useAuthStore from "./Stores/Auth.Store";
 
@@ -58,6 +59,13 @@ const App = () => {
   const { checkAuth } = useAuthStore();
   useEffect(() => {
     checkAuth();
+    socket.on("connect", () => {
+      console.log("Connected");
+
+      return () => {
+        socket.off("connect");
+      };
+    });
   }, []);
 
   return (

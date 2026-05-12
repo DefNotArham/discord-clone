@@ -17,6 +17,8 @@ import useChannelStore from "../Stores/Channel.Store";
 
 import replaceSpaces from "../utils/replaceSpaces.js";
 
+import socket from "../socket/socket.js";
+
 const ServerSideBar = ({
   setInviteToServerPopUp,
   setLeaveConfirmPopup,
@@ -67,7 +69,6 @@ const ServerSideBar = ({
           }}
         >
           <h1 className="text-white truncate max-w-[180px]">
-            {" "}
             {currentServer?.name ?? "Loading..."}
           </h1>
           <FaChevronDown className="" />
