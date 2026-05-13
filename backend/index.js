@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import serverRoutes from "./routes/server.routes.js";
 import messageRoutes from "./routes/message.routes.js";
+import friendRoutes from "./routes/friend.routes.js";
 
 import Message from "./model/message.model.js";
 
@@ -40,6 +41,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/server", serverRoutes);
 app.use("/message", messageRoutes);
+app.use("/friend", friendRoutes);
 
 io.on("connection", (socket) => {
   console.log("User connected");

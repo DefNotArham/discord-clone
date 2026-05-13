@@ -31,6 +31,9 @@ const userSchema = new mongoose.Schema(
         ref: "server",
       },
     ],
+    friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    sentRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   },
   { timestamps: true },
 );
