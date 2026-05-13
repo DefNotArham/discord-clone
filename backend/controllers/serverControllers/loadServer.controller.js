@@ -8,7 +8,9 @@ const loadServerController = async (req, res) => {
     const server = await Server.findOne({
       _id: serverId,
       members: req.userId,
-    }).populate("channels");
+    })
+      .populate("channels")
+      .populate("members", "username");
 
     const user = await User.findById(req.userId).select("-password");
 
