@@ -9,7 +9,7 @@ const getMessagesController = async (req, res) => {
         .json({ success: false, message: "Channel not found" });
 
     const messages = await Messaage.find({ channelId })
-      .populate("sender", "username")
+      .populate("sender")
       .sort({ createdAt: 1 });
 
     res.status(200).json({ success: true, messages });

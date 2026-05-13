@@ -79,7 +79,7 @@ const ShowMessages = () => {
                 {/* USERNAME (others only) */}
                 {!isMe && (
                   <span className="text-xs font-bold text-white">
-                    {m.sender?.username || "Unknown"}
+                    {m.sender?.displayName || "Unknown"}
                   </span>
                 )}
 

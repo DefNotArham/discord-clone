@@ -21,7 +21,7 @@ const ServerMembers = () => {
               {m.username?.[0] || "U"}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm">{m.username}</span>
+              <span className="text-sm">{m.displayName}</span>
               <span>
                 {isOwner ? <FaCrown size={12} color="yellow" /> : null}
               </span>

@@ -10,7 +10,7 @@ const loadServerController = async (req, res) => {
       members: req.userId,
     })
       .populate("channels")
-      .populate("members", "username");
+      .populate("members");
 
     const user = await User.findById(req.userId).select("-password");
 
