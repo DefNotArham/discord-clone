@@ -36,6 +36,10 @@ const useFriendStore = create((set) => ({
         errorType: "addFriend",
       });
 
+      setTimeout(() => {
+        set({ friendError: null, errorType: "" });
+      }, 3000);
+
       return { success: false };
     }
   },

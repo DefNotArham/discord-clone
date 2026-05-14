@@ -6,7 +6,12 @@ const addFriendController = async (req, res) => {
     const { targetUsername } = req.body;
     const senderId = req.userId;
 
-    if (!targetUsername || !senderId)
+    if (!targetUsername)
+      return res
+        .status(400)
+        .json({ success: false, message: "Enter the username" });
+
+    if (!senderId)
       return res
         .status(404)
         .json({ success: false, message: "User not found" });

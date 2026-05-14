@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 
 import { FaUserFriends } from "react-icons/fa";
+import { MdError } from "react-icons/md";
+import { FaCheckCircle } from "react-icons/fa";
+
 import useFriendStore from "../Stores/Friend.Store";
 
 const FriendsPage = () => {
   const [activeTab, setActiveTab] = useState("online");
   const [targetUsername, setTargetUsername] = useState("");
 
-  const { addFriend, sentFriendRequests } = useFriendStore();
+  const { addFriend, sentFriendRequests, friendError, errorType } =
+    useFriendStore();
+
+  const [showReqSuccess, setShowReqSuccess] = useState(false);
 
   const handleSendFriendReq = async (targetUsername) => {
     try {
-      await addFriend(targetUsername);
-      console.log(sentFriendRequests);
+      const result = await addFriend(targetUsername);
+
+      if (result.success) {
+        setShowReqSuccess(true);
+
+        setTimeout(() => {
+          setShowReqSuccess(false);
+        }, 3000);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -81,6 +94,18 @@ const FriendsPage = () => {
                 Send Friend Request
               </button>
             </div>
+
+            {showReqSuccess && (
+              <p className="text-discord-success text-sm font-medium ml-1 flex items-center gap-1">
+                <FaCheckCircle /> Friend request sent successfully
+              </p>
+            )}
+
+            {friendError && errorType === "addFriend" && (
+              <p className="text-discord-danger text-sm font-medium ml-1 flex items-center gap-1">
+                <MdError /> {friendError}
+              </p>
+            )}
           </div>
         )}
       </div>
