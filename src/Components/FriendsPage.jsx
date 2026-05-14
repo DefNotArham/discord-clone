@@ -1,8 +1,22 @@
 import React, { useState } from "react";
+
 import { FaUserFriends } from "react-icons/fa";
+import useFriendStore from "../Stores/Friend.Store";
 
 const FriendsPage = () => {
   const [activeTab, setActiveTab] = useState("online");
+  const [targetUsername, setTargetUsername] = useState("");
+
+  const { addFriend, sentFriendRequests } = useFriendStore();
+
+  const handleSendFriendReq = async (targetUsername) => {
+    try {
+      await addFriend(targetUsername);
+      console.log(sentFriendRequests);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="ml-87 py-4 text-white flex flex-col bg-discord-border w-screen h-screen items-start">
@@ -55,10 +69,15 @@ const FriendsPage = () => {
               <input
                 type="text"
                 placeholder="Enter a Username"
+                onChange={(e) => setTargetUsername(e.target.value)}
+                value={targetUsername}
                 className="flex-1 h-12 px-4 rounded-lg bg-[#1e1f22] border border-gray-700 outline-none text-sm focus:border-discord-blurple transition-all"
               />
 
-              <button className="h-12 px-5 rounded-lg bg-discord-blurple hover:bg-[#4e5dff] transition-all font-semibold text-sm cursor-pointer">
+              <button
+                onClick={() => handleSendFriendReq(targetUsername)}
+                className="h-12 px-5 rounded-lg bg-discord-blurple hover:bg-[#4e5dff] transition-all font-semibold text-sm cursor-pointer"
+              >
                 Send Friend Request
               </button>
             </div>

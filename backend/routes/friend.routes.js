@@ -8,8 +8,8 @@ import declineAddFriendController from "../controllers/friendController/declineA
 
 const router = express.Router();
 
-router.post("accept-frined", verifyToken, acceptFriendController);
-router.post("add-frined", verifyToken, addFriendController);
-router.post("decline-frined", verifyToken, declineAddFriendController);
+router.post("/accept-friend", verifyToken, acceptFriendController);
+router.post("/add-friend", verifyToken, addFriendController);
+router.post("/decline-friend", verifyToken, declineAddFriendController);
 
 export default router;

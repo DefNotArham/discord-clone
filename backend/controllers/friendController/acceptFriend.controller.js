@@ -20,7 +20,9 @@ const acceptFriendController = async (req, res) => {
       $pull: { sentRequests: userId },
     });
 
-    res.status(200).json({ success: true, message: "Friend added" });
+    const newFriend = await User.findById(senderId);
+
+    res.status(200).json({ success: true, message: "Friend added", newFriend });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Server error" });

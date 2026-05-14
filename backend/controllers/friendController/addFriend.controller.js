@@ -11,11 +11,6 @@ const addFriendController = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
 
-    if (targetUsername === senderId)
-      return res
-        .status(400)
-        .json({ success: false, message: "You can't add your self" });
-
     const sender = await User.findById(senderId);
     const target = await User.findOne({ username: targetUsername });
 
@@ -26,12 +21,19 @@ const addFriendController = async (req, res) => {
 
     const targetUserId = target._id;
 
-    if (sender.friends.some((id) => id.toString() === targetUserId))
+    if (target._id.toString() === senderId)
+      return res
+        .status(400)
+        .json({ success: false, message: "You can't add your self" });
+
+    if (sender.friends.some((id) => id.toString() === targetUserId.toString()))
       return res
         .status(400)
         .json({ success: false, message: "Already friends" });
 
-    if (target.friendRequests.some((id) => id.toString() === senderId))
+    if (
+      target.friendRequests.some((id) => id.toString() === senderId.toString())
+    )
       return res
         .status(400)
         .json({ success: false, message: "Request already sent" });
@@ -44,7 +46,13 @@ const addFriendController = async (req, res) => {
       $push: { sentRequests: targetUserId },
     });
 
-    res.status(200).json({ success: true, message: "Friend request sent" });
+    const newFriendReq = await User.findById(targetUserId).select("username");
+
+    res.status(200).json({
+      success: true,
+      message: "Friend request sent",
+      newFriendReq,
+    });
   } catch (error) {
     console.log(error);
 
