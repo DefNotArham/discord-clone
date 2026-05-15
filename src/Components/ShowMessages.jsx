@@ -61,7 +61,7 @@ const ShowMessages = () => {
 
   return (
     <div className="flex flex-col gap-3 p-4 overflow-y-auto bg-[#313338]  h-full">
-      <div className="flex justify-end">
+      <div className=" justify-end flex md:hidden">
         <div
           className="bg-gray-300 p-2 rounded-full cursor-pointer"
           onClick={() => setSidebar(!sidebar)}

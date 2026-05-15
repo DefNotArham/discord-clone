@@ -11,15 +11,22 @@ import { useState } from "react";
 const DirectMessagePage = () => {
   const [mainTab, setMainTab] = useState("friends");
 
+  const renderContent = () => {
+    if (mainTab === "friends")
+      return <FriendsPage mainTab={mainTab} setMainTab={setMainTab} />;
+
+    if (mainTab === "friendreqs") return <FriendReq />;
+
+    if (mainTab.startsWith("friend/")) {
+      const friendId = mainTab.split("/")[1];
+    }
+  };
+
   return (
     <div className="flex">
       <Sidebar />
       <DirectMessageSidebar mainTab={mainTab} setMainTab={setMainTab} />
-      {mainTab === "friends" ? (
-        <FriendsPage mainTab={mainTab} setMainTab={setMainTab} />
-      ) : (
-        <FriendReq />
-      )}
+      {renderContent()}
     </div>
   );
 };

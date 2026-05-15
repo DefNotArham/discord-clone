@@ -4,6 +4,7 @@ import { HiOutlineUserAdd } from "react-icons/hi";
 import { RiChatUnreadFill } from "react-icons/ri";
 
 import useFriendStore from "../Stores/Friend.Store";
+import { useNavigate } from "react-router-dom";
 
 const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
   const { friends, loadFriends } = useFriendStore();
@@ -47,7 +48,14 @@ const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
           {friends?.map((friend) => (
             <div
               key={friend._id}
-              className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer hover:bg-discord-hover group transition-colors hover:bg-gray-700 ease-in-out mt-3`}
+              onClick={() => {
+                setMainTab(`friend/${friend._id}`);
+              }}
+              className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer group transition-colors ease-in-out mt-3 ${
+                mainTab === `friend/${friend._id}`
+                  ? "bg-gray-700"
+                  : "hover:bg-gray-700"
+              }`}
             >
               <div className="relative flex-shrink-0">
                 <div className="w-8 h-8 rounded-full bg-discord-blurple flex items-center justify-center text-white text-xs font-bold">
