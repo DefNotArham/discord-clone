@@ -100,6 +100,30 @@ const useFriendStore = create((set) => ({
       }, 3000);
     }
   },
+
+  loadFriends: async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/friend/get-friends",
+        { withCredentials: true },
+      );
+
+      if (response?.data?.success) {
+        set({ friends: response?.data?.friends });
+      }
+    } catch (error) {
+      console.log(error);
+
+      set({
+        friendError: error?.response?.data?.message,
+        errorType: "loadfriends",
+      });
+
+      setTimeout(() => {
+        set({ friendError: null, errorType: "" });
+      }, 3000);
+    }
+  },
 }));
 
 export default useFriendStore;
