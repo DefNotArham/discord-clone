@@ -6,7 +6,7 @@ import { FaCheckCircle } from "react-icons/fa";
 
 import useFriendStore from "../Stores/Friend.Store";
 
-const FriendsPage = () => {
+const FriendsPage = ({ mainTab, setMainTab }) => {
   const [activeTab, setActiveTab] = useState("online");
   const [targetUsername, setTargetUsername] = useState("");
 
