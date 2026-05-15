@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 
 import useFriendStore from "../Stores/Friend.Store.js";
 
-const MOCK_REQUESTS = [
-  { _id: "1", username: "phantom_v" },
-  { _id: "2", username: "kaito99" },
-  { _id: "3", username: "nova_kai" },
-];
-
 const FriendReq = () => {
-  const { friendRequests } = useFriendStore();
+  const { friendRequests, loadFriendRequests } = useFriendStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await loadFriendRequests();
+      console.log(friendRequests);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full px-8 py-6 text-white ml-85">
@@ -25,15 +28,20 @@ const FriendReq = () => {
         {friendRequests.map((req) => (
           <div
             key={req._id}
-            className="flex items-center justify-between bg-[#2b2d31] hover:bg-[#313338] transition-all rounded-lg px-4 py-3"
+            className="flex items-center justify-between bg-[#2b2d31] hover:bg-[#313338] transition-all rounded-lg px-4 py-3 group ease-in-out"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-discord-blurple flex items-center justify-center font-bold">
-                {req.username[0].toUpperCase()}
+                {req.displayName[0].toUpperCase()}
               </div>
 
-              <div>
-                <p className="font-medium text-white">{req.username}</p>
+              <div className="cursor-default">
+                <div className="flex items-center gap-2">
+                  <p className="font-medium text-white">{req.displayName}</p>
+                  <p className="text-xs text-discord-muted opacity-0 group-hover:opacity-100 transition-all ease-in-out">
+                    {req.username}
+                  </p>
+                </div>
                 <p className="text-xs text-gray-400">
                   Sent you a friend request
                 </p>
@@ -42,11 +50,11 @@ const FriendReq = () => {
 
             {/* Buttons */}
             <div className="flex items-center gap-2">
-              <button className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-700 hover:bg-green-500 transition-all">
+              <button className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-700 hover:bg-green-500 transition-all cursor-pointer">
                 <HiOutlineCheck size={18} />
               </button>
 
-              <button className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-700 hover:bg-red-500 transition-all">
+              <button className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-700 hover:bg-red-500 transition-all cursor-pointer">
                 <HiOutlineX size={18} />
               </button>
             </div>

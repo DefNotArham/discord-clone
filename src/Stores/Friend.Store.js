@@ -43,6 +43,30 @@ const useFriendStore = create((set) => ({
       return { success: false };
     }
   },
+
+  loadFriendRequests: async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/friend/get-friendRequests",
+        { withCredentials: true },
+      );
+
+      if (response?.data?.success) {
+        set({ friendRequests: response.data.friendRequests });
+      }
+    } catch (error) {
+      console.log(error);
+
+      set({
+        friendError: error?.response?.data?.message,
+        errorType: "loadreq",
+      });
+
+      setTimeout(() => {
+        set({ friendError: null, errorType: "" });
+      }, 3000);
+    }
+  },
 }));
 
 export default useFriendStore;

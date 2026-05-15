@@ -2,7 +2,10 @@ import User from "../../model/user.model.js";
 
 const getFriendRequestsController = async (req, res) => {
   try {
-    const user = await User.findById(req.userId).populate("friendRequests");
+    const user = await User.findById(req.userId).populate(
+      "friendRequests",
+      "-password",
+    );
 
     if (!user)
       return res
