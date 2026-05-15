@@ -141,7 +141,7 @@ const ServerPage = () => {
           </h1>
         </div>
       ) : (
-        <div className="ml-90 flex justify-between h-screen">
+        <div className="ml-67 md:ml-90 flex justify-between h-screen">
           <div className="flex flex-col justify-between w-screen">
             <ShowMessages />
             <MessageInput />

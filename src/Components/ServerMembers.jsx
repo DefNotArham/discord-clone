@@ -5,7 +5,7 @@ const ServerMembers = () => {
   const { currentServer } = useServerStore();
 
   return (
-    <div className="h-screen bg-discord-border w-[40%] p-3 text-white">
+    <div className="h-screen bg-discord-border hidden md:inline-block md:w-[40%] p-3 text-white">
       <p className="text-xs text-gray-300 mb-2">
         Members {currentServer?.members.length}
       </p>

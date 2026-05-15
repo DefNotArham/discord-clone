@@ -32,7 +32,7 @@ const FriendsPage = ({ mainTab, setMainTab }) => {
   };
 
   return (
-    <div className="ml-87 py-4 text-white flex flex-col bg-discord-border w-screen h-screen items-start">
+    <div className="md:ml-87 ml-67 py-4 text-white flex flex-col bg-discord-border w-screen h-screen items-start">
       <div className="flex gap-8 mx-7">
         <div className="flex items-center gap-2 cursor-default">
           <FaUserFriends size={20} />
@@ -40,10 +40,10 @@ const FriendsPage = ({ mainTab, setMainTab }) => {
           <div className="w-[1%] h-4 bg-gray-500"></div>
         </div>
 
-        <div className="flex items-center gap-10 ">
+        <div className="flex items-center custom3:gap-10 gap-5  ">
           <button
             onClick={() => setActiveTab("online")}
-            className={`cursor-pointer px-4 py-2 rounded-md font-semibold hover:bg-gray-700 transition-all ease-in-out  text-sm ${
+            className={`cursor-pointer px-4 py-2 rounded-md font-semibold hover:bg-gray-700 transition-all ease-in-out  text-xs custom3:text-sm ${
               activeTab === "online" ? "bg-gray-700" : ""
             }`}
           >
@@ -51,7 +51,7 @@ const FriendsPage = ({ mainTab, setMainTab }) => {
           </button>
           <button
             onClick={() => setActiveTab("all")}
-            className={`cursor-pointer px-6 py-2 rounded-md font-semibold hover:bg-gray-700 transition-all ease-in-out text-sm ${
+            className={`cursor-pointer px-6 py-2 rounded-md font-semibold hover:bg-gray-700 transition-all ease-in-out text-xs custom3:text-sm ${
               activeTab === "all" ? "bg-gray-700" : ""
             }`}
           >
@@ -60,7 +60,7 @@ const FriendsPage = ({ mainTab, setMainTab }) => {
 
           <button
             onClick={() => setActiveTab("addfriend")}
-            className={`cursor-pointer  px-3 py-2 rounded-md text-sm font-semibold  transition-all ease-in-out ${activeTab === "addfriend" ? "bg-discord-blurple/10 text-discord-blurple" : "bg-discord-blurple text-white hover:bg-[#454fb8]"}`}
+            className={`cursor-pointer  px-3 py-2 rounded-md text-xs custom3:text-sm font-semibold  transition-all ease-in-out ${activeTab === "addfriend" ? "bg-discord-blurple/10 text-discord-blurple" : "bg-discord-blurple text-white hover:bg-[#454fb8]"}`}
           >
             Add Friend
           </button>
