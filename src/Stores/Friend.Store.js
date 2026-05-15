@@ -67,6 +67,39 @@ const useFriendStore = create((set) => ({
       }, 3000);
     }
   },
+
+  acceptFriendReq: async (senderId) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/friend/accept-friend",
+        { senderId },
+        { withCredentials: true },
+      );
+
+      if (response?.data?.success) {
+        set((state) => ({
+          friends: [...state.friends, response?.data?.newFriend],
+        }));
+
+        set((state) => ({
+          friendRequests: state.friendRequests.filter(
+            (req) => req._id.toString() !== senderId.toString(),
+          ),
+        }));
+      }
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+
+      set({
+        friendError: error?.response?.data?.message,
+        errorType: "acceptfriend",
+      });
+
+      setTimeout(() => {
+        set({ friendError: null, errorType: "" });
+      }, 3000);
+    }
+  },
 }));
 
 export default useFriendStore;

@@ -4,12 +4,18 @@ import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import useFriendStore from "../Stores/Friend.Store.js";
 
 const FriendReq = () => {
-  const { friendRequests, loadFriendRequests } = useFriendStore();
+  const {
+    friendRequests,
+    loadFriendRequests,
+    addFriend,
+    acceptFriendReq,
+    friendError,
+    errorType,
+  } = useFriendStore();
 
   useEffect(() => {
     const fetchData = async () => {
       await loadFriendRequests();
-      console.log(friendRequests);
     };
 
     fetchData();
@@ -50,7 +56,10 @@ const FriendReq = () => {
 
             {/* Buttons */}
             <div className="flex items-center gap-2">
-              <button className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-700 hover:bg-green-500 transition-all cursor-pointer">
+              <button
+                onClick={() => acceptFriendReq(req._id)}
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-700 hover:bg-green-500 transition-all cursor-pointer"
+              >
                 <HiOutlineCheck size={18} />
               </button>
 
