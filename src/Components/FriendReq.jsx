@@ -1,6 +1,8 @@
 import React from "react";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 
+import useFriendStore from "../Stores/Friend.Store.js";
+
 const MOCK_REQUESTS = [
   { _id: "1", username: "phantom_v" },
   { _id: "2", username: "kaito99" },
@@ -8,9 +10,10 @@ const MOCK_REQUESTS = [
 ];
 
 const FriendReq = () => {
+  const { friendRequests } = useFriendStore();
+
   return (
     <div className="w-full px-8 py-6 text-white ml-85">
-      {/* Header */}
       <div className="mb-4">
         <h1 className="text-xl font-bold">Friend Requests</h1>
         <p className="text-gray-400 text-sm">
@@ -18,14 +21,12 @@ const FriendReq = () => {
         </p>
       </div>
 
-      {/* List */}
       <div className="flex flex-col gap-2">
-        {MOCK_REQUESTS.map((req) => (
+        {friendRequests.map((req) => (
           <div
             key={req._id}
             className="flex items-center justify-between bg-[#2b2d31] hover:bg-[#313338] transition-all rounded-lg px-4 py-3"
           >
-            {/* Left side */}
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-discord-blurple flex items-center justify-center font-bold">
                 {req.username[0].toUpperCase()}
