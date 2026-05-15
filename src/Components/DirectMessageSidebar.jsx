@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaUserFriends } from "react-icons/fa";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { RiChatUnreadFill } from "react-icons/ri";
+
 import useFriendStore from "../Stores/Friend.Store";
 
 const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
@@ -36,34 +37,36 @@ const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
           Friend Requests
         </div>
 
-        {friends.length === 0 && (
-          <p className="text-discord-muted text-xs px-3 mt-2">No friends yet</p>
-        )}
+        <div>
+          {friends.length === 0 && (
+            <p className="text-discord-muted text-xs px-3 mt-2">
+              No friends yet
+            </p>
+          )}
 
-        {friends?.map((friend) => (
-          <div
-            key={friend._id}
-            className="flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer hover:bg-discord-hover group transition-colors"
-          >
-            <div className="relative flex-shrink-0">
-              <div className="w-8 h-8 rounded-full bg-discord-blurple flex items-center justify-center text-white text-xs font-bold">
-                {friend.displayName?.[0]?.toUpperCase() ?? "?"}
+          {friends?.map((friend) => (
+            <div
+              key={friend._id}
+              className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer hover:bg-discord-hover group transition-colors hover:bg-gray-700 ease-in-out mt-3`}
+            >
+              <div className="relative flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-discord-blurple flex items-center justify-center text-white text-xs font-bold">
+                  {friend.displayName?.[0]?.toUpperCase() ?? "?"}
+                </div>
               </div>
 
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-discord-sidebar bg-discord-success" />
-            </div>
+              <div className="flex flex-col min-w-0">
+                <span className="text-white text-sm font-medium truncate">
+                  {friend.displayName}
+                </span>
 
-            <div className="flex flex-col min-w-0">
-              <span className="text-white text-sm font-medium truncate">
-                {friend.displayName}
-              </span>
-
-              <span className="text-discord-muted text-xs truncate">
-                {friend.username}
-              </span>
+                <span className="text-discord-muted text-xs truncate">
+                  {friend.username}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
