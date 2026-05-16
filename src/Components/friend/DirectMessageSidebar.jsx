@@ -3,7 +3,7 @@ import { FaUserFriends } from "react-icons/fa";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { RiChatUnreadFill } from "react-icons/ri";
 
-import useFriendStore from "../Stores/Friend.Store";
+import useFriendStore from "../../Stores/Friend.Store";
 import { useNavigate } from "react-router-dom";
 
 const DirectMessageSidebar = ({ mainTab, setMainTab }) => {

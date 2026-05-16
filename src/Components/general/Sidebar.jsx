@@ -16,12 +16,12 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 
-import getServerInitials from "../utils/getServerInitials.js";
+import getServerInitials from "../../utils/getServerInitials.js";
 
 //Stores
-import useAuthStore from "../Stores/Auth.Store.js";
-import useUserStore from "../Stores/User.Store.js";
-import useServerStore from "../Stores/Server.Store.js";
+import useAuthStore from "../../Stores/Auth.Store.js";
+import useUserStore from "../../Stores/User.Store.js";
+import useServerStore from "../../Stores/Server.Store.js";
 
 const Sidebar = () => {
   const { user, loading } = useAuthStore();

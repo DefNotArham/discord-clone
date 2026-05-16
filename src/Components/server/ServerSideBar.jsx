@@ -11,13 +11,13 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { IoAddCircle } from "react-icons/io5";
 import { IoIosExit } from "react-icons/io";
 import { IoCreate } from "react-icons/io5";
-import useAuthStore from "../Stores/Auth.Store";
-import useServerStore from "../Stores/Server.Store";
-import useChannelStore from "../Stores/Channel.Store";
+import useAuthStore from "../../Stores/Auth.Store.js";
+import useServerStore from "../../Stores/Server.Store.js";
+import useChannelStore from "../../Stores/Channel.Store.js";
 
-import replaceSpaces from "../utils/replaceSpaces.js";
+import replaceSpaces from "../../utils/replaceSpaces.js";
 
-import socket from "../socket/socket.js";
+import socket from "../../socket/socket.js";
 
 const ServerSideBar = ({
   setInviteToServerPopUp,

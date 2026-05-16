@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 
-import useFriendStore from "../Stores/Friend.Store.js";
+import useFriendStore from "../../Stores/Friend.Store";
 
 const FriendReq = () => {
   const {

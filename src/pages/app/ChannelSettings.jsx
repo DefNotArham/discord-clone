@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
 
-import DefaultBackground from "../../Components/DefaultBackground";
-import LoadingUi from "../../Components/LoadingUi";
+import DefaultBackground from "../../Components/general/DefaultBackground";
+import LoadingUi from "../../Components/general/LoadingUi";
 
 import { MdDeleteForever } from "react-icons/md";
 import { FaCircleXmark, FaSketch } from "react-icons/fa6";

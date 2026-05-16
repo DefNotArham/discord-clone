@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthPages from "../../Components/AuthPages";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
+
 import useAuthStore from "../../Stores/Auth.Store";
+
+import AuthPages from "../../Components/Auth/AuthPages";
 
 const VerificationPage = () => {
   const [code, setCode] = useState("");

@@ -1,9 +1,9 @@
 import { IoSend } from "react-icons/io5";
-import useChannelStore from "../Stores/Channel.Store";
+import useChannelStore from "../../Stores/Channel.Store.js";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import socket from "../socket/socket.js";
-import useAuthStore from "../Stores/Auth.Store";
+import socket from "../../socket/socket.js";
+import useAuthStore from "../../Stores/Auth.Store.js";
 
 const MessageInput = () => {
   const { currentChannel, loadChannel } = useChannelStore();

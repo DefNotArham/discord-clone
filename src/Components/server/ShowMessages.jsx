@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import socket from "../socket/socket.js";
+import socket from "../../socket/socket.js";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
-import useAuthStore from "../Stores/Auth.Store.js";
-import useServerStore from "../Stores/Server.Store.js";
+import useAuthStore from "../../Stores/Auth.Store.js";
+import useServerStore from "../../Stores/Server.Store.js";
 
 import ServerMembers from "./ServerMembers.jsx";
 

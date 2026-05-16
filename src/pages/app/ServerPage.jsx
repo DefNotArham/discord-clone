@@ -3,11 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
 
-import Sidebar from "../../Components/Sidebar";
-import ServerSideBar from "../../Components/ServerSideBar";
-import MessageInput from "../../Components/MessageInput";
-import ServerMembers from "../../Components/ServerMembers";
-import ShowMessages from "../../Components/ShowMessages";
+import Sidebar from "../../Components/general/Sidebar";
+import ServerSideBar from "../../Components/server/ServerSideBar";
+import MessageInput from "../../Components/server/MessageInput";
+import ServerMembers from "../../Components/server/ServerMembers";
+import ShowMessages from "../../Components/server/ShowMessages";
 
 import { PiWarningFill } from "react-icons/pi";
 import useAuthStore from "../../Stores/Auth.Store";

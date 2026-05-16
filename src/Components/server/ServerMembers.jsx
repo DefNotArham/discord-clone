@@ -1,4 +1,4 @@
-import useServerStore from "../Stores/Server.Store";
+import useServerStore from "../../Stores/Server.Store";
 import { FaCrown } from "react-icons/fa6";
 
 const ServerMembers = () => {

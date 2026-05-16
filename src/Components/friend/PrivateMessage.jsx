@@ -1,6 +1,6 @@
 import React from "react";
 import { IoSend } from "react-icons/io5";
-import socket from "../socket/socket.js";
+import socket from "../../socket/socket.js";
 
 const PrivateMessage = ({ friendId }) => {
   return (

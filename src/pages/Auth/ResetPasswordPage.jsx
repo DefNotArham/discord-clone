@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 
-import AuthPages from "../../Components/AuthPages";
+import AuthPages from "../../Components/Auth/AuthPages";
 import useAuthStore from "../../Stores/Auth.Store";
 
 const ResetPasswordPage = () => {

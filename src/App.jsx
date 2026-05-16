@@ -16,7 +16,7 @@ import ServerPage from "./pages/app/ServerPage";
 import ChannelSettings from "./pages/app/ChannelSettings";
 import ServerSettings from "./pages/app/ServerSettings";
 
-import LoadingUi from "./Components/LoadingUi";
+import LoadingUi from "./Components/general/LoadingUi.jsx";
 import useServerStore from "./Stores/Server.Store";
 
 const ProtectedRoutes = ({ children }) => {

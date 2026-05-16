@@ -4,7 +4,7 @@ import axios from "axios";
 import { MdError } from "react-icons/md";
 import { Oval } from "react-loader-spinner";
 
-import AuthPages from "../../Components/AuthPages";
+import AuthPages from "../../Components/Auth/AuthPages";
 import useAuthStore from "../../Stores/Auth.Store";
 
 const RegisterPage = () => {
