@@ -5,6 +5,7 @@ import Sidebar from "../../Components/Sidebar";
 import DirectMessageSidebar from "../../Components/DirectMessageSidebar";
 import FriendsPage from "../../Components/FriendsPage";
 import FriendReq from "../../Components/FriendReq";
+import PrivateMessage from "../../Components/PrivateMessage";
 
 import { useState } from "react";
 
@@ -19,6 +20,8 @@ const DirectMessagePage = () => {
 
     if (mainTab.startsWith("friend/")) {
       const friendId = mainTab.split("/")[1];
+      console.log(friendId);
+      return <PrivateMessage friendId={friendId} />;
     }
   };
 
