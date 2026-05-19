@@ -11,6 +11,7 @@ import userRoutes from "./routes/user.routes.js";
 import serverRoutes from "./routes/server.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import friendRoutes from "./routes/friend.routes.js";
+import dmRoutes from "./routes/dm.routes.js";
 
 import Message from "./model/message.model.js";
 import DM from "./model/dm.model.js";
@@ -43,6 +44,7 @@ app.use("/user", userRoutes);
 app.use("/server", serverRoutes);
 app.use("/message", messageRoutes);
 app.use("/friend", friendRoutes);
+app.use("/dm", dmRoutes);
 
 io.on("connection", (socket) => {
   console.log("User connected");
