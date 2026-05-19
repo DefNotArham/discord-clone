@@ -1,29 +1,25 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Sidebar from "../../Components/general/Sidebar";
 import DirectMessageSidebar from "../../Components/friend/DirectMessageSidebar";
 import FriendsPage from "../../Components/friend/FriendsPage";
 import FriendReq from "../../Components/friend/FriendReq";
 import PrivateMessage from "../../Components/friend/PrivateMessage";
-// import PrivateMessage from "../../Components/PrivateMessage";
 
 import { useState } from "react";
 
 const DirectMessagePage = () => {
   const [mainTab, setMainTab] = useState("friends");
 
-  const renderContent = () => {
-    if (mainTab === "friends")
-      return <FriendsPage mainTab={mainTab} setMainTab={setMainTab} />;
+  const navigate = useNavigate();
+  const { friendId } = useParams();
 
+  const renderContent = () => {
+    if (friendId) return <PrivateMessage friendId={friendId} />;
     if (mainTab === "friendreqs") return <FriendReq />;
 
-    if (mainTab.startsWith("friend/")) {
-      const friendId = mainTab.split("/")[1];
-      console.log(friendId);
-      return <PrivateMessage friendId={friendId} />;
-    }
+    return <FriendsPage mainTab={mainTab} setMainTab={setMainTab} />;
   };
 
   return (

@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
   const { friends, loadFriends } = useFriendStore();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       await loadFriends();
@@ -21,7 +23,10 @@ const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
     <div className="bg-discord-sidebar w-[200px] md:w-[280px] h-screen ml-[70px] fixed left-0 top-0 flex flex-col justify-between z-40 border-r border-gray-700 pt-2">
       <div className="flex flex-col gap-2 p-3">
         <div
-          onClick={() => setMainTab("friends")}
+          onClick={() => {
+            setMainTab("friends");
+            navigate(`/`);
+          }}
           className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-white cursor-pointer transition-all ease-in-out ${mainTab === "friends" ? "bg-gray-700" : "hover:bg-gray-700"}`}
         >
           <FaUserFriends size={18} />
@@ -29,7 +34,10 @@ const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
         </div>
 
         <div
-          onClick={() => setMainTab("friendreqs")}
+          onClick={() => {
+            setMainTab("friendreqs");
+            navigate(`/`);
+          }}
           className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700/60 cursor-pointer transition-all ease-in-out   ${mainTab === "friendreqs" ? "bg-gray-700" : "hover:bg-gray-700"}`}
         >
           <span className="w-[18px] h-[18px] flex items-center justify-center">
@@ -50,6 +58,7 @@ const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
               key={friend._id}
               onClick={() => {
                 setMainTab(`friend/${friend._id}`);
+                navigate(`/dm/${friend._id}`);
               }}
               className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer group transition-colors ease-in-out mt-3 ${
                 mainTab === `friend/${friend._id}`

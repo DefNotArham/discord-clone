@@ -130,6 +130,15 @@ const App = () => {
         }
       />
 
+      <Route
+        path="/dm/:friendId"
+        element={
+          <ProtectedRoutes>
+            <DirectMessagePage />
+          </ProtectedRoutes>
+        }
+      />
+
       {/* Auth pages */}
 
       <Route
