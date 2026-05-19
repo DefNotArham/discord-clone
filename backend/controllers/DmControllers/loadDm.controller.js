@@ -1,13 +1,9 @@
 import DM from "../../model/dm.model.js";
 
 const loadDmController = async (req, res) => {
-  const userId = req.userId;
-  const { friendId } = req.params;
   try {
-    if (!userId || friendId)
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+    const userId = req.userId;
+    const { friendId } = req.params;
 
     const messages = await DM.find({
       $or: [
@@ -15,8 +11,8 @@ const loadDmController = async (req, res) => {
         { from: friendId, to: userId },
       ],
     })
-      .populate("to")
-      .populate("from")
+      .populate("from", "username displayName")
+      .populate("to", "username displayName")
       .sort({ createdAt: 1 });
 
     res.status(200).json({ success: true, messages });

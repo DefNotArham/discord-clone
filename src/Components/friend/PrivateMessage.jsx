@@ -2,15 +2,36 @@ import React, { useEffect, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import socket from "../../socket/socket.js";
 import useAuthStore from "../../Stores/Auth.Store.js";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-const PrivateMessage = ({ friendId }) => {
+const PrivateMessage = () => {
   const { user } = useAuthStore();
 
   const [dm, setDm] = useState([]);
 
   const [messageInput, setMessageInput] = useState("");
 
+  const { friendId } = useParams();
+
   useEffect(() => {
+    const fetchDm = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/dm/loadDmMessages/${friendId}`,
+          { withCredentials: true },
+        );
+
+        if (response?.data?.success) {
+          setDm(response?.data?.messages);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchDm();
+
     socket.emit("privateDm", { userId: user._id, friendId });
 
     socket.on("receiveDM", (message) => {

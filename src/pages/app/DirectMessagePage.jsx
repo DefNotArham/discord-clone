@@ -7,7 +7,7 @@ import FriendsPage from "../../Components/friend/FriendsPage";
 import FriendReq from "../../Components/friend/FriendReq";
 import PrivateMessage from "../../Components/friend/PrivateMessage";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const DirectMessagePage = () => {
   const [mainTab, setMainTab] = useState("friends");
@@ -16,7 +16,7 @@ const DirectMessagePage = () => {
   const { friendId } = useParams();
 
   const renderContent = () => {
-    if (friendId) return <PrivateMessage friendId={friendId} />;
+    if (friendId) return <PrivateMessage />;
     if (mainTab === "friendreqs") return <FriendReq />;
 
     return <FriendsPage mainTab={mainTab} setMainTab={setMainTab} />;
