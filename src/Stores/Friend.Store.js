@@ -98,6 +98,32 @@ const useFriendStore = create((set) => ({
     }
   },
 
+  declineFriendReq: async (senderId) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/friend/decline-friend",
+        { senderId },
+        { withCredentials: true },
+      );
+      if (response?.data?.success) {
+        set((state) => ({
+          friendRequests: state.friendRequests.filter(
+            (req) => req._id.toString() !== senderId.toString(),
+          ),
+        }));
+        return { success: true };
+      }
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      set({
+        friendError: error?.response?.data?.message,
+        errorType: "declinefriend",
+      });
+      setTimeout(() => set({ friendError: null, errorType: "" }), 3000);
+      return { success: false };
+    }
+  },
+
   loadFriends: async () => {
     try {
       const response = await axios.get(

@@ -9,6 +9,7 @@ const FriendReq = () => {
     loadFriendRequests,
     addFriend,
     acceptFriendReq,
+    declineFriendReq,
     friendError,
     errorType,
   } = useFriendStore();
@@ -63,7 +64,10 @@ const FriendReq = () => {
                 <HiOutlineCheck size={18} />
               </button>
 
-              <button className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-700 hover:bg-red-500 transition-all cursor-pointer">
+              <button
+                onClick={() => declineFriendReq(req._id)}
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-700 hover:bg-red-500 transition-all cursor-pointer"
+              >
                 <HiOutlineX size={18} />
               </button>
             </div>
