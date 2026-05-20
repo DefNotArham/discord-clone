@@ -164,7 +164,7 @@ const ServerPage = () => {
           user={selectedUser}
           onClose={() => setSelectedUser(null)}
           top={"200px"}
-          left={"900px"}
+          left={"1000px"}
         />
       )}
 
