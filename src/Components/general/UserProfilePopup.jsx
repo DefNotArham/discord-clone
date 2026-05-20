@@ -9,7 +9,7 @@ import { MdPersonRemove } from "react-icons/md";
 const UserProfilePopup = ({ user, onClose, top, left }) => {
   const ref = useRef(null);
   const navigate = useNavigate();
-  const { friends, addFriend } = useFriendStore();
+  const { friends, addFriend, removeFriend } = useFriendStore();
   const { user: me } = useAuthStore();
 
   const isFriend = friends.some((f) => f._id === user._id);
@@ -66,9 +66,11 @@ const UserProfilePopup = ({ user, onClose, top, left }) => {
 
             <button
               onClick={() => {
+                removeFriend(user._id);
+                navigate("/");
                 onClose();
               }}
-              className="w-full py-2 rounded-lg bg-discord-blurple hover:bg-discord-blurple-hover text-white text-sm font-medium transition-colors cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-400 text-sm font-medium transition-colors cursor-pointer flex items-center justify-center gap-2"
             >
               <MdPersonRemove size={15} /> Remove friend
             </button>

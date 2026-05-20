@@ -147,6 +147,32 @@ const useFriendStore = create((set) => ({
       }, 3000);
     }
   },
+
+  removeFriend: async (friendId) => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:8000/friend/remove-friend",
+        {
+          data: { friendId },
+          withCredentials: true,
+        },
+      );
+      if (response?.data?.success) {
+        set((state) => ({
+          friends: state.friends.filter((f) => f._id !== friendId),
+        }));
+        return { success: true };
+      }
+    } catch (error) {
+      console.log(error);
+      set({
+        friendError: error?.response?.data?.message,
+        errorType: "removefriend",
+      });
+      setTimeout(() => set({ friendError: null, errorType: "" }), 3000);
+      return { success: false };
+    }
+  },
 }));
 
 export default useFriendStore;
