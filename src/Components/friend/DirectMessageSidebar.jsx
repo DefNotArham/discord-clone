@@ -4,7 +4,7 @@ import { HiOutlineUserAdd } from "react-icons/hi";
 import { RiChatUnreadFill } from "react-icons/ri";
 
 import useFriendStore from "../../Stores/Friend.Store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const DirectMessageSidebar = ({ mainTab, setMainTab }) => {
   const { friends, loadFriends } = useFriendStore();

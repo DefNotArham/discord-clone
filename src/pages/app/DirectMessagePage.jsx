@@ -22,6 +22,10 @@ const DirectMessagePage = () => {
     return <FriendsPage mainTab={mainTab} setMainTab={setMainTab} />;
   };
 
+  useEffect(() => {
+    if (friendId) setMainTab(`friend/${friendId}`);
+  }, [friendId]);
+
   return (
     <div className="flex">
       <Sidebar />
