@@ -163,6 +163,8 @@ const ServerPage = () => {
         <UserProfilePopup
           user={selectedUser}
           onClose={() => setSelectedUser(null)}
+          top={"200px"}
+          left={"900px"}
         />
       )}
 

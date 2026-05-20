@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import useFriendStore from "../../Stores/Friend.Store";
 import useAuthStore from "../../Stores/Auth.Store";
 
-const UserProfilePopup = ({ user, onClose }) => {
+import { TiMessages } from "react-icons/ti";
+import { MdPersonRemove } from "react-icons/md";
+
+const UserProfilePopup = ({ user, onClose, top, left }) => {
   const ref = useRef(null);
   const navigate = useNavigate();
   const { friends, addFriend } = useFriendStore();
@@ -23,8 +26,14 @@ const UserProfilePopup = ({ user, onClose }) => {
   return (
     <div
       ref={ref}
-      className="fixed top-50 left-[900px] -translate-x-1/2 -translate-y-1/2 z-[1000] w-56 bg-[#1e1f22] rounded-xl shadow-xl p-4 flex flex-col gap-3"
+      style={{
+        top,
+        left,
+      }}
+      className="fixed -translate-x-1/2 -translate-y-1/2 z-[1000] w-56 bg-[#1e1f22] rounded-xl shadow-xl p-4 flex flex-col gap-3"
     >
+      {/* 200px 900px */}
+
       {/* Avatar */}
       <div className="w-14 h-14 rounded-full bg-discord-blurple flex items-center justify-center text-white text-2xl font-bold">
         {user.displayName?.[0]?.toUpperCase()}
@@ -44,15 +53,26 @@ const UserProfilePopup = ({ user, onClose }) => {
       {/* Action button */}
       {!isMe &&
         (isFriend ? (
-          <button
-            onClick={() => {
-              navigate(`/dm/${user._id}`);
-              onClose();
-            }}
-            className="w-full py-2 rounded-lg bg-discord-blurple hover:bg-discord-blurple-hover text-white text-sm font-medium transition-colors cursor-pointer"
-          >
-            Message
-          </button>
+          <>
+            <button
+              onClick={() => {
+                navigate(`/dm/${user._id}`);
+                onClose();
+              }}
+              className="w-full py-2 rounded-lg bg-discord-blurple hover:bg-discord-blurple-hover text-white text-sm font-medium transition-colors cursor-pointer flex items-center justify-center gap-2"
+            >
+              <TiMessages size={15} /> Message
+            </button>
+
+            <button
+              onClick={() => {
+                onClose();
+              }}
+              className="w-full py-2 rounded-lg bg-discord-blurple hover:bg-discord-blurple-hover text-white text-sm font-medium transition-colors cursor-pointer flex items-center justify-center gap-2"
+            >
+              <MdPersonRemove size={15} /> Remove friend
+            </button>
+          </>
         ) : (
           <button
             onClick={() => addFriend(user.username)}

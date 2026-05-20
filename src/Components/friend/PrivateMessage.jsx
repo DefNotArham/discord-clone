@@ -4,6 +4,7 @@ import socket from "../../socket/socket.js";
 import useAuthStore from "../../Stores/Auth.Store.js";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import UserProfilePopup from "../general/UserProfilePopup.jsx";
 
 const PrivateMessage = () => {
   const { user } = useAuthStore();
@@ -13,6 +14,8 @@ const PrivateMessage = () => {
   const [messageInput, setMessageInput] = useState("");
 
   const { friendId } = useParams();
+
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const bottomRef = useRef(null);
   const scrollToBottom = () => {
@@ -81,7 +84,10 @@ const PrivateMessage = () => {
                 className={`flex gap-3 max-w-[70%] items-start ${isMe ? "flex-row-reverse" : "flex-row"}`}
               >
                 {!isMe && (
-                  <div className="w-9 h-9 shrink-0 rounded-full bg-[#5865f2] text-xs flex items-center justify-center text-white font-bold">
+                  <div
+                    onClick={() => setSelectedUser(m.from)}
+                    className="cursor-pointer w-9 h-9 shrink-0 rounded-full bg-[#5865f2] text-xs flex items-center justify-center text-white font-bold"
+                  >
                     {m.from?.username?.[0] || "U"}
                   </div>
                 )}
@@ -102,6 +108,15 @@ const PrivateMessage = () => {
             </div>
           );
         })}
+
+        {selectedUser && (
+          <UserProfilePopup
+            user={selectedUser}
+            onClose={() => setSelectedUser(null)}
+            top={"290px"}
+            left={"460px"}
+          />
+        )}
         <div ref={bottomRef} />
       </div>
 
