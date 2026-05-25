@@ -1,5 +1,5 @@
 import User from "../../model/user.model.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const changePasswordController = async (req, res) => {
   const { currentPassword } = req.body;

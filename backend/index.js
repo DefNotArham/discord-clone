@@ -19,10 +19,11 @@ import DM from "./model/dm.model.js";
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
+const allowedOrigins = ["http://localhost:5173", "http://localhost:4173"];
 
 const io = new SocketServer(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   },
 });
@@ -31,7 +32,7 @@ const PORT = process.env.PORT;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   }),
 );
