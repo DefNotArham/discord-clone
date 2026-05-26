@@ -1,0 +1,16 @@
+# dependencies
+node_modules
+
+# git
+.git
+.gitignore
+
+# logs
+*.log
+
+# mac
+.DS_Store
+
+# build output
+dist
+build

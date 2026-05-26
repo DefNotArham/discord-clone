@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# env files
+.env
+.env.*
+
+# build folders
+dist/
+build/
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# mac files
+.DS_Store
+
+# vscode
+.vscode/
+
+# docker
+*.pid
