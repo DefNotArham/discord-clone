@@ -12,6 +12,8 @@ import { RiSidebarUnfoldFill } from "react-icons/ri";
 import { FaCrown } from "react-icons/fa6";
 import { IoIosExit } from "react-icons/io";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ShowMessages = () => {
   const { channelId } = useParams();
   const [messages, setMessages] = useState([]);
@@ -40,7 +42,7 @@ const ShowMessages = () => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/message/getMessages/${channelId}`,
+          `${API_URL}/message/getMessages/${channelId}`,
         );
         setMessages(response.data.messages);
       } catch (error) {
