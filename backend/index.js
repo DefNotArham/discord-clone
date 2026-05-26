@@ -22,7 +22,7 @@ const server = http.createServer(app);
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:4173",
-  "https://discord-clone-arham.netlify.app",
+  "https://discordclone-frontend-0nzy.onrender.com",
 ];
 
 const io = new SocketServer(server, {
