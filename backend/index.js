@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { Server as SocketServer } from "socket.io";
 import http from "http";
+import dotenv from "dotenv";
 
 import connectDb from "./db/connectDb.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -20,9 +21,9 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 const allowedOrigins = [
+  process.env.FRONTEND_URL,
   "http://localhost:5173",
   "http://localhost:4173",
-  "https://discordclone-frontend-0nzy.onrender.com",
 ];
 
 const io = new SocketServer(server, {
