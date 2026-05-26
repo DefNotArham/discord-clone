@@ -4,7 +4,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { Server as SocketServer } from "socket.io";
 import http from "http";
-import dotenv from "dotenv";
 
 import connectDb from "./db/connectDb.js";
 import authRoutes from "./routes/auth.routes.js";
