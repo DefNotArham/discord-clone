@@ -19,16 +19,22 @@ import DM from "./model/dm.model.js";
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
-const allowedOrigins = ["http://localhost:5173", "http://localhost:4173"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:4173",
+  "https://discord-clone-arham.netlify.app",
+];
 
 const io = new SocketServer(server, {
   cors: {
     origin: allowedOrigins,
     credentials: true,
+    methods: ["GET", "POST"],
   },
+  transports: ["websocket", "polling"],
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 
 app.use(
   cors({
