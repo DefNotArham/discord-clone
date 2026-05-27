@@ -55,7 +55,7 @@ export const verificationEmailTemplate = (verificationCode) => `
     </div>
   </div>
 `;
-export const resetPasswordEmailTemplate = (resetToken) => `
+export const resetPasswordEmailTemplate = (resetToken, API_URL) => `
   <div style="
     font-family: Arial, sans-serif;
     background: #0f172a;
@@ -95,7 +95,7 @@ export const resetPasswordEmailTemplate = (resetToken) => `
         We received a request to reset your password. Click the button below to continue.
       </p>
 
-      <a href="http://localhost:5173/reset-password/${resetToken}"
+      <a href="${API_URL}/reset-password/${resetToken}"
         style="
           display: inline-block;
           padding: 14px 24px;

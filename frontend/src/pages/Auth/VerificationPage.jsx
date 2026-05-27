@@ -30,7 +30,7 @@ const VerificationPage = () => {
             We emailed you a six-digit code. Enter the code below to confirm
             your email address{" "}
           </p>
-          <p className="text-xs mt-1 text-discord-muted">
+          <p className="text-xs mt-1 text-discord-danger-hover">
             Check your spam or junk folder.
           </p>
         </div>

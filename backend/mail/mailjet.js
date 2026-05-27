@@ -8,6 +8,8 @@ import {
 
 dotenv.config();
 
+const API_URL = process.env.FRONTEND_URL;
+
 const MailjetApiKey = process.env.MailjetApiKey;
 const MailjetSecretKey = process.env.MailjetSecretKey;
 
@@ -54,7 +56,7 @@ export const resetPasswordEmail = async (userEmail, resetToken) => {
             },
           ],
           Subject: "Reset your password",
-          HTMLPart: resetPasswordEmailTemplate(resetToken),
+          HTMLPart: resetPasswordEmailTemplate(resetToken, API_URL),
         },
       ],
     });
